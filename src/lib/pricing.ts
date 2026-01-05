@@ -2,8 +2,11 @@
  * Pricing utilities using JSON data (no database required)
  */
 
-import pricingData from '@/data/pricing.json';
-import { PricingData, FlatModel } from '@/data/types';
+import rawPricingData from '@/data/pricing.json';
+import { PricingData, FlatModel, ModelPricing } from '@/data/types';
+
+// Type assertion to handle JSON import
+const pricingData = rawPricingData as unknown as PricingData;
 
 export interface ComparisonResult {
   best_overall: FlatModel;
@@ -25,14 +28,17 @@ function flattenModels(data: PricingData): FlatModel[] {
       const score = calculateScore(model);
 
       flattened.push({
-        provider: provider.name,
-        provider_id: provider.id,
-        model: model.name,
+        // From ModelPricing
+        name: model.name,
         input_per_million: model.input_per_million,
         output_per_million: model.output_per_million,
         context_window: model.context_window,
         free_tier: model.free_tier,
         last_updated: model.last_updated,
+        // Additional FlatModel properties
+        provider: provider.name,
+        provider_id: provider.id,
+        model: model.name,
         total_cost: totalCost,
         score,
       });
@@ -109,7 +115,7 @@ export function comparePricing(): ComparisonResult {
 
   // Hidden gem: high score, low cost, not best overall
   const hiddenGems = allModels
-    .filter(m => m.score > 500 && m.total_cost < 5 && m.model !== bestOverall.model)
+    .filter(m => (m.score || 0) > 500 && (m.total_cost || 0) < 5 && m.model !== bestOverall.model)
     .sort((a, b) => (b.score || 0) - (a.score || 0));
 
   const hiddenGem = hiddenGems[0] || bestValue;

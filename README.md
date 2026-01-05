@@ -11,10 +11,11 @@ This is a **frontend-only** Next.js application with automated daily pricing upd
 ```
 ┌─────────────────────────────────────────┐
 │  Daily GitHub Action (Cron)             │
-│  - Scrapes pricing from providers       │
-│  - Compares with existing data          │
-│  - Sends email alerts                   │
-│  - Creates PR or auto-publishes         │
+│  1. Fetches from llm-prices.com API     │
+│  2. Compares with verified data         │
+│  3. Flags changes for review            │
+│  4. Sends email alerts                  │
+│  5. Creates PR or auto-publishes        │
 └─────────────────────────────────────────┘
                     ↓
 ┌─────────────────────────────────────────┐
@@ -31,6 +32,8 @@ This is a **frontend-only** Next.js application with automated daily pricing upd
 │  - Review & approval workflow           │
 └─────────────────────────────────────────┘
 ```
+
+**Note**: The scraper uses verified data as the source of truth, with llm-prices.com API for change detection (due to inconsistent units in the API).
 
 ## Features
 

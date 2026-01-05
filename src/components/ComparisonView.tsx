@@ -1,10 +1,11 @@
 'use client';
 
-import { ModelPricing, ComparisonResult } from '@/lib/pricing';
+import { ComparisonResult } from '@/lib/pricing';
+import type { FlatModel } from '@/data/types';
 import { useState } from 'react';
 
 interface ComparisonViewProps {
-  data: ComparisonResult | { all_models: ModelPricing[] };
+  data: ComparisonResult | { all_models: FlatModel[] };
   isSearch: boolean;
   query: string;
 }
@@ -90,7 +91,7 @@ export function ComparisonView({ data, isSearch, query }: ComparisonViewProps) {
 function SmartCard({ title, subtitle, model, accent }: {
   title: string;
   subtitle: string;
-  model: ModelPricing;
+  model: FlatModel;
   accent: string;
 }) {
   const totalCost = model.input_per_million + model.output_per_million;
@@ -111,10 +112,10 @@ function SmartCard({ title, subtitle, model, accent }: {
   );
 }
 
-function PricingTable({ models }: { models: ModelPricing[] }) {
-  const [selectedModel, setSelectedModel] = useState<ModelPricing | null>(null);
+function PricingTable({ models }: { models: FlatModel[] }) {
+  const [selectedModel, setSelectedModel] = useState<FlatModel | null>(null);
 
-  const handleRowClick = (model: ModelPricing) => {
+  const handleRowClick = (model: FlatModel) => {
     // Show alternatives in a simple alert for now
     // In production, this would show a modal
     alert(

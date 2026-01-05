@@ -13,6 +13,15 @@ interface EmailPayload {
   html: string;
 }
 
+export function generateEmailSubject(changes: PriceChange[]): string {
+  if (changes.length === 0) {
+    return '✅ LLM Pricing Check - No Changes Today';
+  }
+
+  const highConfidence = changes.filter(c => c.confidence > 0.9).length;
+  return `🚨 LLM Pricing Update: ${changes.length} change${changes.length > 1 ? 's' : ''} (${highConfidence} high-confidence)`;
+}
+
 export function generateEmailHTML(changes: PriceChange[], timestamp: string): string {
   const hasChanges = changes.length > 0;
   const highConfidence = changes.filter(c => c.confidence > 0.9).length;
@@ -209,7 +218,7 @@ export async function sendDailyReport(
 }
 
 // If run directly for testing
-if (require.main === module) {
+if (import.meta.url === `file://${process.argv[1]}`) {
   // Test with sample data
   const sampleChanges: PriceChange[] = [
     {

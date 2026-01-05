@@ -192,15 +192,28 @@ llm-cost-compass/
 
 **Alternative:** Vercel Cron + Edge Functions (paid)
 
-### 3. Mock Scraping vs Real Scraping
+### 3. Scraping Strategy
 
-**Decision:** Mock data in initial scraper
+**Decision:** Hybrid approach - Verified data + API monitoring
 **Why:**
-- Works immediately
-- Easy to test
-- Can be replaced later
+- llm-prices.com API has inconsistent units (some per 1K, some per million)
+- Verified mock data ensures accuracy
+- API used for change detection only
 
-**Upgrade path:** Add Playwright/Puppeteer or LLM extraction
+**Architecture:**
+```
+1. Fetch from llm-prices.com API
+2. Compare with verified pricing data
+3. Flag significant changes for review
+4. Always use verified data for actual values
+5. High confidence (>90%) = auto-publish
+6. Lower confidence = create PR for review
+```
+
+**Upgrade path:**
+- Add Playwright/Puppeteer for direct provider scraping
+- Implement LLM-assisted extraction for dynamic sites
+- Add multiple data sources for redundancy
 
 ### 4. Email via Resend vs SendGrid
 

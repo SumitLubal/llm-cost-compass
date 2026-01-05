@@ -26,8 +26,8 @@ export interface FlatModel extends ModelPricing {
   provider: string;
   provider_id: string;
   model: string;
-  score?: number;
-  total_cost?: number;
+  score: number;
+  total_cost: number;
 }
 
 export interface PriceChange {

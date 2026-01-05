@@ -1,4 +1,4 @@
-import { comparePricing, searchModels } from '@/lib/pricing-json';
+import { comparePricing, searchModels } from '@/lib/pricing';
 import { ComparisonView } from '@/components/ComparisonView';
 import { SearchBar } from '@/components/SearchBar';
 import { SubmitButton } from '@/components/SubmitButton';

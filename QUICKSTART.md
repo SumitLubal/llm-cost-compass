@@ -35,6 +35,12 @@ netlify deploy --prod
 2. Add secrets: `RESEND_API_KEY`, `ALERT_EMAIL`
 3. Done! Updates run daily at 9 AM UTC
 
+**What happens:**
+- Fetches pricing from llm-prices.com API
+- Compares with verified data
+- Sends email if changes detected
+- Auto-publishes if confidence > 90%
+
 ### Manual
 ```bash
 npm run daily:update your@email.com

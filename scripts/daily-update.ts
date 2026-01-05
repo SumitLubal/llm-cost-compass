@@ -121,15 +121,15 @@ export async function runDailyUpdate(
 }
 
 // CLI entry point
-if (require.main === module) {
+if (import.meta.url === `file://${process.argv[1]}`) {
   const email = process.env.ALERT_EMAIL || process.argv[2];
   const autoPublish = process.argv.includes('--auto-publish');
 
   if (!email) {
     console.error('❌ Error: No email address provided');
     console.error('\nUsage:');
-    console.error('  npm run daily:update -- your@email.com');
-    console.error('  npm run daily:update -- your@email.com --auto-publish');
+    console.error('  npm run daily:update your@email.com');
+    console.error('  npm run daily:update your@email.com --auto-publish');
     console.error('\nOr set ALERT_EMAIL environment variable');
     process.exit(1);
   }

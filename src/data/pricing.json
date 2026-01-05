@@ -6,27 +6,27 @@
       "models": [
         {
           "name": "GPT-4o",
-          "input_per_million": 5.00,
-          "output_per_million": 15.00,
+          "input_per_million": 5,
+          "output_per_million": 15,
           "context_window": 128000,
           "free_tier": null,
-          "last_updated": "2026-01-04T00:00:00Z"
+          "last_updated": "2026-01-05T06:50:37.234Z"
         },
         {
           "name": "GPT-4 Turbo",
-          "input_per_million": 10.00,
-          "output_per_million": 30.00,
+          "input_per_million": 10,
+          "output_per_million": 30,
           "context_window": 128000,
           "free_tier": null,
-          "last_updated": "2026-01-04T00:00:00Z"
+          "last_updated": "2026-01-05T06:50:37.234Z"
         },
         {
           "name": "GPT-3.5 Turbo",
-          "input_per_million": 0.50,
-          "output_per_million": 1.50,
+          "input_per_million": 0.5,
+          "output_per_million": 1.5,
           "context_window": 16385,
           "free_tier": "Free tier: $5 credit for new users",
-          "last_updated": "2026-01-04T00:00:00Z"
+          "last_updated": "2026-01-05T06:50:37.234Z"
         }
       ]
     },
@@ -36,19 +36,19 @@
       "models": [
         {
           "name": "Claude 3 Opus",
-          "input_per_million": 15.00,
-          "output_per_million": 75.00,
+          "input_per_million": 15,
+          "output_per_million": 75,
           "context_window": 200000,
           "free_tier": null,
-          "last_updated": "2026-01-04T00:00:00Z"
+          "last_updated": "2026-01-05T06:50:37.234Z"
         },
         {
           "name": "Claude 3 Sonnet",
-          "input_per_million": 3.00,
-          "output_per_million": 15.00,
+          "input_per_million": 3,
+          "output_per_million": 15,
           "context_window": 200000,
           "free_tier": null,
-          "last_updated": "2026-01-04T00:00:00Z"
+          "last_updated": "2026-01-05T06:50:37.234Z"
         },
         {
           "name": "Claude 3 Haiku",
@@ -56,7 +56,7 @@
           "output_per_million": 1.25,
           "context_window": 200000,
           "free_tier": "1M tokens/month free tier",
-          "last_updated": "2026-01-04T00:00:00Z"
+          "last_updated": "2026-01-05T06:50:37.234Z"
         }
       ]
     },
@@ -66,19 +66,19 @@
       "models": [
         {
           "name": "Gemini 1.5 Pro",
-          "input_per_million": 5.00,
-          "output_per_million": 15.00,
+          "input_per_million": 5,
+          "output_per_million": 15,
           "context_window": 2000000,
           "free_tier": "Free tier: 1M tokens/month",
-          "last_updated": "2026-01-04T00:00:00Z"
+          "last_updated": "2026-01-05T06:50:37.234Z"
         },
         {
           "name": "Gemini Pro",
-          "input_per_million": 0.50,
-          "output_per_million": 1.50,
+          "input_per_million": 0.5,
+          "output_per_million": 1.5,
           "context_window": 32000,
           "free_tier": "Free tier: 1M tokens/month",
-          "last_updated": "2026-01-04T00:00:00Z"
+          "last_updated": "2026-01-05T06:50:37.234Z"
         }
       ]
     },
@@ -88,19 +88,19 @@
       "models": [
         {
           "name": "Llama 3 70B",
-          "input_per_million": 2.50,
-          "output_per_million": 10.00,
+          "input_per_million": 2.5,
+          "output_per_million": 10,
           "context_window": 8192,
           "free_tier": null,
-          "last_updated": "2026-01-04T00:00:00Z"
+          "last_updated": "2026-01-05T06:50:37.234Z"
         },
         {
           "name": "Llama 3 8B",
-          "input_per_million": 0.30,
-          "output_per_million": 0.60,
+          "input_per_million": 0.3,
+          "output_per_million": 0.6,
           "context_window": 8192,
           "free_tier": null,
-          "last_updated": "2026-01-04T00:00:00Z"
+          "last_updated": "2026-01-05T06:50:37.234Z"
         }
       ]
     },
@@ -111,25 +111,25 @@
         {
           "name": "Mistral 7B",
           "input_per_million": 0.15,
-          "output_per_million": 0.30,
+          "output_per_million": 0.3,
           "context_window": 32000,
           "free_tier": null,
-          "last_updated": "2026-01-04T00:00:00Z"
+          "last_updated": "2026-01-05T06:50:37.234Z"
         },
         {
           "name": "Mixtral 8x7B",
-          "input_per_million": 0.70,
-          "output_per_million": 2.80,
+          "input_per_million": 0.7,
+          "output_per_million": 2.8,
           "context_window": 32000,
           "free_tier": null,
-          "last_updated": "2026-01-04T00:00:00Z"
+          "last_updated": "2026-01-05T06:50:37.234Z"
         }
       ]
     }
   ],
   "metadata": {
-    "last_updated": "2026-01-04T00:00:00Z",
-    "source": "manual",
+    "last_updated": "2026-01-05T06:50:37.236Z",
+    "source": "scraped",
     "total_models": 12
   }
 }

@@ -1,10 +1,10 @@
 'use client';
 
 import { useState } from 'react';
-import { ModelPricing } from '@/lib/pricing';
+import type { FlatModel } from '@/data/types';
 
 interface CostCalculatorProps {
-  models: ModelPricing[];
+  models: FlatModel[];
 }
 
 export function CostCalculator({ models }: CostCalculatorProps) {
@@ -12,7 +12,7 @@ export function CostCalculator({ models }: CostCalculatorProps) {
   const [outputTokens, setOutputTokens] = useState<number>(50000); // 50K
   const [showResults, setShowResults] = useState<boolean>(false);
 
-  const calculateCost = (model: ModelPricing) => {
+  const calculateCost = (model: FlatModel) => {
     const inputCost = (inputTokens / 1000000) * model.input_per_million;
     const outputCost = (outputTokens / 1000000) * model.output_per_million;
     return inputCost + outputCost;

@@ -159,15 +159,7 @@ export function generateEmailSubject(changes: PriceChange[]): string {
 }
 
 // If run directly
-if (require.main === module) {
-  const args = process.argv.slice(2);
-
-  if (args.length === 0) {
-    console.log('Usage: ts-node compare-pricing.ts [new-scrape-results.json]');
-    process.exit(1);
-  }
-
-  // This is for testing - in production, results come from scraper
+if (import.meta.url === `file://${process.argv[1]}`) {
   import('./scrape-providers').then(async ({ scrapeAllProviders }) => {
     const oldData = await loadExistingPricing();
     const newResults = await scrapeAllProviders();

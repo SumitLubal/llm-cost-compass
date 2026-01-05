@@ -173,29 +173,44 @@ Users can submit pricing at `yourdomain.com/submit`:
 2. The form at `/submit` will work automatically
 3. Submissions go to your `ALERT_EMAIL`
 
-## Step 7: Customizing Scraping
+## Step 7: Scraping & Data Sources
 
-The default scraper uses mock data. To scrape real prices:
+### How Scraping Works
 
-### 7.1 Update `scripts/scrape-providers.ts`
+The scraper uses a **hybrid approach**:
+
+1. **Primary Source**: Verified mock data (always accurate)
+2. **Monitoring**: llm-prices.com API for change detection
+3. **Fallback**: If API fails, uses verified data
+
+### Why This Approach?
+
+The llm-prices.com API has inconsistent units:
+- Some models: per 1,000 tokens
+- Others: per 1 million tokens
+
+This makes direct use risky. Instead:
+- ✅ Use verified data for actual pricing
+- ✅ Use API to detect potential changes
+- ✅ Flag discrepancies for manual review
+
+### 7.1 Customizing Scraping
+
+To add real scraping:
+
+#### Option A: Use Playwright for dynamic sites
 
 ```typescript
-// Example: Using Playwright for dynamic sites
 import { chromium } from 'playwright';
 
 async function scrapeOpenAI() {
   const browser = await chromium.launch();
   const page = await browser.newPage();
-
   await page.goto('https://openai.com/pricing');
 
-  // Extract pricing data
   const prices = await page.evaluate(() => {
-    // Your scraping logic here
-    return {
-      provider: 'OpenAI',
-      models: [...]
-    };
+    // Extract pricing from page
+    return { /* ... */ };
   });
 
   await browser.close();
@@ -203,18 +218,15 @@ async function scrapeOpenAI() {
 }
 ```
 
-### 7.2 Or Use LLM-Assisted Extraction
+#### Option B: LLM-assisted extraction
 
 ```typescript
 import OpenAI from 'openai';
 
-async function extractPricingFromURL(url: string) {
+async function extractPricing(url: string) {
   const openai = new OpenAI();
-
-  // Fetch page content
   const content = await fetch(url).then(r => r.text());
 
-  // Ask LLM to extract pricing
   const response = await openai.chat.completions.create({
     model: 'gpt-4-turbo',
     messages: [{
@@ -226,6 +238,10 @@ async function extractPricingFromURL(url: string) {
   return JSON.parse(response.choices[0].message.content);
 }
 ```
+
+#### Option C: Update verified data directly
+
+Edit `VERIFIED_PRICING` in `scripts/scrape-providers.ts` to update prices manually.
 
 ## Step 8: Monitoring & Maintenance
 
