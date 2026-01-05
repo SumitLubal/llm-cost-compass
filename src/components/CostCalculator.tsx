@@ -158,9 +158,9 @@ export function CostCalculator({ models }: CostCalculatorProps) {
                   <tr>
                     <th className="px-4 py-2 text-left">Provider</th>
                     <th className="px-4 py-2 text-left">Model</th>
-                    <th className="px-4 py-2 text-right">Input</th>
-                    <th className="px-4 py-2 text-right">Output</th>
-                    <th className="px-4 py-2 text-right font-bold">Total</th>
+                    <th className="px-4 py-2 text-right">Input ($)</th>
+                    <th className="px-4 py-2 text-right">Output ($)</th>
+                    <th className="px-4 py-2 text-right font-bold">Total ($)</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-200 dark:divide-gray-700">

@@ -133,9 +133,9 @@ function PricingTable({ models }: { models: FlatModel[] }) {
             <tr>
               <th className="px-6 py-3 text-left font-semibold">Provider</th>
               <th className="px-6 py-3 text-left font-semibold">Model</th>
-              <th className="px-6 py-3 text-right font-semibold">Input/M</th>
-              <th className="px-6 py-3 text-right font-semibold">Output/M</th>
-              <th className="px-6 py-3 text-right font-semibold">Total</th>
+              <th className="px-6 py-3 text-right font-semibold">Input ($/M)</th>
+              <th className="px-6 py-3 text-right font-semibold">Output ($/M)</th>
+              <th className="px-6 py-3 text-right font-semibold">Total ($)</th>
               <th className="px-6 py-3 text-right font-semibold">Score</th>
             </tr>
           </thead>
