@@ -1,4 +1,4 @@
-import { comparePricing, searchModels } from '@/lib/pricing';
+import { comparePricing, searchModels } from '@/lib/pricing-json';
 import { ComparisonView } from '@/components/ComparisonView';
 import { SearchBar } from '@/components/SearchBar';
 import { SubmitButton } from '@/components/SubmitButton';
@@ -14,45 +14,14 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ q
   let isSearch = false;
   let allModels: any[] = [];
 
-  try {
-    if (query) {
-      const results = searchModels(query);
-      data = { all_models: results };
-      allModels = results;
-      isSearch = true;
-    } else {
-      data = comparePricing();
-      allModels = data.all_models;
-    }
-  } catch (error) {
-    // Database might not be seeded yet
-    return (
-      <div className="min-h-screen bg-gradient-to-br from-purple-50 to-blue-50 dark:from-gray-900 dark:to-gray-950 py-12 px-4">
-        <div className="max-w-6xl mx-auto">
-          <header className="text-center mb-12">
-            <h1 className="text-5xl font-bold text-gray-900 dark:text-gray-100 mb-2">
-              🎯 LLM PriceCheck
-            </h1>
-            <p className="text-gray-600 dark:text-gray-400 text-lg">
-              Find the best LLM pricing instantly
-            </p>
-          </header>
-
-          <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-8 text-center border border-gray-200 dark:border-gray-700">
-            <h2 className="text-2xl font-semibold mb-4 text-gray-900 dark:text-gray-100">Database Not Seeded</h2>
-            <p className="text-gray-600 dark:text-gray-400 mb-6">
-              Run <code className="bg-gray-100 dark:bg-gray-700 px-2 py-1 rounded">npm run db:seed</code> to populate initial data
-            </p>
-            <a
-              href="/submit"
-              className="inline-block bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition"
-            >
-              Or Submit Pricing Manually
-            </a>
-          </div>
-        </div>
-      </div>
-    );
+  if (query) {
+    const results = searchModels(query);
+    data = { all_models: results };
+    allModels = results;
+    isSearch = true;
+  } else {
+    data = comparePricing();
+    allModels = data.all_models;
   }
 
   return (

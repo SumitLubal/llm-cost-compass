@@ -8,16 +8,15 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "db:seed": "node scripts/seed.js",
-    "db:scrape": "node scripts/scrape.js",
-    "db:reset": "rm -f llm-pricing.db && npm run db:seed",
-    "test": "node scripts/test.js"
+    "daily:update": "tsx scripts/daily-update.ts",
+    "daily:update:auto": "tsx scripts/daily-update.ts --auto-publish",
+    "scrape": "tsx scripts/scrape-providers.ts",
+    "compare": "tsx scripts/compare-pricing.ts",
+    "email:test": "tsx scripts/send-email.ts",
+    "db:remove": "rm -f llm-pricing.db || true"
   },
   "dependencies": {
-    "better-sqlite3": "^12.5.0",
-    "cheerio": "^1.1.2",
     "next": "16.1.1",
-    "openai": "^6.15.0",
     "react": "19.2.3",
     "react-dom": "19.2.3",
     "resend": "^6.6.0"
@@ -30,6 +29,7 @@
     "eslint": "^9",
     "eslint-config-next": "16.1.1",
     "tailwindcss": "^4",
+    "tsx": "^4.21.0",
     "typescript": "^5"
   }
 }

@@ -1,267 +1,293 @@
-# 🚀 Beta Setup Guide for LLM PriceCheck
+# Setup Guide - LLM PriceCheck
 
-## What You Have Built
+This guide will help you get LLM PriceCheck running with automated daily updates.
 
-A complete LLM price comparison app with:
-- ✅ 5 top providers pre-loaded (OpenAI, Anthropic, Google, Meta, Mistral)
-- ✅ Smart comparison engine (always shows better/free alternatives)
-- ✅ User submission form
-- ✅ LLM-assisted pricing extraction
-- ✅ Automated daily updates
-- ✅ Email alerts for price changes
-- ✅ Search functionality
+## Step 1: Local Development Setup
 
-## Quick Start (5 minutes)
-
-### Step 1: Environment Setup
+### 1.1 Install Dependencies
 ```bash
-cd llm-cost-compass
-cp .env.example .env.local
+npm install
 ```
 
-Now edit `.env.local` and add your keys:
-
-```bash
-# Required for extraction
-EXTRACTION_API_KEY=sk-...  # Your OpenAI API key (or any compatible API)
-
-# Optional but recommended
-RESEND_API_KEY=your_resend_key  # Get from resend.com (free tier)
-ALERT_EMAIL=your@email.com
-```
-
-### Step 2: Seed the Database
-```bash
-npm run db:seed
-```
-
-You should see:
-```
-🌱 Seeding database...
-
-📦 OpenAI (ID: 1)
-  ✓ GPT-4o: $5.00/$15.00 per 1M
-  ✓ GPT-4 Turbo: $10.00/$30.00 per 1M
-  ✓ GPT-3.5 Turbo: $0.50/$1.50 per 1M
-
-📦 Anthropic (ID: 2)
-  ✓ Claude 3 Opus: $15.00/$75.00 per 1M
-  ...
-
-✅ Seeding complete! Added 12 models from 5 providers.
-```
-
-### Step 3: Run Development Server
+### 1.2 Start Development Server
 ```bash
 npm run dev
 ```
 
-Visit: http://localhost:3000
+Visit `http://localhost:3000` to see the app.
 
-### Step 4: Test the Features
+**Note:** The app will work immediately with the pre-loaded pricing data in `src/data/pricing.json`.
 
-**1. View Comparison Table**
-- You'll see "Best Overall", "Best Free", "Best Value", "Hidden Gem"
-- Click any model to see alternatives (shows alert for now)
+## Step 2: Set Up Email Alerts (Optional but Recommended)
 
-**2. Search**
-- Type "OpenAI" or "Claude" in search bar
-- Results filter instantly
+### 2.1 Get a Resend API Key
+1. Sign up at [resend.com](https://resend.com)
+2. Go to API Keys section
+3. Create a new API key
+4. Copy the key (starts with `re_`)
 
-**3. Submit Pricing**
-- Click "Submit Pricing" button
-- Fill out form and submit
-- Check your database: `sqlite3 llm-pricing.db "SELECT * FROM submissions"`
+### 2.2 Configure Environment Variables
 
-## Advanced Features
+Create a `.env.local` file in the project root:
 
-### Manual Price Update
 ```bash
-npm run db:scrape
+# .env.local
+RESEND_API_KEY="re_1234567890abcdef..."
+ALERT_EMAIL="your-email@example.com"
 ```
 
-This will:
-1. Fetch pricing from provider websites
-2. Use your LLM API to extract structured data
-3. Auto-publish if confidence > 85%
-4. Send email if prices changed
-
-### Configure Different LLM API
-Edit `.env.local`:
-
+### 2.3 Test Email Sending
 ```bash
-# Use Together AI (cheaper)
-EXTRACTION_BASE_URL=https://api.together.xyz/v1
-EXTRACTION_MODEL=meta-llama/Meta-Llama-3.1-70B-Instruct-Turbo
-
-# Use Azure
-EXTRACTION_BASE_URL=https://your-resource.openai.azure.com
-EXTRACTION_MODEL=gpt-4
+# Test with sample changes
+npm run email:test your-email@example.com
 ```
 
-### Check Database
+## Step 3: Set Up Automated Daily Updates
+
+### Option A: GitHub Actions (Recommended - Zero Maintenance)
+
+#### 3.1 Fork the Repository
+1. Go to GitHub and fork this repository
+2. Clone your fork locally
+
+#### 3.2 Add GitHub Secrets
+1. Go to your repository on GitHub
+2. Settings → Secrets and variables → Actions
+3. Add these secrets:
+
+| Secret | Description | Example |
+|--------|-------------|---------|
+| `RESEND_API_KEY` | Your Resend API key | `re_123456...` |
+| `ALERT_EMAIL` | Your email for alerts | `you@example.com` |
+
+#### 3.3 Enable GitHub Actions
+1. Go to Actions tab
+2. Click "I understand my workflows"
+3. The daily job will run automatically at 9 AM UTC
+
+#### 3.4 Manual Trigger
+You can also trigger it manually:
+1. Go to Actions → Daily Pricing Update
+2. Click "Run workflow"
+3. Choose auto-publish option
+
+### Option B: Run Manually
+
 ```bash
-# View all pricing
-sqlite3 llm-pricing.db "SELECT * FROM pricing"
+# Just scrape and compare (no email)
+npm run scrape
 
-# View submissions
-sqlite3 llm-pricing.db "SELECT * FROM submissions"
+# Full update with email
+npm run daily:update your@email.com
 
-# View providers
-sqlite3 llm-pricing.db "SELECT * FROM providers"
+# Auto-publish high-confidence changes
+npm run daily:update your@email.com --auto-publish
 ```
 
-## Deployment to Vercel
+## Step 4: Deploy to Production
 
-### Option 1: GitHub + Vercel (Recommended)
+### Option A: Vercel (Recommended)
+
 ```bash
-# 1. Create GitHub repo
-git init
-git add .
-git commit -m "Initial commit"
-git push origin main
-
-# 2. Go to vercel.com
-# 3. Import GitHub repo
-# 4. Add environment variables in Vercel dashboard
-# 5. Deploy
-```
-
-### Option 2: Vercel CLI
-```bash
+# 1. Install Vercel CLI
 npm i -g vercel
-vercel
+
+# 2. Login
+vercel login
+
+# 3. Deploy
+vercel --prod
+
+# 4. Add environment variables (if using email)
+vercel env add RESEND_API_KEY
+vercel env add ALERT_EMAIL
 ```
 
-### Environment Variables on Vercel
-Add these in Vercel dashboard:
-- `EXTRACTION_API_KEY` (required)
-- `EXTRACTION_BASE_URL` (optional)
-- `EXTRACTION_MODEL` (optional)
-- `RESEND_API_KEY` (optional)
-- `ALERT_EMAIL` (optional)
-- `ADMIN_SECRET` (optional, for manual triggers)
+### Option B: Netlify
 
-### Enable Daily Updates
-Vercel will automatically run `/api/update` daily at 2 AM UTC (configured in `vercel.json`).
-
-## Testing the Full Pipeline
-
-### 1. Test User Submission
-1. Go to http://localhost:3000/submit
-2. Fill form:
-   - Provider: "TestAI"
-   - Website: "https://example.com/pricing"
-   - Model: "Test Model"
-   - Input: 2.50
-   - Output: 7.50
-3. Submit
-4. Check database: `sqlite3 llm-pricing.db "SELECT * FROM submissions"`
-
-### 2. Test LLM Extraction (requires API key)
 ```bash
-# Edit scripts/test-extract.js first with a real URL
-npm run db:scrape
+# 1. Install Netlify CLI
+npm i -g netlify-cli
+
+# 2. Login
+netlify login
+
+# 3. Deploy
+netlify deploy --prod
 ```
 
-### 3. Test Email Alerts
-If you configured Resend:
-- Price changes will trigger emails
-- New submissions with high confidence trigger emails
+### Option C: Push to GitHub + Vercel Auto-Deploy
 
-## Troubleshooting
+1. Push your code to GitHub
+2. Connect repository to Vercel
+3. Vercel will auto-deploy on every push
 
-### "Database not seeded"
+## Step 5: Understanding the Workflow
+
+### Daily Update Flow
+
+```
+9 AM UTC (GitHub Actions)
+    ↓
+Scrape providers for pricing
+    ↓
+Compare with existing data
+    ↓
+Changes detected?
+    ├─ YES → Send email with diff
+    │         ├─ Auto-publish if confidence > 90%
+    │         └─ OR create PR for review
+    └─ NO → Skip (no action needed)
+```
+
+### Email You'll Receive
+
+```
+Subject: 🚨 LLM Pricing Update: 3 changes (2 high-confidence)
+
+📊 LLM PriceCheck Daily Report
+
+Found 3 pricing changes across providers (2 high-confidence).
+
+┌─────────┬──────────┬────────┬───────┬───────┬────────┬──────┐
+│ Provider│ Model    │ Type   │ Old   │ New   │ Change │ Conf │
+├─────────┼──────────┼────────┼───────┼───────┼────────┼──────┤
+│ OpenAI  │ GPT-4o   │ Input  │ $5.00 │ $4.50 │ ↓ 10%  │ 95%  │
+│ Google  │ Gemini...│ Output │ $1.50 │ $1.25 │ ↓ 17%  │ 90%  │
+│ Anthropic│ Claude...│ Input │ $15.00│ $14.50│ ↓ 3%   │ 75%  │
+└─────────┴──────────┴────────┴───────┴───────┴────────┴──────┘
+
+[Review on GitHub] [View Live Site]
+```
+
+## Step 6: User Submissions
+
+Users can submit pricing at `yourdomain.com/submit`:
+- Form collects provider, model, pricing info
+- Sends email to you
+- You manually verify and update
+
+### To Enable User Submissions
+
+1. Ensure `RESEND_API_KEY` is set
+2. The form at `/submit` will work automatically
+3. Submissions go to your `ALERT_EMAIL`
+
+## Step 7: Customizing Scraping
+
+The default scraper uses mock data. To scrape real prices:
+
+### 7.1 Update `scripts/scrape-providers.ts`
+
+```typescript
+// Example: Using Playwright for dynamic sites
+import { chromium } from 'playwright';
+
+async function scrapeOpenAI() {
+  const browser = await chromium.launch();
+  const page = await browser.newPage();
+
+  await page.goto('https://openai.com/pricing');
+
+  // Extract pricing data
+  const prices = await page.evaluate(() => {
+    // Your scraping logic here
+    return {
+      provider: 'OpenAI',
+      models: [...]
+    };
+  });
+
+  await browser.close();
+  return prices;
+}
+```
+
+### 7.2 Or Use LLM-Assisted Extraction
+
+```typescript
+import OpenAI from 'openai';
+
+async function extractPricingFromURL(url: string) {
+  const openai = new OpenAI();
+
+  // Fetch page content
+  const content = await fetch(url).then(r => r.text());
+
+  // Ask LLM to extract pricing
+  const response = await openai.chat.completions.create({
+    model: 'gpt-4-turbo',
+    messages: [{
+      role: 'user',
+      content: `Extract pricing from this HTML: ${content}`
+    }]
+  });
+
+  return JSON.parse(response.choices[0].message.content);
+}
+```
+
+## Step 8: Monitoring & Maintenance
+
+### Check Daily Updates
+1. GitHub Actions → Daily Pricing Update
+2. Look for green checkmarks
+3. Review any PRs created
+
+### Troubleshooting
+
+**No emails received?**
 ```bash
-npm run db:reset
+# Check if API key is set
+echo $RESEND_API_KEY
+
+# Test email manually
+npm run email:test your@email.com
 ```
 
-### "EXTRACTION_API_KEY not set"
-- Create `.env.local` file
-- Add your API key
-- Restart dev server
+**Scraping failing?**
+- Some sites use JavaScript rendering
+- Update scraper to use Playwright/Puppeteer
+- Or use LLM-assisted extraction
 
-### Extraction fails
-- Check your API key is valid
-- Try a different model
-- Check if URL is accessible
-- Lower confidence threshold in `src/lib/extractor.ts`
+**Data not updating?**
+- Check GitHub Actions logs
+- Verify cron schedule is correct
+- Manual trigger to test
 
-### Email not sending
-- Verify Resend API key
-- Check email in `ALERT_EMAIL`
-- Check Resend dashboard for errors
+## Step 9: Scaling Up
 
-## Project Structure
+### Add More Providers
 
-```
-llm-cost-compass/
-├── src/
-│   ├── app/
-│   │   ├── page.tsx              # Main comparison page
-│   │   ├── submit/               # Submission page
-│   │   └── api/                  # API endpoints
-│   ├── components/
-│   │   ├── ComparisonView.tsx    # Smart comparison UI
-│   │   ├── SearchBar.tsx         # Search functionality
-│   │   ├── SubmitButton.tsx      # Submit CTA
-│   │   └── SubmitForm.tsx        # Submission form
-│   ├── lib/
-│   │   ├── db.ts                 # SQLite setup
-│   │   ├── pricing.ts            # Comparison logic
-│   │   ├── extractor.ts          # LLM extraction
-│   │   └── scrape.ts             # Scraping pipeline
-│   └── app/
-│       └── globals.css           # Styling
-├── scripts/
-│   ├── seed.js                   # Initial data
-│   └── scrape.js                 # Manual scrape
-├── .env.example                  # Template
-├── vercel.json                   # Cron config
-└── package.json                  # Dependencies
+1. Add to `src/data/pricing.json`
+2. Update scraper in `scripts/scrape-providers.ts`
+3. Daily job will handle the rest
+
+### Increase Update Frequency
+
+Edit `.github/workflows/daily-pricing-update.yml`:
+```yaml
+schedule:
+  - cron: '0 */6 * * *'  # Every 6 hours
 ```
 
-## Next Steps for Beta
+### Add More Email Recipients
 
-1. ✅ Test all features locally
-2. ✅ Deploy to Vercel
-3. ✅ Add your API keys to Vercel
-4. ✅ Run manual scrape to verify extraction
-5. ✅ Share with Sumeet for review
-6. ✅ Gather feedback and iterate
+Modify `scripts/send-email.ts` to send to multiple addresses.
 
-## Features to Add Later
+## Summary
 
-- [ ] Web monitoring for new providers
-- [ ] Historical price trends chart
-- [ ] Cost calculator for specific tasks
-- [ ] Bulk CSV upload
-- [ ] API access for developers
-- [ ] Slack/Discord webhooks
-- [ ] 100+ providers
+✅ **Done!** Your LLM PriceCheck is now:
+- Running locally for development
+- Deployed to production (if you deployed)
+- Updating daily via GitHub Actions
+- Sending email alerts
+- Accepting user submissions
 
-## Questions?
+**Next Steps:**
+- Test the search functionality
+- Try the cost calculator
+- Submit test pricing data
+- Verify dark mode works
 
-**Where do I get API keys?**
-- OpenAI: https://platform.openai.com/api-keys
-- Together: https://api.together.xyz/settings/api-keys
-- Resend: https://resend.com/api-keys
-
-**How do I add more providers?**
-- Submit via web form
-- Or add manually to database
-- Or update seed.js and run `npm run db:reset`
-
-**How accurate is the extraction?**
-- ~90% accuracy with GPT-4
-- Confidence score shows reliability
-- Always reviews low-confidence extractions
-
-**What if pricing changes?**
-- Daily updates catch changes
-- Email alerts notify you
-- History table tracks trends
-
----
-
-**Ready to launch?** Run through the Quick Start steps and let me know what you think! 🚀
+**Questions?** Check `README.md` or open an issue!

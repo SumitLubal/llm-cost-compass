@@ -1,158 +1,262 @@
-# LLM PriceCheck 💎
+# LLM PriceCheck 🎯
 
-**Smart LLM pricing comparison that always shows you better alternatives.**
+A smart LLM pricing comparison tool that helps you find the best AI model prices instantly.
+
+## Architecture
+
+This is a **frontend-only** Next.js application with automated daily pricing updates.
+
+### How It Works
+
+```
+┌─────────────────────────────────────────┐
+│  Daily GitHub Action (Cron)             │
+│  - Scrapes pricing from providers       │
+│  - Compares with existing data          │
+│  - Sends email alerts                   │
+│  - Creates PR or auto-publishes         │
+└─────────────────────────────────────────┘
+                    ↓
+┌─────────────────────────────────────────┐
+│  Frontend (Vercel/Netlify)              │
+│  - Reads pricing.json                   │
+│  - Client-side search/filter            │
+│  - Cost calculator                      │
+│  - Theme toggle (light/dark)            │
+└─────────────────────────────────────────┘
+                    ↓
+┌─────────────────────────────────────────┐
+│  Email Alerts (Resend)                  │
+│  - Daily changes notification           │
+│  - Review & approval workflow           │
+└─────────────────────────────────────────┘
+```
 
 ## Features
 
-✅ **Always Show Better/Free Options** - Never overpay again
-✅ **Auto-Updated Pricing** - Daily scraping with LLM extraction
-✅ **Smart Comparisons** - Find hidden gems and best value
-✅ **User Submissions** - Community-driven accuracy
-✅ **Email Alerts** - Get notified of price changes
-✅ **No Hiding Providers** - All pricing visible, always
+- ✅ **Zero Backend** - No database server needed
+- ✅ **Daily Updates** - Automated pricing scraping
+- ✅ **Email Alerts** - Get notified of price changes
+- ✅ **Smart Comparison** - Best value, best free, hidden gems
+- ✅ **Cost Calculator** - Estimate your monthly bill
+- ✅ **Dark Mode** - System-based theme switching
+- ✅ **Search** - Find models by provider or name
 
-## Quick Start
+## Setup
 
 ### 1. Install Dependencies
+
 ```bash
 npm install
 ```
 
-### 2. Setup Environment
-```bash
-cp .env.example .env.local
-# Edit .env.local with your API keys
-```
+### 2. Run Development Server
 
-**Required:**
-- `EXTRACTION_API_KEY` - Your OpenAI or compatible API key
-- `RESEND_API_KEY` - For email alerts (optional for beta)
-- `ALERT_EMAIL` - Your email for notifications
-
-### 3. Seed Database
-```bash
-npm run db:seed
-```
-
-This populates the initial 5 providers:
-- OpenAI (GPT-4o, GPT-4 Turbo, GPT-3.5)
-- Anthropic (Claude 3 Opus, Sonnet, Haiku)
-- Google (Gemini 1.5 Pro, Gemini Pro)
-- Meta (Llama 3 70B, 8B)
-- Mistral (Mixtral 8x7B, Mistral 7B)
-
-### 4. Run Development Server
 ```bash
 npm run dev
 ```
 
-Visit: http://localhost:3000
+Visit `http://localhost:3000`
 
-## Usage
+### 3. Daily Updates (Optional)
 
-### Daily Updates
-```bash
-# Run manually
-npm run db:scrape
+For automated daily updates with email alerts:
 
-# Or setup cron job (Vercel handles this automatically)
-```
+#### Option A: GitHub Actions (Recommended)
 
-### Add New Providers
-1. Submit via web form at `/submit`
-2. Or manually add to database
-3. System will scrape and auto-publish if confidence > 85%
+1. **Fork this repository**
+2. **Add secrets to GitHub:**
+   - `RESEND_API_KEY` - Your Resend API key
+   - `ALERT_EMAIL` - Your email address
+3. **Enable GitHub Actions**
+4. **Daily updates run automatically at 9 AM UTC**
 
-## Architecture
-
-```
-┌─────────────────────────────────────┐
-│  Next.js Frontend (App Router)      │
-│  - Comparison Table                 │
-│  - Smart Suggestions                │
-│  - Submission Form                  │
-└─────────────────────────────────────┘
-         ↓
-┌─────────────────────────────────────┐
-│  SQLite Database                    │
-│  - providers                        │
-│  - pricing                          │
-│  - submissions                      │
-│  - price_history                    │
-└─────────────────────────────────────┘
-         ↓
-┌─────────────────────────────────────┐
-│  LLM Extraction Pipeline            │
-│  - Web scraping                     │
-│  - LLM-assisted parsing             │
-│  - Auto-publish (confidence > 0.85) │
-│  - Email alerts                     │
-└─────────────────────────────────────┘
-```
-
-## API Configuration
-
-The system uses any OpenAI-compatible API for extraction:
+#### Option B: Manual Run
 
 ```bash
-# OpenAI
-EXTRACTION_BASE_URL=https://api.openai.com/v1
-EXTRACTION_MODEL=gpt-4-turbo
+# Scrape and compare (no email)
+npm run scrape
 
-# Azure OpenAI
-EXTRACTION_BASE_URL=https://your-resource.openai.azure.com
-EXTRACTION_MODEL=gpt-4
+# Run full daily update with email
+npm run daily:update your@email.com
 
-# Together AI
-EXTRACTION_BASE_URL=https://api.together.xyz/v1
-EXTRACTION_MODEL=meta-llama/Meta-Llama-3.1-70B-Instruct-Turbo
+# Auto-publish if confidence > 90%
+npm run daily:update your@email.com --auto-publish
 ```
+
+## Project Structure
+
+```
+src/
+├── app/                    # Next.js App Router
+│   ├── page.tsx           # Main page
+│   ├── layout.tsx         # Root layout with ThemeProvider
+│   └── submit/            # Submission page
+├── components/            # React components
+│   ├── ThemeProvider.tsx  # Theme context
+│   ├── ThemeToggle.tsx    # Theme switcher
+│   ├── SearchBar.tsx      # Search functionality
+│   ├── CostCalculator.tsx # Cost estimation
+│   ├── ComparisonView.tsx # Price comparison
+│   ├── SubmitButton.tsx   # Submit CTA
+│   └── SubmitForm.tsx     # User submission form
+├── lib/                   # Utilities
+│   └── pricing-json.ts    # JSON data access
+├── data/                  # Pricing data
+│   ├── pricing.json       # Current prices
+│   └── types.ts           # TypeScript types
+└── scripts/               # Automation scripts
+    ├── daily-update.ts    # Main update script
+    ├── scrape-providers.ts # Web scraper
+    ├── compare-pricing.ts  # Change detection
+    └── send-email.ts       # Email alerts
+.github/
+└── workflows/
+    └── daily-pricing-update.yml  # GitHub Actions
+```
+
+## Scripts
+
+| Script | Description |
+|--------|-------------|
+| `npm run dev` | Start development server |
+| `npm run build` | Build for production |
+| `npm run start` | Start production server |
+| `npm run daily:update email@domain.com` | Run daily update with email |
+| `npm run daily:update:auto` | Auto-publish high-confidence changes |
+| `npm run scrape` | Scrape current pricing |
+| `npm run compare` | Compare with existing data |
+| `npm run email:test email@domain.com` | Test email sending |
+
+## Data Format
+
+Pricing data is stored in `src/data/pricing.json`:
+
+```json
+{
+  "providers": [
+    {
+      "id": "openai",
+      "name": "OpenAI",
+      "models": [
+        {
+          "name": "GPT-4o",
+          "input_per_million": 5.00,
+          "output_per_million": 15.00,
+          "context_window": 128000,
+          "free_tier": null,
+          "last_updated": "2026-01-04T00:00:00Z"
+        }
+      ]
+    }
+  ],
+  "metadata": {
+    "last_updated": "2026-01-04T00:00:00Z",
+    "source": "scraped",
+    "total_models": 12
+  }
+}
+```
+
+## Email Alerts
+
+When pricing changes are detected, you'll receive an email with:
+
+- Summary of changes
+- Table showing old vs new prices
+- Confidence scores
+- Links to review and approve
+
+### Confidence Levels
+
+- **90-100%**: High confidence, auto-publish ready
+- **70-89%**: Medium confidence, review recommended
+- **<70%**: Low confidence, manual verification needed
+
+## User Submissions
+
+Users can submit pricing via `/submit` page:
+- Form collects provider, model, pricing info
+- Sends email to you for review
+- You manually verify and update
+
+## Theme System
+
+- **System Default**: Follows OS preference
+- **User Override**: Click toggle to switch
+- **Persistent**: Saved to localStorage
+- **No Flash**: Hydration-safe rendering
 
 ## Deployment
 
 ### Vercel (Recommended)
-```bash
-# 1. Push to GitHub
-git init && git add . && git commit -m "Initial commit"
-git push origin main
 
-# 2. Import to Vercel
-# 3. Add environment variables in Vercel dashboard
-# 4. Deploy
+```bash
+npm install -g vercel
+vercel
 ```
 
-### Environment Variables on Vercel:
-- `EXTRACTION_API_KEY`
-- `EXTRACTION_BASE_URL` (optional)
-- `EXTRACTION_MODEL` (optional)
-- `RESEND_API_KEY` (optional)
-- `ALERT_EMAIL` (optional)
+### Netlify
 
-## Beta Testing Checklist
+```bash
+npm install -g netlify-cli
+netlify deploy --prod
+```
 
-- [ ] Clone and install
-- [ ] Add your API key to `.env.local`
-- [ ] Run `npm run db:seed`
-- [ ] Start dev server: `npm run dev`
-- [ ] Test search functionality
-- [ ] Submit test pricing data
-- [ ] Verify comparison logic
-- [ ] Test on mobile/responsive
+## Environment Variables
 
-## Roadmap
+For email alerts:
 
-- [ ] Web monitoring for new providers
-- [ ] Historical price trends
-- [ ] Cost calculator for specific tasks
-- [ ] Bulk CSV upload for comparison
-- [ ] API access for developers
-- [ ] Slack/Discord notifications
-- [ ] More providers (100+)
+```bash
+# .env.local
+RESEND_API_KEY="re_..."
+ALERT_EMAIL="your@email.com"
+```
+
+For GitHub Actions, add these to repository secrets:
+- `RESEND_API_KEY`
+- `ALERT_EMAIL`
+
+## Cost
+
+**Monthly Cost: $0**
+
+- Frontend hosting: Free tier (Vercel/Netlify)
+- GitHub Actions: 2,000 min/month free
+- Email: Resend free tier (100 emails/day)
+- Storage: Included in GitHub repo
+
+## Troubleshooting
+
+### No data showing
+```bash
+# Check if pricing.json exists
+ls src/data/pricing.json
+
+# If not, run the update script
+npm run daily:update your@email.com
+```
+
+### Email not sending
+- Check `RESEND_API_KEY` is set
+- Verify email address format
+- Check Resend dashboard for errors
+
+### Scraping not working
+- Some providers require JavaScript rendering
+- Update `scripts/scrape-providers.ts` with actual scraping logic
+- Use Playwright/Puppeteer for dynamic sites
 
 ## Contributing
 
-Found a pricing error? Submit via the form or open an issue!
+1. Fork the repository
+2. Create a feature branch
+3. Submit a pull request
 
 ## License
 
-MIT - Built for Sumeet's beta launch
+MIT
+
+## Built For
+
+Sumeet - Beta v0.1
