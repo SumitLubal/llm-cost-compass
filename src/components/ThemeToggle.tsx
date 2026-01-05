@@ -1,15 +1,18 @@
 'use client';
 
 import { useTheme } from './ThemeProvider';
+import { useAnalytics } from '@/hooks/useAnalytics';
 
 export function ThemeToggle() {
   const { theme, setTheme, resolvedTheme } = useTheme();
+  const { trackThemeToggle } = useAnalytics();
 
   const toggleTheme = () => {
     const nextTheme = theme === 'system'
       ? (resolvedTheme === 'light' ? 'dark' : 'light')
       : (theme === 'light' ? 'dark' : 'light');
     setTheme(nextTheme);
+    trackThemeToggle(nextTheme);
   };
 
   const getIcon = () => {

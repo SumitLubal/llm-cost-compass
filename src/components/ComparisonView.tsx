@@ -3,6 +3,7 @@
 import { ComparisonResult } from '@/lib/pricing';
 import type { FlatModel } from '@/data/types';
 import { useState } from 'react';
+import { useAnalytics } from '@/hooks/useAnalytics';
 
 interface ComparisonViewProps {
   data: ComparisonResult | { all_models: FlatModel[] };
@@ -119,6 +120,7 @@ function PricingTable({ models }: { models: FlatModel[] }) {
   const [selectedModel, setSelectedModel] = useState<FlatModel | null>(null);
   const [sortField, setSortField] = useState<SortField>('score');
   const [sortDirection, setSortDirection] = useState<SortDirection>('desc');
+  const { trackSort } = useAnalytics();
 
   const handleRowClick = (model: FlatModel) => {
     alert(
@@ -129,12 +131,16 @@ function PricingTable({ models }: { models: FlatModel[] }) {
   };
 
   const handleSort = (field: SortField) => {
+    let newDirection: SortDirection;
     if (sortField === field) {
-      setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc');
+      newDirection = sortDirection === 'asc' ? 'desc' : 'asc';
+      setSortDirection(newDirection);
     } else {
       setSortField(field);
+      newDirection = 'desc';
       setSortDirection('desc');
     }
+    trackSort(field, newDirection);
   };
 
   const getSortIcon = (field: SortField) => {

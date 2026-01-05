@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { useAnalytics } from '@/hooks/useAnalytics';
 
 interface SubmissionData {
   providerName: string;
@@ -22,6 +23,7 @@ export function SubmitForm() {
   });
   const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
   const [error, setError] = useState('');
+  const { trackSubmit } = useAnalytics();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData(prev => ({
@@ -36,6 +38,9 @@ export function SubmitForm() {
     setError('');
 
     try {
+      // Track submission
+      trackSubmit(formData.providerName);
+
       // Send email via Resend
       const response = await fetch('https://api.resend.com/emails', {
         method: 'POST',

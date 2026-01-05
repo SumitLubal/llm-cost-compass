@@ -45,6 +45,7 @@ This is a **frontend-only** Next.js application with automated daily pricing upd
 - ✅ **Dark Mode** - System-based theme switching
 - ✅ **Search** - Find models by provider or name
 - ✅ **SEO Optimized** - Dynamic metadata, sitemap, structured data
+- ✅ **Google Analytics** - Track user behavior and conversions
 
 ## GitHub Actions Workflows
 
@@ -296,6 +297,74 @@ curl http://localhost:3000 | grep -i meta
 # Use: https://validator.schema.org/
 ```
 
+## Google Analytics Integration
+
+The app includes full Google Analytics 4 (GA4) tracking for user behavior analysis.
+
+### Setup
+
+1. **Create a GA4 property** at https://analytics.google.com/
+2. **Get your Measurement ID** (format: `G-XXXXXXXXXX`)
+3. **Add to environment variables**:
+
+```bash
+# .env.local
+NEXT_PUBLIC_GA_MEASUREMENT_ID=G-XXXXXXXXXX
+```
+
+4. **Or use .env.example**:
+```bash
+cp .env.example .env.local
+# Then edit .env.local with your GA Measurement ID
+```
+
+### What's Tracked
+
+The following events are automatically tracked:
+
+| Event | Category | Description |
+|-------|----------|-------------|
+| `page_view` | - | Every page view with URL |
+| `search` | Engagement | Search queries and result counts |
+| `calculate_costs` | Engagement | Calculator usage (input/output tokens) |
+| `sort_table` | Interaction | Table sorting by column |
+| `submit_pricing` | Contribution | Form submissions |
+| `toggle_theme` | Preference | Theme changes (light/dark) |
+
+### Tracking Components
+
+- **PageViewTracker**: Automatic page view tracking on route changes
+- **SearchBar**: Tracks search queries
+- **CostCalculator**: Tracks calculator usage and sorting
+- **ComparisonView**: Tracks table sorting
+- **SubmitForm**: Tracks form submissions
+- **ThemeToggle**: Tracks theme preferences
+
+### Viewing Data
+
+In your GA4 dashboard:
+- **Real-time**: See active users and events
+- **Events**: View all tracked events with parameters
+- **Conversions**: Mark important events as conversions
+- **User Journey**: Analyze how users navigate the app
+
+### Privacy Compliance
+
+- ✅ **Anonymized**: No personal data collected by default
+- ✅ **Consent-ready**: Can integrate cookie consent banner
+- ✅ **GDPR-friendly**: Data can be deleted on request
+- ✅ **No PII**: Only tracks usage patterns, not user identity
+
+### Disable Analytics
+
+To disable analytics, simply remove the environment variable:
+```bash
+# Remove or comment out
+# NEXT_PUBLIC_GA_MEASUREMENT_ID=G-XXXXXXXXXX
+```
+
+The app will gracefully skip all tracking calls without errors.
+
 ## Deployment
 
 ### Vercel (Recommended)
@@ -314,17 +383,45 @@ netlify deploy --prod
 
 ## Environment Variables
 
-For email alerts:
+### Required for Full Functionality
 
 ```bash
 # .env.local
-RESEND_API_KEY="re_..."
-ALERT_EMAIL="sumitlubal@hotmail.com"
+
+# Google Analytics 4 (Optional but recommended)
+NEXT_PUBLIC_GA_MEASUREMENT_ID=G-XXXXXXXXXX
+
+# Email alerts (Optional - for daily updates)
+NEXT_PUBLIC_RESEND_API_KEY="re_..."
+NEXT_PUBLIC_ALERT_EMAIL="your-email@example.com"
+
+# LLM Extraction (Optional - for LLM-based scraper)
+EXTRACTION_API_KEY=sk-...
+EXTRACTION_BASE_URL=https://api.openai.com/v1
+EXTRACTION_MODEL=gpt-4-turbo
 ```
 
-For GitHub Actions, add these to repository secrets:
-- `RESEND_API_KEY`
-- `ALERT_EMAIL`
+### GitHub Actions Secrets
+
+For GitHub Actions workflows, add these to repository secrets:
+- `RESEND_API_KEY` - For email alerts
+- `ALERT_EMAIL` - Where to send notifications
+- `EXTRACTION_API_KEY` - For LLM extraction workflow (optional)
+
+### Minimal Setup
+
+For basic local development without email/analytics:
+```bash
+# No .env file needed - the app works without these!
+# Just run: npm run dev
+```
+
+### Production Deployment
+
+For production, set these in your hosting provider:
+- **Vercel**: Project Settings → Environment Variables
+- **Netlify**: Site Settings → Build & Deploy → Environment
+- **Other**: Use your platform's env var management
 
 ## Cost
 

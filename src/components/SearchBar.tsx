@@ -2,15 +2,19 @@
 
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
+import { useAnalytics } from '@/hooks/useAnalytics';
 
 export function SearchBar({ initialQuery }: { initialQuery: string }) {
   const router = useRouter();
   const [query, setQuery] = useState(initialQuery);
+  const { trackSearch } = useAnalytics();
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
     if (query.trim()) {
       router.push(`/?q=${encodeURIComponent(query.trim())}`);
+      // Track search event
+      trackSearch(query.trim(), 0); // result count will be updated after search
     } else {
       router.push('/');
     }

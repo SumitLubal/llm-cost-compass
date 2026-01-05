@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import type { FlatModel } from '@/data/types';
+import { useAnalytics } from '@/hooks/useAnalytics';
 
 interface CostCalculatorProps {
   models: FlatModel[];
@@ -16,6 +17,7 @@ export function CostCalculator({ models }: CostCalculatorProps) {
   const [showResults, setShowResults] = useState<boolean>(false);
   const [sortField, setSortField] = useState<SortField>('total_cost');
   const [sortDirection, setSortDirection] = useState<SortDirection>('asc');
+  const { trackCalculator, trackSort } = useAnalytics();
 
   const calculateCost = (model: FlatModel) => {
     const inputCost = (inputTokens / 1000000) * model.input_per_million;
@@ -26,16 +28,23 @@ export function CostCalculator({ models }: CostCalculatorProps) {
   const handleCalculate = () => {
     if (inputTokens >= 0 && outputTokens >= 0) {
       setShowResults(true);
+      // Track calculator usage
+      trackCalculator(inputTokens, outputTokens, models.length);
     }
   };
 
   const handleSort = (field: SortField) => {
+    let newDirection: SortDirection;
     if (sortField === field) {
-      setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc');
+      newDirection = sortDirection === 'asc' ? 'desc' : 'asc';
+      setSortDirection(newDirection);
     } else {
       setSortField(field);
+      newDirection = 'asc';
       setSortDirection('asc');
     }
+    // Track sort event
+    trackSort(field, newDirection);
   };
 
   const getSortIcon = (field: SortField) => {
