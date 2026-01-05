@@ -105,6 +105,40 @@ export function CostCalculator({ models }: CostCalculatorProps) {
               </div>
             </div>
 
+            {/* Summary Cards - Moved above the table */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+              <div className="bg-gradient-to-br from-green-600 to-green-700 text-white rounded-lg p-4">
+                <div className="text-xs opacity-90">Cheapest Option</div>
+                <div className="font-bold text-lg mt-1">{sortedModels[0].provider}</div>
+                <div className="text-sm opacity-90">{sortedModels[0].model}</div>
+                <div className="text-2xl font-bold mt-2">
+                  ${calculateCost(sortedModels[0]).toFixed(2)}
+                </div>
+              </div>
+
+              <div className="bg-gradient-to-br from-blue-600 to-blue-700 text-white rounded-lg p-4">
+                <div className="text-xs opacity-90">Best Value (score)</div>
+                <div className="font-bold text-lg mt-1">
+                  {models.reduce((best, curr) =>
+                    (curr.score || 0) > (best.score || 0) ? curr : best
+                  ).provider}
+                </div>
+                <div className="text-sm opacity-90">
+                  {models.reduce((best, curr) =>
+                    (curr.score || 0) > (best.score || 0) ? curr : best
+                  ).model}
+                </div>
+              </div>
+
+              <div className="bg-gradient-to-br from-purple-600 to-purple-700 text-white rounded-lg p-4">
+                <div className="text-xs opacity-90">Your Total</div>
+                <div className="text-3xl font-bold mt-2">
+                  ${sortedModels.reduce((sum, m) => sum + calculateCost(m), 0).toFixed(2)}
+                </div>
+                <div className="text-xs opacity-90 mt-1">Sum of all providers</div>
+              </div>
+            </div>
+
             <h3 className="font-semibold text-gray-900 dark:text-gray-100 text-lg">Estimated Monthly Costs:</h3>
 
             <div className="overflow-x-auto">
@@ -147,40 +181,6 @@ export function CostCalculator({ models }: CostCalculatorProps) {
                   })}
                 </tbody>
               </table>
-            </div>
-
-            {/* Summary Cards */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
-              <div className="bg-gradient-to-br from-green-600 to-green-700 text-white rounded-lg p-4">
-                <div className="text-xs opacity-90">Cheapest Option</div>
-                <div className="font-bold text-lg mt-1">{sortedModels[0].provider}</div>
-                <div className="text-sm opacity-90">{sortedModels[0].model}</div>
-                <div className="text-2xl font-bold mt-2">
-                  ${calculateCost(sortedModels[0]).toFixed(2)}
-                </div>
-              </div>
-
-              <div className="bg-gradient-to-br from-blue-600 to-blue-700 text-white rounded-lg p-4">
-                <div className="text-xs opacity-90">Best Value (score)</div>
-                <div className="font-bold text-lg mt-1">
-                  {models.reduce((best, curr) =>
-                    (curr.score || 0) > (best.score || 0) ? curr : best
-                  ).provider}
-                </div>
-                <div className="text-sm opacity-90">
-                  {models.reduce((best, curr) =>
-                    (curr.score || 0) > (best.score || 0) ? curr : best
-                  ).model}
-                </div>
-              </div>
-
-              <div className="bg-gradient-to-br from-purple-600 to-purple-700 text-white rounded-lg p-4">
-                <div className="text-xs opacity-90">Your Total</div>
-                <div className="text-3xl font-bold mt-2">
-                  ${sortedModels.reduce((sum, m) => sum + calculateCost(m), 0).toFixed(2)}
-                </div>
-                <div className="text-xs opacity-90 mt-1">Sum of all providers</div>
-              </div>
             </div>
 
             {/* Free Tier Alert */}
