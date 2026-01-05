@@ -4,8 +4,44 @@ import { SearchBar } from '@/components/SearchBar';
 import { SubmitButton } from '@/components/SubmitButton';
 import { CostCalculator } from '@/components/CostCalculator';
 import { ThemeToggle } from '@/components/ThemeToggle';
+import type { Metadata } from 'next';
 
 export const dynamic = 'force-dynamic';
+
+// Generate dynamic metadata based on search query
+export async function generateMetadata({ searchParams }: { searchParams: Promise<{ q?: string }> }): Promise<Metadata> {
+  const { q: query = '' } = await searchParams;
+
+  if (query) {
+    const cleanQuery = query.trim();
+    return {
+      title: `Search Results for "${cleanQuery}" | LLM PriceCheck`,
+      description: `Find LLM pricing for ${cleanQuery}. Compare costs across OpenAI, Anthropic, Google, xAI and more.`,
+      alternates: {
+        canonical: `https://llmpricecheck.com/?q=${encodeURIComponent(cleanQuery)}`,
+      },
+      openGraph: {
+        title: `LLM Pricing for ${cleanQuery} - LLM PriceCheck`,
+        description: `Compare ${cleanQuery} pricing and find cheaper alternatives.`,
+        url: `https://llmpricecheck.com/?q=${encodeURIComponent(cleanQuery)}`,
+        type: 'website',
+      },
+      twitter: {
+        title: `LLM Pricing for ${cleanQuery}`,
+        description: `Compare ${cleanQuery} pricing and find cheaper alternatives.`,
+      },
+    };
+  }
+
+  // Default metadata for home page
+  return {
+    title: "LLM PriceCheck - Compare LLM Pricing Across All Providers",
+    description: "Compare LLM pricing across OpenAI, Anthropic, Google, xAI, and more. Real-time cost calculator, smart recommendations, and daily price updates.",
+    alternates: {
+      canonical: "https://llmpricecheck.com",
+    },
+  };
+}
 
 export default async function Home({ searchParams }: { searchParams: Promise<{ q?: string }> }) {
   const { q: query = '' } = await searchParams;
