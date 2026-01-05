@@ -120,9 +120,16 @@ function PricingTable({ models }: { models: FlatModel[] }) {
   const [selectedModel, setSelectedModel] = useState<FlatModel | null>(null);
   const [sortField, setSortField] = useState<SortField>('score');
   const [sortDirection, setSortDirection] = useState<SortDirection>('desc');
-  const { trackSort } = useAnalytics();
+  const { trackSort, trackEvent } = useAnalytics();
 
   const handleRowClick = (model: FlatModel) => {
+    // Track model selection
+    trackEvent({
+      action: 'select_model',
+      category: 'Interaction',
+      label: `${model.provider} ${model.model}`,
+      value: model.score || 0,
+    });
     alert(
       `Model: ${model.provider} ${model.model}\n` +
       `Price: $${(model.input_per_million + model.output_per_million).toFixed(2)} per 1M tokens\n\n` +

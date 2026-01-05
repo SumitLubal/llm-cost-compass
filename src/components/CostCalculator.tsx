@@ -26,6 +26,7 @@ export function CostCalculator({ models }: CostCalculatorProps) {
   };
 
   const handleCalculate = () => {
+    console.log('[GA DEBUG] Calculate button clicked');
     if (inputTokens >= 0 && outputTokens >= 0) {
       setShowResults(true);
       // Track calculator usage

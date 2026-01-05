@@ -5,6 +5,8 @@ import { SubmitButton } from '@/components/SubmitButton';
 import { CostCalculator } from '@/components/CostCalculator';
 import { ThemeToggle } from '@/components/ThemeToggle';
 import { PageViewTracker } from '@/components/PageViewTracker';
+import { ScrollTracker } from '@/components/ScrollTracker';
+import { GADebug } from '@/components/GADebug';
 import type { Metadata } from 'next';
 
 export const dynamic = 'force-dynamic';
@@ -64,6 +66,8 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ q
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-50 via-blue-50 to-cyan-50 dark:from-gray-900 dark:via-gray-950 dark:to-black">
       <PageViewTracker />
+      <ScrollTracker />
+      <GADebug />
       {/* Header */}
       <header className="bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm border-b border-gray-200 dark:border-gray-800 sticky top-0 z-50">
         <div className="max-w-6xl mx-auto px-4 py-4">

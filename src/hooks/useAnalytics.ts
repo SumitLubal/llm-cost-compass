@@ -7,22 +7,79 @@ export interface AnalyticsEvent {
   value?: number | string;
 }
 
+// Helper to get measurement ID
+function getMeasurementId(): string {
+  return process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID || '';
+}
+
+// Helper to check if GA is ready
+function isGAReady(): boolean {
+  return typeof window !== 'undefined' &&
+         typeof window.gtag === 'function' &&
+         Array.isArray(window.dataLayer);
+}
+
 export function useAnalytics() {
   const trackEvent = useCallback((event: AnalyticsEvent) => {
-    if (typeof window !== 'undefined' && (window as any).gtag) {
-      (window as any).gtag('event', event.action, {
+    const measurementId = getMeasurementId();
+
+    console.log('[GA DEBUG] trackEvent called:', { event, measurementId });
+
+    if (!measurementId) {
+      console.log('[GA] No measurement ID configured, skipping event');
+      return;
+    }
+
+    if (typeof window === 'undefined') {
+      console.log('[GA] Server-side, skipping event');
+      return;
+    }
+
+    // Check if GA is ready
+    if (isGAReady()) {
+      console.log('[GA] Sending via gtag');
+      window.gtag!('event', event.action, {
         event_category: event.category,
         event_label: event.label,
         value: event.value,
       });
+    } else if (window.dataLayer) {
+      console.log('[GA] GA not fully ready, queuing to dataLayer');
+      window.dataLayer.push(['event', event.action, {
+        event_category: event.category,
+        event_label: event.label,
+        value: event.value,
+      }]);
+    } else {
+      console.log('[GA] No dataLayer available - GA not initialized');
     }
   }, []);
 
   const trackPageView = useCallback((path: string) => {
-    if (typeof window !== 'undefined' && (window as any).gtag) {
-      (window as any).gtag('config', process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID || '', {
+    const measurementId = getMeasurementId();
+
+    console.log('[GA DEBUG] trackPageView called:', { path, measurementId });
+
+    if (!measurementId) {
+      console.log('[GA] No measurement ID configured, skipping page view');
+      return;
+    }
+
+    if (typeof window === 'undefined') {
+      console.log('[GA] Server-side, skipping page view');
+      return;
+    }
+
+    if (isGAReady()) {
+      console.log('[GA] Sending page view via gtag');
+      window.gtag!('config', measurementId, {
         page_path: path,
       });
+    } else if (window.dataLayer) {
+      console.log('[GA] GA not fully ready, queuing page view to dataLayer');
+      window.dataLayer.push(['config', measurementId, { page_path: path }]);
+    } else {
+      console.log('[GA] No dataLayer available for page view');
     }
   }, []);
 

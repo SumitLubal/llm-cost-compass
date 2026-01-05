@@ -1,4 +1,6 @@
 import { SubmitForm } from '@/components/SubmitForm';
+import { PageViewTracker } from '@/components/PageViewTracker';
+import { ScrollTracker } from '@/components/ScrollTracker';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
@@ -34,6 +36,8 @@ export const metadata: Metadata = {
 export default function SubmitPage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-50 via-blue-50 to-cyan-50 dark:from-gray-900 dark:via-gray-950 dark:to-black py-12 px-4">
+      <PageViewTracker />
+      <ScrollTracker />
       <div className="max-w-2xl mx-auto">
         <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl overflow-hidden border border-gray-200 dark:border-gray-700">
           <div className="bg-gradient-to-r from-purple-600 to-blue-600 px-8 py-6 text-white">

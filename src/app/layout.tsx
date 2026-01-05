@@ -176,6 +176,11 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  // Debug log for GA
+  if (typeof window === 'undefined') {
+    console.log('[GA] Server-side - NEXT_PUBLIC_GA_MEASUREMENT_ID:', process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID);
+  }
+
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
