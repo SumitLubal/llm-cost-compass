@@ -58,7 +58,7 @@ jobs:
         id: update
         env:
           RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
-          ALERT_EMAIL: ${{ github.event.inputs.alert_email || secrets.ALERT_EMAIL || 'your-email@example.com' }}
+          ALERT_EMAIL: ${{ github.event.inputs.alert_email || secrets.ALERT_EMAIL || 'sumitlubal@hotmail.com' }}
         run: |
           # Determine auto-publish flag
           AUTO_PUBLISH="${{ github.event.inputs.auto_publish || 'false' }}"
