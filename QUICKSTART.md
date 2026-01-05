@@ -14,7 +14,7 @@ npm run dev
 # Get API key from resend.com
 # Create .env.local:
 RESEND_API_KEY="re_..."
-ALERT_EMAIL="you@example.com"
+ALERT_EMAIL="sumitlubal@hotmail.com"
 ```
 
 ### 3. (Optional) Deploy
@@ -43,7 +43,7 @@ netlify deploy --prod
 
 ### Manual
 ```bash
-npm run daily:update your@email.com
+npm run daily:update sumitlubal@hotmail.com
 ```
 
 ---
@@ -81,12 +81,12 @@ npm run daily:update your@email.com
 
 **No data?**
 ```bash
-npm run daily:update your@email.com
+npm run daily:update sumitlubal@hotmail.com
 ```
 
 **Email not sending?**
 - Check `RESEND_API_KEY` is set
-- Run: `npm run email:test your@email.com`
+- Run: `npm run email:test sumitlubal@hotmail.com`
 
 **Build fails?**
 ```bash

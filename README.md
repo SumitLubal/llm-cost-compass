@@ -33,7 +33,7 @@ This is a **frontend-only** Next.js application with automated daily pricing upd
 └─────────────────────────────────────────┘
 ```
 
-**Note**: The scraper uses verified data as the source of truth, with llm-prices.com API for change detection (due to inconsistent units in the API).
+**Note**: The scraper uses **verified pricing constants** for core providers (OpenAI, Anthropic, Google, Meta, Mistral) as the source of truth, with llm-prices.com API for change detection and to gather pricing data for all other providers. The API has inconsistent units (some per 1K tokens, some per million), so we convert all values to per-million tokens for consistency. This approach gives us 32 models from 9 providers instead of just 12 models from 5 providers.
 
 ## Features
 
@@ -81,10 +81,10 @@ For automated daily updates with email alerts:
 npm run scrape
 
 # Run full daily update with email
-npm run daily:update your@email.com
+npm run daily:update sumitlubal@hotmail.com
 
 # Auto-publish if confidence > 90%
-npm run daily:update your@email.com --auto-publish
+npm run daily:update sumitlubal@hotmail.com --auto-publish
 ```
 
 ## Project Structure
@@ -104,7 +104,7 @@ src/
 │   ├── SubmitButton.tsx   # Submit CTA
 │   └── SubmitForm.tsx     # User submission form
 ├── lib/                   # Utilities
-│   └── pricing-json.ts    # JSON data access
+│   └── pricing.ts         # Pricing utilities & data access
 ├── data/                  # Pricing data
 │   ├── pricing.json       # Current prices
 │   └── types.ts           # TypeScript types
@@ -131,7 +131,34 @@ src/
 | `npm run compare` | Compare with existing data |
 | `npm run email:test email@domain.com` | Test email sending |
 
-## Data Format
+## Data Architecture
+
+### Verified Pricing Constants
+
+The scraper contains `VERIFIED_PRICING` constants in `scripts/scrape-providers.ts`:
+
+```typescript
+const VERIFIED_PRICING = {
+  'OpenAI': {
+    'GPT-4o': {
+      name: 'GPT-4o',
+      input_per_million: 5.00,    // $5 per million tokens
+      output_per_million: 15.00,  // $15 per million tokens
+      context_window: 128000
+    },
+    // ... more models
+  },
+  // ... more providers
+}
+```
+
+**Why this approach?**
+- llm-prices.com API has inconsistent units (per 1K vs per million)
+- Verified constants ensure accurate pricing
+- API is only used for **change detection**
+- You can easily update constants when prices change
+
+### Pricing Data Format
 
 Pricing data is stored in `src/data/pricing.json`:
 
@@ -213,7 +240,7 @@ For email alerts:
 ```bash
 # .env.local
 RESEND_API_KEY="re_..."
-ALERT_EMAIL="your@email.com"
+ALERT_EMAIL="sumitlubal@hotmail.com"
 ```
 
 For GitHub Actions, add these to repository secrets:
@@ -237,7 +264,7 @@ For GitHub Actions, add these to repository secrets:
 ls src/data/pricing.json
 
 # If not, run the update script
-npm run daily:update your@email.com
+npm run daily:update sumitlubal@hotmail.com
 ```
 
 ### Email not sending

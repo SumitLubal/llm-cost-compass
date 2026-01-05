@@ -2,10 +2,13 @@
  * Daily Update Script
  *
  * This script is run by GitHub Actions daily to:
- * 1. Scrape pricing from all providers
- * 2. Compare with existing data
+ * 1. Monitor pricing from llm-prices.com API
+ * 2. Compare with existing pricing.json data
  * 3. Send email if changes detected
- * 4. Update the pricing.json file
+ * 4. Update the pricing.json file (if auto-publish or no changes)
+ *
+ * Uses verified pricing constants as source of truth.
+ * API data is only used for change detection.
  */
 
 import { scrapeAllProviders } from './scrape-providers';

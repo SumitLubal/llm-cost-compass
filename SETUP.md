@@ -33,13 +33,13 @@ Create a `.env.local` file in the project root:
 ```bash
 # .env.local
 RESEND_API_KEY="re_1234567890abcdef..."
-ALERT_EMAIL="your-email@example.com"
+ALERT_EMAIL="sumitlubal@hotmail.com"
 ```
 
 ### 2.3 Test Email Sending
 ```bash
 # Test with sample changes
-npm run email:test your-email@example.com
+npm run email:test sumitlubal@hotmail.com
 ```
 
 ## Step 3: Set Up Automated Daily Updates
@@ -58,7 +58,7 @@ npm run email:test your-email@example.com
 | Secret | Description | Example |
 |--------|-------------|---------|
 | `RESEND_API_KEY` | Your Resend API key | `re_123456...` |
-| `ALERT_EMAIL` | Your email for alerts | `you@example.com` |
+| `ALERT_EMAIL` | Your email for alerts | `sumitlubal@hotmail.com` |
 
 #### 3.3 Enable GitHub Actions
 1. Go to Actions tab
@@ -78,10 +78,10 @@ You can also trigger it manually:
 npm run scrape
 
 # Full update with email
-npm run daily:update your@email.com
+npm run daily:update sumitlubal@hotmail.com
 
 # Auto-publish high-confidence changes
-npm run daily:update your@email.com --auto-publish
+npm run daily:update sumitlubal@hotmail.com --auto-publish
 ```
 
 ## Step 4: Deploy to Production

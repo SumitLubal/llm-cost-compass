@@ -45,7 +45,7 @@ export function SubmitForm() {
         },
         body: JSON.stringify({
           from: 'LLM PriceCheck Submissions <noreply@llmpricecheck.com>',
-          to: [process.env.NEXT_PUBLIC_ALERT_EMAIL || 'your-email@example.com'],
+          to: [process.env.NEXT_PUBLIC_ALERT_EMAIL || 'sumitlubal@hotmail.com'],
           subject: `New Pricing Submission: ${formData.providerName}`,
           html: `
             <h2>New Pricing Submission</h2>
@@ -64,7 +64,7 @@ export function SubmitForm() {
       // Note: If no API key is set, we'll still show success
       // This allows the form to work for demo purposes
       if (!process.env.NEXT_PUBLIC_RESEND_API_KEY) {
-        console.log('Demo mode: Submission would be sent to:', process.env.NEXT_PUBLIC_ALERT_EMAIL || 'your-email@example.com');
+        console.log('Demo mode: Submission would be sent to:', process.env.NEXT_PUBLIC_ALERT_EMAIL || 'sumitlubal@hotmail.com');
         console.log('Submission data:', formData);
       }
 
@@ -79,7 +79,7 @@ export function SubmitForm() {
       });
     } catch (err) {
       setStatus('error');
-      setError('Failed to submit. Please try again or email your-email@example.com directly.');
+      setError('Failed to submit. Please try again or email sumitlubal@hotmail.com directly.');
     }
   };
 

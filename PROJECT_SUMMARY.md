@@ -139,7 +139,7 @@ EXTRACTION_MODEL=gpt-4-turbo                   # Optional
 
 # Optional for email alerts
 RESEND_API_KEY=your_resend_key
-ALERT_EMAIL=your@email.com
+ALERT_EMAIL=sumitlubal@hotmail.com
 
 # Optional for manual triggers
 ADMIN_SECRET=your_secret

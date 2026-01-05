@@ -243,7 +243,7 @@ if (import.meta.url === `file://${process.argv[1]}`) {
     },
   ];
 
-  const testEmail = process.argv[2] || 'test@example.com';
+  const testEmail = process.argv[2] || 'sumitlubal@hotmail.com';
   sendDailyReport(sampleChanges, testEmail).then(() => {
     console.log('\nTest complete!');
   });
