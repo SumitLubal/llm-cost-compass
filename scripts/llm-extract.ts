@@ -242,7 +242,7 @@ function validateAndNormalize(result: ExtractionResult): ExtractionResult {
       input_per_million: model.input_per_million,
       output_per_million: model.output_per_million,
       context_window: model.context_window || 0,
-      free_tier: model.free_tier || null,
+      free_tier: model.free_tier || undefined,
     };
   });
 
