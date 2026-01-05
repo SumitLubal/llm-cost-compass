@@ -6,93 +6,7 @@ A smart LLM pricing comparison tool that helps you find the best AI model prices
 
 This is a **frontend-only** Next.js application with automated daily pricing updates.
 
-### How It Works
-
-```
-┌─────────────────────────────────────────┐
-│  Daily GitHub Action (Cron)             │
-│  1. Fetches from llm-prices.com API     │
-│  2. Compares with verified data         │
-│  3. Flags changes for review            │
-│  4. Sends email alerts                  │
-│  5. Creates PR or auto-publishes        │
-└─────────────────────────────────────────┘
-                    ↓
-┌─────────────────────────────────────────┐
-│  Frontend (Vercel/Netlify)              │
-│  - Reads pricing.json                   │
-│  - Client-side search/filter            │
-│  - Cost calculator                      │
-│  - Theme toggle (light/dark)            │
-└─────────────────────────────────────────┘
-                    ↓
-┌─────────────────────────────────────────┐
-│  Email Alerts (Resend)                  │
-│  - Daily changes notification           │
-│  - Review & approval workflow           │
-└─────────────────────────────────────────┘
-```
-
 **Note**: The scraper uses **verified pricing constants** for core providers (OpenAI, Anthropic, Google, Meta, Mistral) as the source of truth, with llm-prices.com API for change detection and to gather pricing data for all other providers. The API has inconsistent units (some per 1K tokens, some per million), so we convert all values to per-million tokens for consistency. This approach gives us 32 models from 9 providers instead of just 12 models from 5 providers.
-
-## Features
-
-- ✅ **Zero Backend** - No database server needed
-- ✅ **Daily Updates** - Automated pricing scraping
-- ✅ **Email Alerts** - Get notified of price changes
-- ✅ **Smart Comparison** - Best value, best free, hidden gems
-- ✅ **Cost Calculator** - Estimate your monthly bill
-- ✅ **Dark Mode** - System-based theme switching
-- ✅ **Search** - Find models by provider or name
-- ✅ **SEO Optimized** - Dynamic metadata, sitemap, structured data
-- ✅ **Google Analytics** - Track user behavior and conversions
-- ✅ **Automated Marketing** - 100% free growth system
-
-## 🚀 Marketing Automation (100% Free, Zero Manual Work)
-
-This project includes a complete, automated marketing system that runs daily with zero manual intervention.
-
-### Quick Start (3 minutes)
-```bash
-# 1. Install dependencies
-npm install
-
-# 2. Enable GitHub Actions
-# Go to: Repository Settings > Actions > Enable workflows
-
-# 3. Add API credentials (optional - for auto-posting)
-# Add GitHub secrets for Twitter, LinkedIn, Reddit APIs
-
-# 4. Done! Everything runs automatically daily at 9 AM UTC
-```
-
-### What Happens Automatically (Daily at 9 AM UTC)
-✅ **Auto-posts to social media** (Twitter, LinkedIn, Reddit) - if API credentials set
-✅ **Generates social media posts** (backup content)
-✅ **Creates 30-day content calendar** with SEO keywords
-✅ **Updates directory checklist** (21 directories)
-✅ **Generates outreach plan** (20 targets + email templates)
-✅ **Creates daily marketing report**
-
-### What Happens Automatically (Weekly on Monday at 10 AM UTC)
-✅ **Weekly marketing plan**
-✅ **Progress report**
-✅ **GitHub issue with tasks**
-
-### Zero Manual Work Required
-The GitHub Actions workflow handles everything:
-1. Fetches latest pricing data
-2. Auto-posts to social media (if credentials configured)
-3. Generates all marketing materials
-4. Uploads artifacts
-5. Creates summary
-
-**You don't need to do anything manually!**
-
-### Expected Results
-- Week 1: 50-100 visitors, 5 backlinks
-- Week 4: 400-600 visitors, 20 backlinks
-- Week 12: 1,000+ visitors, 50+ backlinks
 
 ## GitHub Actions Workflows
 
@@ -132,38 +46,6 @@ gh workflow run llm-extract.yml -f batch_file="urls.json"
 3. Formats data correctly
 4. Merges into pricing.json
 5. Commits directly to main branch
-
-### Daily Marketing Automation
-**File**: `.github/workflows/daily-marketing.yml`
-
-**Schedule**: Daily at 9 AM UTC
-
-**Manual Run**:
-```bash
-gh workflow run daily-marketing.yml
-```
-
-**What it does**:
-1. Generates social media posts (Twitter, LinkedIn, Reddit)
-2. Creates content briefs and calendar
-3. Updates directory submission checklist
-4. Generates outreach email templates
-5. Creates daily marketing report
-
-### Weekly Marketing Summary
-**File**: `.github/workflows/weekly-marketing-summary.yml`
-
-**Schedule**: Every Monday at 10 AM UTC
-
-**Manual Run**:
-```bash
-gh workflow run weekly-marketing-summary.yml
-```
-
-**What it does**:
-1. Creates weekly marketing plan
-2. Generates progress report
-3. Opens GitHub issue with tasks
 
 ## Setup
 
@@ -205,46 +87,6 @@ npm run daily:update sumitlubal@hotmail.com
 
 # Auto-publish if confidence > 90%
 npm run daily:update sumitlubal@hotmail.com --auto-publish
-```
-
-## Project Structure
-
-```
-src/
-├── app/                    # Next.js App Router
-│   ├── page.tsx           # Main page
-│   ├── layout.tsx         # Root layout with ThemeProvider
-│   └── submit/            # Submission page
-├── components/            # React components
-│   ├── ThemeProvider.tsx  # Theme context
-│   ├── ThemeToggle.tsx    # Theme switcher
-│   ├── SearchBar.tsx      # Search functionality
-│   ├── CostCalculator.tsx # Cost estimation
-│   ├── ComparisonView.tsx # Price comparison
-│   ├── SubmitButton.tsx   # Submit CTA
-│   └── SubmitForm.tsx     # User submission form
-├── lib/                   # Utilities
-│   └── pricing.ts         # Pricing utilities & data access
-├── data/                  # Pricing data
-│   ├── pricing.json       # Current prices
-│   └── types.ts           # TypeScript types
-└── scripts/               # Automation scripts
-    ├── daily-update.ts    # Main update script
-    ├── scrape-providers.ts # Web scraper
-    ├── compare-pricing.ts  # Change detection
-    ├── send-email.ts       # Email alerts
-    └── marketing/          # Marketing automation
-        ├── social-poster.ts
-        ├── directory-submitter.ts
-        ├── blog-ideas.ts
-        ├── backlink-outreach.ts
-        └── README.md
-.github/
-└── workflows/
-    ├── daily-pricing-update.yml     # Pricing updates
-    ├── llm-extract.yml              # LLM extraction
-    ├── daily-marketing.yml          # Daily marketing automation
-    └── weekly-marketing-summary.yml # Weekly summary
 ```
 
 ## Scripts
@@ -331,141 +173,12 @@ Pricing data is stored in `src/data/pricing.json`:
 }
 ```
 
-## Email Alerts
-
-When pricing changes are detected, you'll receive an email with:
-
-- Summary of changes
-- Table showing old vs new prices
-- Confidence scores
-- Links to review and approve
-
-### Confidence Levels
-
-- **90-100%**: High confidence, auto-publish ready
-- **70-89%**: Medium confidence, review recommended
-- **<70%**: Low confidence, manual verification needed
-
 ## User Submissions
 
 Users can submit pricing via `/submit` page:
 - Form collects provider, model, pricing info
 - Sends email to you for review
 - You manually verify and update
-
-## Theme System
-
-- **System Default**: Follows OS preference
-- **User Override**: Click toggle to switch
-- **Persistent**: Saved to localStorage
-- **No Flash**: Hydration-safe rendering
-
-## SEO Features
-
-This website is fully SEO-optimized with:
-
-### Metadata
-- **Dynamic titles** based on search queries
-- **Descriptive meta descriptions** for each page
-- **Canonical URLs** to prevent duplicate content
-- **Open Graph tags** for social sharing
-- **Twitter Card** metadata
-
-### Structured Data
-- **JSON-LD** for Organization schema
-- **WebApplication** schema with pricing info
-- **AggregateRating** for social proof
-
-### Indexing
-- **Sitemap.xml** with all important pages
-- **Robots.txt** with proper directives
-- **Daily updates** signal fresh content to search engines
-
-### PWA Support
-- **Manifest.json** for installable web app
-- **Favicon variants** for all devices
-- **Theme color** for browser chrome
-
-### Testing
-```bash
-# Test your SEO
-npm run build
-npm run start
-
-# Check metadata
-curl http://localhost:3000 | grep -i meta
-
-# Validate structured data
-# Use: https://validator.schema.org/
-```
-
-## Google Analytics Integration
-
-The app includes full Google Analytics 4 (GA4) tracking for user behavior analysis.
-
-### Setup
-
-1. **Create a GA4 property** at https://analytics.google.com/
-2. **Get your Measurement ID** (format: `G-XXXXXXXXXX`)
-3. **Add to environment variables**:
-
-```bash
-# .env.local
-NEXT_PUBLIC_GA_MEASUREMENT_ID=G-XXXXXXXXXX
-```
-
-4. **Or use .env.example**:
-```bash
-cp .env.example .env.local
-# Then edit .env.local with your GA Measurement ID
-```
-
-### What's Tracked
-
-The following events are automatically tracked:
-
-| Event | Category | Description |
-|-------|----------|-------------|
-| `page_view` | - | Every page view with URL |
-| `search` | Engagement | Search queries and result counts |
-| `calculate_costs` | Engagement | Calculator usage (input/output tokens) |
-| `sort_table` | Interaction | Table sorting by column |
-| `submit_pricing` | Contribution | Form submissions |
-| `toggle_theme` | Preference | Theme changes (light/dark) |
-
-### Tracking Components
-
-- **PageViewTracker**: Automatic page view tracking on route changes
-- **SearchBar**: Tracks search queries
-- **CostCalculator**: Tracks calculator usage and sorting
-- **ComparisonView**: Tracks table sorting
-- **SubmitForm**: Tracks form submissions
-- **ThemeToggle**: Tracks theme preferences
-
-### Viewing Data
-
-In your GA4 dashboard:
-- **Real-time**: See active users and events
-- **Events**: View all tracked events with parameters
-- **Conversions**: Mark important events as conversions
-- **User Journey**: Analyze how users navigate the app
-
-### Privacy Compliance
-
-- ✅ **Anonymized**: No personal data collected by default
-- ✅ **Consent-ready**: Can integrate cookie consent banner
-- ✅ **GDPR-friendly**: Data can be deleted on request
-- ✅ **No PII**: Only tracks usage patterns, not user identity
-
-### Disable Analytics
-
-To disable analytics, simply remove the environment variable:
-```bash
-# Remove or comment out
-# NEXT_PUBLIC_GA_MEASUREMENT_ID=G-XXXXXXXXXX
-```
-
-The app will gracefully skip all tracking calls without errors.
 
 ## Deployment
 
@@ -560,27 +273,3 @@ npm run daily:update sumitlubal@hotmail.com
 1. Fork the repository
 2. Create a feature branch
 3. Submit a pull request
-
-## License
-
-**Business Source License (BSL) 1.1**
-
-This project is licensed under the Business Source License. You may use this software for commercial purposes, but you cannot provide it as a hosted service or resell it as part of a competing product.
-
-**After January 4, 2029**, this software will become fully open source under the MIT License.
-
-For alternative licensing arrangements, please contact the repository owner.
-
-### Summary
-
-- ✅ **Free to use** for internal business operations
-- ✅ **Free to use** for personal projects  
-- ❌ **Cannot** provide as a hosted service
-- ❌ **Cannot** resell or redistribute as a competing product
-- 📅 **Full open source** on January 4, 2029
-
-For full license terms, see [LICENSE](LICENSE)
-
-## Built For
-
-Sumeet - Beta v0.1
