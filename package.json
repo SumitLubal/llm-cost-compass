@@ -2,16 +2,25 @@
   "name": "llm-cost-compass",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "db:seed": "node scripts/seed.js",
+    "db:scrape": "node scripts/scrape.js",
+    "db:reset": "rm -f llm-pricing.db && npm run db:seed",
+    "test": "node scripts/test.js"
   },
   "dependencies": {
+    "better-sqlite3": "^12.5.0",
+    "cheerio": "^1.1.2",
     "next": "16.1.1",
+    "openai": "^6.15.0",
     "react": "19.2.3",
-    "react-dom": "19.2.3"
+    "react-dom": "19.2.3",
+    "resend": "^6.6.0"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",

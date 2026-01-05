@@ -1,0 +1,11 @@
+{
+  "crons": [
+    {
+      "path": "/api/update",
+      "schedule": "0 2 * * *"
+    }
+  ],
+  "buildCommand": "npm run build",
+  "devCommand": "npm run dev",
+  "installCommand": "npm install"
+}
