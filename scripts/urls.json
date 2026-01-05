@@ -6,5 +6,9 @@
   {
     "url": "https://ai.google.dev/gemini-api/docs/pricing",
     "provider": "Google"
+  },
+  {
+    "url": "https://platform.claude.com/docs/en/about-claude/pricing",
+    "provider": "Anthropic"
   }
 ]
