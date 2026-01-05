@@ -94,9 +94,6 @@ The GitHub Actions workflow handles everything:
 - Week 4: 400-600 visitors, 20 backlinks
 - Week 12: 1,000+ visitors, 50+ backlinks
 
-**Full Guide**: See `MARKETING_QUICKSTART.md` for zero-manual setup
-**Strategy**: See `MARKETING_STRATEGY.md` for detailed plan
-
 ## GitHub Actions Workflows
 
 ### Daily Pricing Update
@@ -276,8 +273,6 @@ All marketing scripts are in `scripts/marketing/`:
 - **directory-submitter.ts** - 20+ directory submission checklist
 - **blog-ideas.ts** - 30-day content calendar with SEO
 - **backlink-outreach.ts** - Email templates for backlinks
-
-**See `MARKETING_STRATEGY.md` for complete guide.**
 
 ## Data Architecture
 
