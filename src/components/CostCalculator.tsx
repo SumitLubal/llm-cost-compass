@@ -131,11 +131,22 @@ export function CostCalculator({ models }: CostCalculatorProps) {
               </div>
 
               <div className="bg-gradient-to-br from-purple-600 to-purple-700 text-white rounded-lg p-4">
-                <div className="text-xs opacity-90">Your Total</div>
-                <div className="text-3xl font-bold mt-2">
-                  ${sortedModels.reduce((sum, m) => sum + calculateCost(m), 0).toFixed(2)}
+                <div className="text-xs opacity-90">Latest Prices</div>
+                <div className="text-sm mt-1 space-y-1">
+                  {['OpenAI', 'Google', 'Anthropic'].map(provider => {
+                    const model = models.find(m => 
+                      m.provider.toLowerCase().includes(provider.toLowerCase())
+                    );
+                    if (!model) return null;
+                    const cost = calculateCost(model);
+                    return (
+                      <div key={provider} className="flex justify-between text-xs">
+                        <span className="opacity-80">{provider}:</span>
+                        <span className="font-bold">${cost.toFixed(2)}</span>
+                      </div>
+                    );
+                  })}
                 </div>
-                <div className="text-xs opacity-90 mt-1">Sum of all providers</div>
               </div>
             </div>
 
