@@ -80,9 +80,30 @@ jobs:
           echo "Auto-merge: $MERGE"
           echo ""
 
+          # Determine mode
+          MODE=""
           if [ -n "$BATCH_FILE" ]; then
+            MODE="batch"
+            TARGET="$BATCH_FILE"
+          elif [ -n "$URL" ]; then
+            MODE="single"
+            TARGET="$URL"
+          else
+            # Default to checking for scripts/urls.json
+            if [ -f "scripts/urls.json" ]; then
+              MODE="batch"
+              TARGET="scripts/urls.json"
+              echo "⚠️  No input specified, using default batch file: scripts/urls.json"
+            else
+              echo "❌ Error: Either 'url' or 'batch_file' must be specified"
+              echo "   Or create scripts/urls.json for default batch processing"
+              exit 1
+            fi
+          fi
+
+          if [ "$MODE" = "batch" ]; then
             # Batch mode
-            echo "Running BATCH extraction from: $BATCH_FILE"
+            echo "Running BATCH extraction from: $TARGET"
             if [ "$MERGE" = "true" ]; then
               echo "⚠️  Batch mode with auto-merge is not recommended for safety."
               echo "   Run in preview mode first, then manually review."
@@ -90,7 +111,7 @@ jobs:
             fi
 
             # Always preview for batch mode (safety)
-            npx tsx scripts/llm-extract.ts "$BATCH_FILE" --batch
+            npx tsx scripts/llm-extract.ts "$TARGET" --batch
 
             # Check if any changes were made (should be none in preview)
             if git diff --quiet src/data/pricing.json; then
@@ -99,16 +120,16 @@ jobs:
               echo "no_changes=false" >> $GITHUB_OUTPUT
             fi
 
-          elif [ -n "$URL" ]; then
+          else
             # Single URL mode
-            echo "Running SINGLE URL extraction"
+            echo "Running SINGLE URL extraction from: $TARGET"
 
             if [ "$MERGE" = "true" ]; then
               echo "Step 1: Extracting and merging into pricing.json..."
               if [ -n "$HINT" ]; then
-                npx tsx scripts/extract-and-merge.ts "$URL" --provider "$HINT"
+                npx tsx scripts/extract-and-merge.ts "$TARGET" --provider "$HINT"
               else
-                npx tsx scripts/extract-and-merge.ts "$URL"
+                npx tsx scripts/extract-and-merge.ts "$TARGET"
               fi
 
               # Check if pricing.json was modified
@@ -120,15 +141,12 @@ jobs:
             else
               echo "Step 1: Preview extraction (no changes to files)..."
               if [ -n "$HINT" ]; then
-                npx tsx scripts/llm-extract.ts "$URL" --provider "$HINT"
+                npx tsx scripts/llm-extract.ts "$TARGET" --provider "$HINT"
               else
-                npx tsx scripts/llm-extract.ts "$URL"
+                npx tsx scripts/llm-extract.ts "$TARGET"
               fi
               echo "no_changes=true" >> $GITHUB_OUTPUT
             fi
-          else
-            echo "❌ Error: Either 'url' or 'batch_file' must be specified"
-            exit 1
           fi
 
       # 5. Send email notification (if email provided and merged)
