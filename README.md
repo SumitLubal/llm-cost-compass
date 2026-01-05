@@ -285,7 +285,23 @@ npm run daily:update sumitlubal@hotmail.com
 
 ## License
 
-MIT
+**Business Source License (BSL) 1.1**
+
+This project is licensed under the Business Source License. You may use this software for commercial purposes, but you cannot provide it as a hosted service or resell it as part of a competing product.
+
+**After January 4, 2029**, this software will become fully open source under the MIT License.
+
+For alternative licensing arrangements, please contact the repository owner.
+
+### Summary
+
+- ✅ **Free to use** for internal business operations
+- ✅ **Free to use** for personal projects  
+- ❌ **Cannot** provide as a hosted service
+- ❌ **Cannot** resell or redistribute as a competing product
+- 📅 **Full open source** on January 4, 2029
+
+For full license terms, see [LICENSE](LICENSE)
 
 ## Built For
 

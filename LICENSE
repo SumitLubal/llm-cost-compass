@@ -1,0 +1,49 @@
+Business Source License 1.1
+
+License text copyright (c) 2017 MariaDB Corporation Ab,
+All Rights Reserved. "Business Source License" is a trademark of MariaDB Corporation Ab.
+
+Parameters
+
+Licensor:             Sumeet
+Licensed Work:        LLM Cost Compass v0.1.0
+                      The Licensed Work is (c) 2026 Sumeet
+
+Additional Use Grant: You may use the Licensed Work for commercial purposes,
+                      provided that you:
+                      1. Do not provide the Licensed Work as a hosted service
+                         where third parties access the Licensed Work
+                      2. Do not resell or redistribute the Licensed Work
+                         as part of a competing product or service
+                      3. Are using the Licensed Work internally for business
+                         operations or personal use
+
+Change Date:          2029-01-04
+
+Change License:       MIT License
+
+Notice
+
+The Business Source License (BSL) license is designed to allow you to use
+the software for production purposes while preventing the software from
+becoming a direct competitor. After the Change Date, the software will
+become fully open source under the MIT License.
+
+For information on alternative licensing arrangements, please contact
+the Licensor at the email address provided in the repository.
+
+Termination
+
+If you violate the terms of this license, all rights granted to you under
+this license will terminate automatically. Upon termination, you must
+cease all use of the Licensed Work.
+
+Disclaimer
+
+THE LICENSED WORK IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+IN NO EVENT SHALL THE LICENSOR BE LIABLE FOR ANY CLAIM, DAMAGES OR
+OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
+ARISING FROM, OUT OF OR IN CONNECTION WITH THE LICENSED WORK OR THE
+USE OR OTHER DEALINGS IN THE LICENSED WORK.
