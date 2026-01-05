@@ -18,7 +18,7 @@ on:
       auto_merge:
         description: 'Auto-merge into pricing.json?'
         required: false
-        default: 'false'
+        default: 'true'
         type: choice
         options:
           - 'true'
@@ -104,16 +104,30 @@ jobs:
           if [ "$MODE" = "batch" ]; then
             # Batch mode
             echo "Running BATCH extraction from: $TARGET"
+
             if [ "$MERGE" = "true" ]; then
-              echo "⚠️  Batch mode with auto-merge is not recommended for safety."
-              echo "   Run in preview mode first, then manually review."
-              echo "   Continuing with preview only..."
+              echo "Extracting and merging all URLs from batch file..."
+              # Process each URL in the batch file
+              while IFS= read -r line; do
+                URL=$(echo "$line" | grep -o '"url": "[^"]*"' | cut -d'"' -f4)
+                PROVIDER=$(echo "$line" | grep -o '"provider": "[^"]*"' | cut -d'"' -f4)
+
+                if [ -n "$URL" ]; then
+                  echo "  Processing: $URL"
+                  if [ -n "$PROVIDER" ]; then
+                    npx tsx scripts/extract-and-merge.ts "$URL" --provider "$PROVIDER"
+                  else
+                    npx tsx scripts/extract-and-merge.ts "$URL"
+                  fi
+                fi
+              done < "$TARGET"
+            else
+              # Preview mode
+              echo "Preview mode - extracting without merging..."
+              npx tsx scripts/llm-extract.ts "$TARGET" --batch
             fi
 
-            # Always preview for batch mode (safety)
-            npx tsx scripts/llm-extract.ts "$TARGET" --batch
-
-            # Check if any changes were made (should be none in preview)
+            # Check if any changes were made
             if git diff --quiet src/data/pricing.json; then
               echo "no_changes=true" >> $GITHUB_OUTPUT
             else
@@ -212,26 +226,25 @@ jobs:
           if [ "${{ github.event.inputs.batch_file }}" != "" ]; then
             echo "**Batch File**: ${{ github.event.inputs.batch_file }}" >> $GITHUB_STEP_SUMMARY
             echo "**Mode**: Batch Processing" >> $GITHUB_STEP_SUMMARY
-          else
+          elif [ "${{ github.event.inputs.url }}" != "" ]; then
             echo "**URL**: ${{ github.event.inputs.url }}" >> $GITHUB_STEP_SUMMARY
             echo "**Provider Hint**: ${{ github.event.inputs.provider_hint || 'None' }}" >> $GITHUB_STEP_SUMMARY
             echo "**Mode**: Single URL" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "**Batch File**: scripts/urls.json (default)" >> $GITHUB_STEP_SUMMARY
+            echo "**Mode**: Batch Processing (default)" >> $GITHUB_STEP_SUMMARY
           fi
 
           echo "**Auto-merge**: ${{ github.event.inputs.auto_merge }}" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
 
-          if [ "${{ github.event.inputs.auto_merge }}" = "true" ]; then
-            if [ "${{ steps.extract.outputs.no_changes }}" = "true" ]; then
-              echo "✅ No changes detected - pricing data already up to date" >> $GITHUB_STEP_SUMMARY
-            else
-              echo "📝 Pull request created with extracted pricing data" >> $GITHUB_STEP_SUMMARY
-            fi
+          if [ "${{ steps.extract.outputs.no_changes }}" = "true" ]; then
+            echo "✅ No changes detected - pricing data already up to date" >> $GITHUB_STEP_SUMMARY
           else
-            echo "🔍 Preview mode - check logs above for extracted data" >> $GITHUB_STEP_SUMMARY
+            if [ "${{ github.event.inputs.auto_merge }}" = "true" ]; then
+              echo "📝 Changes merged into pricing.json" >> $GITHUB_STEP_SUMMARY
+              echo "📝 Pull request created" >> $GITHUB_STEP_SUMMARY
+            else
+              echo "🔍 Preview mode - check logs for extracted data" >> $GITHUB_STEP_SUMMARY
+            fi
           fi
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "### Next Steps" >> $GITHUB_STEP_SUMMARY
-          echo "- Review the extracted data carefully in the logs" >> $GITHUB_STEP_SUMMARY
-          echo "- For batch files: preview first, then enable auto-merge" >> $GITHUB_STEP_SUMMARY
-          echo "- Or manually verify with \`npm run extract\` locally" >> $GITHUB_STEP_SUMMARY
