@@ -65,6 +65,76 @@
           "context_window": 200000,
           "free_tier": "1M tokens/month free tier",
           "last_updated": "2026-01-05T07:46:02.882Z"
+        },
+        {
+          "name": "Claude Opus 4.5",
+          "input_per_million": 5,
+          "output_per_million": 25,
+          "context_window": 0,
+          "last_updated": "2026-01-05T09:18:42.576Z"
+        },
+        {
+          "name": "Claude Opus 4.1",
+          "input_per_million": 15,
+          "output_per_million": 75,
+          "context_window": 0,
+          "last_updated": "2026-01-05T09:18:42.576Z"
+        },
+        {
+          "name": "Claude Opus 4",
+          "input_per_million": 15,
+          "output_per_million": 75,
+          "context_window": 0,
+          "last_updated": "2026-01-05T09:18:42.576Z"
+        },
+        {
+          "name": "Claude Sonnet 4.5",
+          "input_per_million": 3,
+          "output_per_million": 15,
+          "context_window": 0,
+          "last_updated": "2026-01-05T09:18:42.576Z"
+        },
+        {
+          "name": "Claude Sonnet 4",
+          "input_per_million": 3,
+          "output_per_million": 15,
+          "context_window": 0,
+          "last_updated": "2026-01-05T09:18:42.576Z"
+        },
+        {
+          "name": "Claude Sonnet 3.7 (deprecated)",
+          "input_per_million": 3,
+          "output_per_million": 15,
+          "context_window": 0,
+          "last_updated": "2026-01-05T09:18:42.576Z"
+        },
+        {
+          "name": "Claude Haiku 4.5",
+          "input_per_million": 1,
+          "output_per_million": 5,
+          "context_window": 0,
+          "last_updated": "2026-01-05T09:18:42.576Z"
+        },
+        {
+          "name": "Claude Haiku 3.5",
+          "input_per_million": 0.8,
+          "output_per_million": 4,
+          "context_window": 0,
+          "last_updated": "2026-01-05T09:18:42.576Z"
+        },
+        {
+          "name": "Claude Opus 3 (deprecated)",
+          "input_per_million": 15,
+          "output_per_million": 75,
+          "context_window": 0,
+          "last_updated": "2026-01-05T09:18:42.576Z"
+        },
+        {
+          "name": "Claude Haiku 3",
+          "input_per_million": 0.25,
+          "output_per_million": 1.25,
+          "context_window": 0,
+          "last_updated": "2026-01-05T09:18:42.576Z"
         }
       ]
     },
@@ -109,6 +179,30 @@
           "context_window": 32000,
           "free_tier": "Free tier: 1M tokens/month",
           "last_updated": "2026-01-05T07:46:02.882Z"
+        },
+        {
+          "name": "Gemini 3 Pro Preview",
+          "input_per_million": 2,
+          "output_per_million": 12,
+          "context_window": 200000,
+          "free_tier": "Limited access, free input/output tokens",
+          "last_updated": "2026-01-05T09:18:14.239Z"
+        },
+        {
+          "name": "Gemini 3 Flash Preview",
+          "input_per_million": 0.5,
+          "output_per_million": 3,
+          "context_window": 200000,
+          "free_tier": "Free input/output tokens",
+          "last_updated": "2026-01-05T09:18:14.239Z"
+        },
+        {
+          "name": "Gemini 3 Pro Image Preview",
+          "input_per_million": 2,
+          "output_per_million": 12,
+          "context_window": 200000,
+          "free_tier": "Limited access, free input/output tokens",
+          "last_updated": "2026-01-05T09:18:14.239Z"
         }
       ]
     },
@@ -250,7 +344,7 @@
           "output_per_million": 2.5,
           "context_window": 128000,
           "free_tier": "50 requests per month",
-          "last_updated": "2026-01-05T08:43:48.561Z"
+          "last_updated": "2026-01-05T09:18:07.310Z"
         },
         {
           "name": "Grok 4 ≤128k",
@@ -314,7 +408,7 @@
           "output_per_million": 15,
           "context_window": 128000,
           "free_tier": "50 requests per month",
-          "last_updated": "2026-01-05T08:43:48.561Z"
+          "last_updated": "2026-01-05T09:18:07.310Z"
         },
         {
           "name": "Grok 4 Code",
@@ -322,7 +416,7 @@
           "output_per_million": 15,
           "context_window": 128000,
           "free_tier": "50 requests per month",
-          "last_updated": "2026-01-05T08:43:48.561Z"
+          "last_updated": "2026-01-05T09:18:07.310Z"
         },
         {
           "name": "Grok 4 Mini",
@@ -330,7 +424,7 @@
           "output_per_million": 1.5,
           "context_window": 128000,
           "free_tier": "50 requests per month",
-          "last_updated": "2026-01-05T08:43:48.561Z"
+          "last_updated": "2026-01-05T09:18:07.310Z"
         },
         {
           "name": "Grok 4 Mini Fast",
@@ -339,13 +433,21 @@
           "context_window": 128000,
           "free_tier": "50 requests per month",
           "last_updated": "2026-01-05T08:43:48.561Z"
+        },
+        {
+          "name": "Grok 4 Vision",
+          "input_per_million": 3,
+          "output_per_million": 15,
+          "context_window": 128000,
+          "free_tier": "50 requests per month",
+          "last_updated": "2026-01-05T09:18:07.310Z"
         }
       ]
     }
   ],
   "metadata": {
-    "last_updated": "2026-01-05T08:43:48.562Z",
+    "last_updated": "2026-01-05T09:18:42.577Z",
     "source": "scraped",
-    "total_models": 36
+    "total_models": 50
   }
 }
