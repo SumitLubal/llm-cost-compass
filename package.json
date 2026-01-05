@@ -17,7 +17,13 @@
     "merge": "tsx scripts/merge-pricing.ts",
     "extract-and-merge": "tsx scripts/extract-and-merge.ts",
     "db:remove": "rm -f llm-pricing.db || true",
-    "assets:generate": "node scripts/generate-assets.cjs"
+    "assets:generate": "node scripts/generate-assets.cjs",
+    "marketing:social": "tsx scripts/marketing/social-poster.ts",
+    "marketing:auto-post": "tsx scripts/marketing/auto-post.ts",
+    "marketing:directories": "tsx scripts/marketing/directory-submitter.ts",
+    "marketing:blog": "tsx scripts/marketing/blog-ideas.ts",
+    "marketing:outreach": "tsx scripts/marketing/backlink-outreach.ts",
+    "marketing:setup": "mkdir -p marketing-output && echo 'Marketing system ready! GitHub Actions will run daily at 9 AM UTC'"
   },
   "dependencies": {
     "next": "16.1.1",

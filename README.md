@@ -46,6 +46,56 @@ This is a **frontend-only** Next.js application with automated daily pricing upd
 - ✅ **Search** - Find models by provider or name
 - ✅ **SEO Optimized** - Dynamic metadata, sitemap, structured data
 - ✅ **Google Analytics** - Track user behavior and conversions
+- ✅ **Automated Marketing** - 100% free growth system
+
+## 🚀 Marketing Automation (100% Free, Zero Manual Work)
+
+This project includes a complete, automated marketing system that runs daily with zero manual intervention.
+
+### Quick Start (3 minutes)
+```bash
+# 1. Install dependencies
+npm install
+
+# 2. Enable GitHub Actions
+# Go to: Repository Settings > Actions > Enable workflows
+
+# 3. Add API credentials (optional - for auto-posting)
+# Add GitHub secrets for Twitter, LinkedIn, Reddit APIs
+
+# 4. Done! Everything runs automatically daily at 9 AM UTC
+```
+
+### What Happens Automatically (Daily at 9 AM UTC)
+✅ **Auto-posts to social media** (Twitter, LinkedIn, Reddit) - if API credentials set
+✅ **Generates social media posts** (backup content)
+✅ **Creates 30-day content calendar** with SEO keywords
+✅ **Updates directory checklist** (21 directories)
+✅ **Generates outreach plan** (20 targets + email templates)
+✅ **Creates daily marketing report**
+
+### What Happens Automatically (Weekly on Monday at 10 AM UTC)
+✅ **Weekly marketing plan**
+✅ **Progress report**
+✅ **GitHub issue with tasks**
+
+### Zero Manual Work Required
+The GitHub Actions workflow handles everything:
+1. Fetches latest pricing data
+2. Auto-posts to social media (if credentials configured)
+3. Generates all marketing materials
+4. Uploads artifacts
+5. Creates summary
+
+**You don't need to do anything manually!**
+
+### Expected Results
+- Week 1: 50-100 visitors, 5 backlinks
+- Week 4: 400-600 visitors, 20 backlinks
+- Week 12: 1,000+ visitors, 50+ backlinks
+
+**Full Guide**: See `MARKETING_QUICKSTART.md` for zero-manual setup
+**Strategy**: See `MARKETING_STRATEGY.md` for detailed plan
 
 ## GitHub Actions Workflows
 
@@ -85,6 +135,38 @@ gh workflow run llm-extract.yml -f batch_file="urls.json"
 3. Formats data correctly
 4. Merges into pricing.json
 5. Commits directly to main branch
+
+### Daily Marketing Automation
+**File**: `.github/workflows/daily-marketing.yml`
+
+**Schedule**: Daily at 9 AM UTC
+
+**Manual Run**:
+```bash
+gh workflow run daily-marketing.yml
+```
+
+**What it does**:
+1. Generates social media posts (Twitter, LinkedIn, Reddit)
+2. Creates content briefs and calendar
+3. Updates directory submission checklist
+4. Generates outreach email templates
+5. Creates daily marketing report
+
+### Weekly Marketing Summary
+**File**: `.github/workflows/weekly-marketing-summary.yml`
+
+**Schedule**: Every Monday at 10 AM UTC
+
+**Manual Run**:
+```bash
+gh workflow run weekly-marketing-summary.yml
+```
+
+**What it does**:
+1. Creates weekly marketing plan
+2. Generates progress report
+3. Opens GitHub issue with tasks
 
 ## Setup
 
@@ -153,10 +235,19 @@ src/
     ├── daily-update.ts    # Main update script
     ├── scrape-providers.ts # Web scraper
     ├── compare-pricing.ts  # Change detection
-    └── send-email.ts       # Email alerts
+    ├── send-email.ts       # Email alerts
+    └── marketing/          # Marketing automation
+        ├── social-poster.ts
+        ├── directory-submitter.ts
+        ├── blog-ideas.ts
+        ├── backlink-outreach.ts
+        └── README.md
 .github/
 └── workflows/
-    └── daily-pricing-update.yml  # GitHub Actions
+    ├── daily-pricing-update.yml     # Pricing updates
+    ├── llm-extract.yml              # LLM extraction
+    ├── daily-marketing.yml          # Daily marketing automation
+    └── weekly-marketing-summary.yml # Weekly summary
 ```
 
 ## Scripts
@@ -171,6 +262,22 @@ src/
 | `npm run scrape` | Scrape current pricing |
 | `npm run compare` | Compare with existing data |
 | `npm run email:test email@domain.com` | Test email sending |
+| `npm run marketing:social` | Generate social media posts |
+| `npm run marketing:directories` | Generate directory checklist |
+| `npm run marketing:blog` | Generate content calendar |
+| `npm run marketing:outreach` | Generate outreach plan |
+| `npm run marketing:setup` | Setup marketing system |
+
+## Marketing Scripts
+
+All marketing scripts are in `scripts/marketing/`:
+
+- **social-poster.ts** - Twitter/X, LinkedIn, Reddit posts
+- **directory-submitter.ts** - 20+ directory submission checklist
+- **blog-ideas.ts** - 30-day content calendar with SEO
+- **backlink-outreach.ts** - Email templates for backlinks
+
+**See `MARKETING_STRATEGY.md` for complete guide.**
 
 ## Data Architecture
 

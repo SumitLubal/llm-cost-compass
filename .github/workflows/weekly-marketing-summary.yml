@@ -1,0 +1,283 @@
+name: Weekly Marketing Summary
+
+on:
+  schedule:
+    # Run every Monday at 10 AM UTC
+    - cron: '0 10 * * 1'
+  workflow_dispatch:
+
+jobs:
+  weekly-summary:
+    name: Generate Weekly Marketing Summary
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Generate weekly summary
+        run: |
+          mkdir -p marketing-output
+
+          cat > marketing-output/WEEKLY_MARKETING_SUMMARY.md << 'EOF'
+# 📊 Weekly Marketing Summary - LLM PriceCompare
+
+**Week of:** $(date +"%B %d, %Y")
+**Generated:** $(date -u +"%Y-%m-%d %H:%M UTC")
+
+---
+
+## 🎯 This Week's Focus
+
+### Priority 1: Directory Submissions (Days 1-3)
+**Goal:** Get listed on 5+ high-authority directories
+
+**Action Items:**
+- [ ] Submit to Futurepedia (AI directory)
+- [ ] Submit to ThereIsAnAIForThat
+- [ ] Submit to DevHunt (dev tools)
+- [ ] Submit to Product Hunt
+- [ ] Submit to BetaList
+
+**Expected Impact:** 5-10 backlinks, referral traffic
+
+---
+
+### Priority 2: Content Marketing (Days 3-5)
+**Goal:** Publish 1 blog post + 5 social posts
+
+**Content Calendar:**
+- Monday: Publish "LLM Pricing Comparison 2026"
+- Tuesday: Twitter thread on cost optimization
+- Wednesday: LinkedIn post about startup savings
+- Thursday: Reddit discussion in r/llmpricing
+- Friday: LinkedIn case study
+
+**Expected Impact:** SEO improvements, social engagement
+
+---
+
+### Priority 3: Outreach Campaign (Days 5-7)
+**Goal:** 10 personalized outreach emails
+
+**Target List:**
+1. AI newsletters (The Batch, AI Breakfast)
+2. Tech blogs (Hacker News, Indie Hackers)
+3. Tool directories (Futurepedia, etc.)
+4. Guest post opportunities
+
+**Expected Impact:** 2-3 backlinks, potential guest posts
+
+---
+
+## 📈 Metrics to Track
+
+### Traffic Goals
+- [ ] 100+ unique visitors from referrals
+- [ ] 50+ social media clicks
+- [ ] 10+ directory referrals
+
+### SEO Goals
+- [ ] 5+ new backlinks
+- [ ] Improved domain authority
+- [ ] Better keyword rankings
+
+### Engagement Goals
+- [ ] 20+ social media interactions
+- [ ] 5+ GitHub stars
+- [ ] 3+ user submissions
+
+---
+
+## 📝 Daily Checklist Template
+
+### Monday
+- [ ] Publish blog post
+- [ ] Share on Twitter/LinkedIn
+- [ ] Submit to 2 directories
+
+### Tuesday
+- [ ] Create Twitter thread
+- [ ] Engage with AI communities
+- [ ] Submit to 2 directories
+
+### Wednesday
+- [ ] LinkedIn post
+- [ ] Reddit discussion
+- [ ] Outreach to 3 targets
+
+### Thursday
+- [ ] Respond to comments
+- [ ] Submit to 1 directory
+- [ ] Outreach to 3 targets
+
+### Friday
+- [ ] Weekly recap post
+- [ ] Outreach to 4 targets
+- [ ] Review metrics
+
+---
+
+## 🎁 Free Marketing Channels
+
+### 1. Social Media (Daily)
+- **Twitter/X:** Post 1-2x daily about pricing updates
+- **LinkedIn:** Professional updates 3x/week
+- **Reddit:** Engage in r/llmpricing, r/ai, r/machinelearning
+- **Indie Hackers:** Share progress and tools
+
+### 2. Directories (One-time setup)
+- Product Hunt, BetaList, Futurepedia
+- AI tool directories (20+ available)
+- Developer tool sites
+- Open source showcases
+
+### 3. Content Marketing (Weekly)
+- Blog posts on Medium/Dev.to
+- Guest posts for AI blogs
+- Technical tutorials
+- Case studies
+
+### 4. Community Engagement (Ongoing)
+- Answer questions on Reddit
+- Help in Discord/Slack communities
+- Comment on Hacker News
+- Participate in GitHub discussions
+
+---
+
+## 📊 Success Metrics Dashboard
+
+### Weekly Targets
+| Metric | Target | How to Track |
+|--------|--------|--------------|
+| New Backlinks | 5+ | Ahrefs/Google Search Console |
+| Referral Traffic | 100+ | Google Analytics |
+| Social Engagement | 50+ | Platform analytics |
+| Directory Listings | 5+ | Manual tracking |
+| Blog Posts | 1 | Website |
+| Outreach Emails | 10 | Manual tracking |
+
+### Monthly Targets
+| Metric | Target |
+|--------|--------|
+| Total Backlinks | 20+ |
+| Monthly Visitors | 500+ |
+| Social Followers | 100+ |
+| Blog Posts | 4+ |
+| Directory Listings | 15+ |
+
+---
+
+## 🛠️ Tools & Resources
+
+### Automation Scripts
+- `scripts/marketing/social-poster.ts` - Generate social posts
+- `scripts/marketing/directory-submitter.ts` - Directory checklist
+- `scripts/marketing/blog-ideas.ts` - Content calendar
+- `scripts/marketing/backlink-outreach.ts` - Outreach templates
+
+### Free Tools for Tracking
+- **Google Search Console** - Backlinks & rankings
+- **Google Analytics** - Traffic sources
+- **Ahrefs Free** - Backlink checker
+- **Ubersuggest** - Keyword research
+- **MozBar** - Domain authority
+
+### Content Ideas
+- LLM pricing comparisons
+- Cost optimization guides
+- Provider deep dives
+- Use case studies
+- Industry trend analysis
+
+---
+
+## 💡 Pro Tips
+
+1. **Leverage GitHub:** Your project is open-source, use it for credibility
+2. **Data-Driven:** Use your daily pricing updates as content hooks
+3. **Community First:** Help others, don't just promote
+4. **Consistency:** Daily small actions > weekly big pushes
+5. **Track Everything:** Use a simple spreadsheet for outreach
+
+---
+
+## 🎯 Next Week Preview
+
+**Week 2 Focus:**
+- Guest post pitching
+- Video content (screen recordings)
+- Newsletter creation
+- Partnership outreach
+
+---
+
+## 📞 Support & Questions
+
+If you need help with:
+- Customizing scripts
+- Outreach strategies
+- Content ideas
+- Metrics tracking
+
+Check the scripts in `scripts/marketing/` or review previous reports.
+
+---
+
+**Generated by GitHub Actions**
+*Automated Marketing System v1.0*
+EOF
+
+          echo "## Weekly Marketing Summary Generated" >> $GITHUB_STEP_SUMMARY
+          echo "✅ Focus areas defined" >> $GITHUB_STEP_SUMMARY
+          echo "✅ Daily checklist created" >> $GITHUB_STEP_SUMMARY
+          echo "✅ Metrics dashboard ready" >> $GITHUB_STEP_SUMMARY
+
+      - name: Upload summary
+        uses: actions/upload-artifact@v4
+        with:
+          name: weekly-marketing-summary-${{ github.run_number }}
+          path: marketing-output/WEEKLY_MARKETING_SUMMARY.md
+          retention-days: 30
+
+      - name: Create GitHub Issue
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const summary = `# 🎯 Weekly Marketing Plan
+
+This week's marketing tasks are ready!
+
+## Quick Start
+1. Download the weekly summary from artifacts
+2. Follow the daily checklist
+3. Track your progress
+
+## Key Goals
+- 5+ directory submissions
+- 1 blog post
+- 10+ outreach emails
+- 100+ referral visitors
+
+## Tools Available
+All marketing scripts are in \`scripts/marketing/\`
+
+Good luck! 🚀`;
+
+            github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: `Weekly Marketing Plan - Week of ${new Date().toLocaleDateString()}`,
+              body: summary,
+              labels: ['marketing', 'weekly']
+            });
