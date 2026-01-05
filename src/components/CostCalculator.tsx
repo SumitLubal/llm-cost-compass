@@ -50,11 +50,7 @@ export function CostCalculator({ models }: CostCalculatorProps) {
     }));
 
     return modelsWithCosts.sort((a, b) => {
-<<<<<<< HEAD
-      let aVal, bVal;
-=======
       let aVal: string | number, bVal: string | number;
->>>>>>> 2b38954 (allows the tables to be sortable)
 
       switch (sortField) {
         case 'provider':
@@ -87,12 +83,8 @@ export function CostCalculator({ models }: CostCalculatorProps) {
           : bVal.localeCompare(aVal);
       }
 
-<<<<<<< HEAD
-      return sortDirection === 'asc' ? aVal - bVal : bVal - aVal;
-=======
       // At this point, both values are numbers
       return sortDirection === 'asc' ? (aVal as number) - (bVal as number) : (bVal as number) - (aVal as number);
->>>>>>> 2b38954 (allows the tables to be sortable)
     });
   };
 

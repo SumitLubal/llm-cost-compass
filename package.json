@@ -16,7 +16,8 @@
     "extract": "tsx scripts/llm-extract.ts",
     "merge": "tsx scripts/merge-pricing.ts",
     "extract-and-merge": "tsx scripts/extract-and-merge.ts",
-    "db:remove": "rm -f llm-pricing.db || true"
+    "db:remove": "rm -f llm-pricing.db || true",
+    "assets:generate": "node scripts/generate-assets.cjs"
   },
   "dependencies": {
     "next": "16.1.1",

@@ -1,4 +1,35 @@
 import { SubmitForm } from '@/components/SubmitForm';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Submit LLM Pricing | LLM PriceCheck',
+  description: 'Submit new LLM pricing information to LLM PriceCheck. Help keep our database accurate and up-to-date with the latest pricing from OpenAI, Anthropic, Google, xAI, Amazon, Meta, and more.',
+  keywords: [
+    'submit LLM pricing',
+    'contribute pricing data',
+    'LLM price submission',
+    'AI model pricing update',
+    'OpenAI pricing submission',
+    'Anthropic pricing submission',
+    'Google Gemini pricing',
+    'xAI Grok pricing',
+    'LLM pricing database',
+    'crowdsourced LLM pricing',
+  ],
+  alternates: {
+    canonical: 'https://llmpricecheck.com/submit',
+  },
+  openGraph: {
+    title: 'Submit LLM Pricing | LLM PriceCheck',
+    description: 'Help keep our database accurate. Submit new pricing for OpenAI, Anthropic, Google, xAI, and more.',
+    url: 'https://llmpricecheck.com/submit',
+    type: 'website',
+  },
+  twitter: {
+    title: 'Submit LLM Pricing',
+    description: 'Help keep our database accurate with new pricing submissions',
+  },
+};
 
 export default function SubmitPage() {
   return (

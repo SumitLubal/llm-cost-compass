@@ -1,0 +1,33 @@
+{
+  "name": "LLM PriceCheck - Compare LLM Pricing",
+  "short_name": "LLM PriceCheck",
+  "description": "Compare LLM pricing across OpenAI, Anthropic, Google, xAI, and more. Real-time cost calculator and smart recommendations.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#6366f1",
+  "orientation": "any",
+  "categories": ["business", "productivity", "developer-tools"],
+  "icons": [
+    {
+      "src": "/android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/android-chrome-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/og-image.png",
+      "sizes": "1200x630",
+      "type": "image/png",
+      "form_factor": "wide"
+    }
+  ]
+}

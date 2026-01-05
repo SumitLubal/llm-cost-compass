@@ -23,18 +23,32 @@ export const metadata: Metadata = {
 
   // Keywords (for legacy SEO)
   keywords: [
-    "LLM pricing",
-    "AI model costs",
-    "OpenAI pricing",
-    "Anthropic pricing",
-    "Claude pricing",
-    "GPT-4 pricing",
-    "LLM comparison",
-    "AI cost calculator",
-    "cheapest LLM",
-    "LLM price comparison",
-    "language model pricing",
-    "AI API pricing",
+    // Core terms
+    "LLM pricing", "AI model costs", "LLM comparison", "AI pricing comparison",
+    "language model pricing", "large language model pricing", "AI API pricing",
+    "LLM cost calculator", "AI cost calculator", "monthly AI cost",
+
+    // Provider-specific pricing
+    "OpenAI pricing", "GPT-4 pricing", "GPT-4o pricing", "GPT-3.5 Turbo pricing",
+    "Anthropic pricing", "Claude pricing", "Claude 3 Opus pricing", "Claude 3 Sonnet pricing", "Claude 3 Haiku pricing",
+    "Google pricing", "Gemini pricing", "Gemini 1.5 Pro pricing", "Gemini Pro pricing",
+    "xAI pricing", "Grok pricing", "Grok 4 pricing", "Grok 3 pricing",
+    "Amazon pricing", "Nova pricing", "AWS Bedrock pricing",
+    "Meta pricing", "Llama pricing",
+    "DeepSeek pricing", "Mistral pricing",
+
+    // Search intent terms
+    "cheapest LLM", "cheapest AI model", "best value LLM", "most affordable AI",
+    "compare LLM prices", "LLM price comparison tool", "AI model comparison",
+    "LLM pricing API", "LLM pricing database", "daily LLM price updates",
+
+    // Feature terms
+    "LLM cost estimator", "token cost calculator", "AI token pricing",
+    "input output cost", "per million tokens pricing",
+
+    // User intent
+    "find cheapest AI", "compare AI costs", "LLM pricing tool",
+    "AI pricing database", "LLM price tracker"
   ],
 
   // Open Graph
@@ -116,25 +130,44 @@ const structuredData = {
   "@context": "https://schema.org",
   "@type": "WebApplication",
   "name": "LLM PriceCheck",
-  "description": "Compare LLM pricing across all providers with smart cost calculator",
+  "alternateName": ["LLM Pricing Tool", "AI Cost Calculator", "LLM Comparison"],
+  "description": "Compare LLM pricing across OpenAI, Anthropic, Google, xAI, Amazon, Meta, DeepSeek, Mistral, and more. Real-time cost calculator, smart recommendations, and daily price updates.",
   "url": "https://llmpricecheck.com",
   "applicationCategory": "BusinessApplication",
   "operatingSystem": "Any",
+  "genre": ["AI", "LLM", "Pricing", "Comparison Tool"],
+  "keywords": "LLM pricing, AI model costs, OpenAI, Anthropic, Google, xAI, cost calculator",
   "offers": {
     "@type": "Offer",
     "price": "0",
     "priceCurrency": "USD",
     "availability": "https://schema.org/InStock",
+    "priceValidUntil": "2029-12-31",
   },
   "creator": {
     "@type": "Person",
     "name": "Sumeet",
+    "jobTitle": "Software Engineer",
   },
   "aggregateRating": {
     "@type": "AggregateRating",
     "ratingValue": "4.8",
     "ratingCount": "100",
+    "bestRating": "5",
+    "worstRating": "1",
   },
+  "featureList": [
+    "Real-time LLM pricing comparison",
+    "Cost calculator for monthly estimates",
+    "Smart recommendations by value score",
+    "Daily automated price updates",
+    "Free tier detection",
+    "Dark mode support"
+  ],
+  "applicationSuite": "LLM PriceCheck Suite",
+  "softwareVersion": "0.1.0",
+  "datePublished": "2026-01-01",
+  "dateModified": "2026-01-05",
 };
 
 export default function RootLayout({
@@ -160,6 +193,27 @@ export default function RootLayout({
         <meta name="mobile-web-app-capable" content="yes" />
         <meta name="msapplication-TileColor" content="#6366f1" />
         <meta name="msapplication-tap-highlight" content="no" />
+
+        {/* Additional SEO meta tags */}
+        <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+        <meta name="googlebot" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+        <meta name="author" content="Sumeet" />
+        <meta name="generator" content="Next.js" />
+        <meta name="rating" content="general" />
+        <meta name="revisit-after" content="1 days" />
+
+        {/* Open Graph additional tags */}
+        <meta property="og:site_name" content="LLM PriceCheck" />
+        <meta property="og:locale" content="en_US" />
+        <meta property="og:type" content="website" />
+
+        {/* Twitter additional tags */}
+        <meta name="twitter:site" content="@llmpricecheck" />
+        <meta name="twitter:creator" content="@sumeet" />
+
+        {/* Theme color for browsers */}
+        <meta name="theme-color" content="#6366f1" media="(prefers-color-scheme: light)" />
+        <meta name="theme-color" content="#111827" media="(prefers-color-scheme: dark)" />
 
         {/* Favicon variants */}
         <link rel="icon" type="image/svg+xml" href="/favicon.svg" />

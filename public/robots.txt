@@ -1,0 +1,41 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://llmpricecheck.com/sitemap.xml
+
+# Block admin and API routes
+Disallow: /api/
+Disallow: /admin/
+Disallow: /_next/
+Disallow: /static/
+Disallow: /_next/static/
+
+# Allow all important pages
+Allow: /
+Allow: /submit
+
+# Crawl delay to be respectful
+Crawl-delay: 1
+
+# Googlebot specific rules
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 0
+Max-video-preview: -1
+Max-image-preview: large
+Max-snippet: -1
+
+# Bingbot
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 0
+
+# Twitterbot (for card previews)
+User-agent: Twitterbot
+Allow: /
+Crawl-delay: 0
+
+# Facebookbot
+User-agent: facebookexternalhit
+Allow: /
+Crawl-delay: 0

@@ -44,6 +44,46 @@ This is a **frontend-only** Next.js application with automated daily pricing upd
 - ✅ **Cost Calculator** - Estimate your monthly bill
 - ✅ **Dark Mode** - System-based theme switching
 - ✅ **Search** - Find models by provider or name
+- ✅ **SEO Optimized** - Dynamic metadata, sitemap, structured data
+
+## GitHub Actions Workflows
+
+### Daily Pricing Update
+**File**: `.github/workflows/daily-pricing-update.yml`
+
+**Manual Run**:
+```bash
+gh workflow run daily-pricing-update.yml
+```
+
+**Auto-merge**: `true` (writes directly to pricing.json)
+
+**What it does**:
+1. Scrapes pricing from llm-prices.com API
+2. Compares with existing data
+3. Sends email alerts for changes
+4. Commits directly to main branch
+
+### LLM Extraction Workflow
+**File**: `.github/workflows/llm-extract.yml`
+
+**Manual Run**:
+```bash
+# Single URL
+gh workflow run llm-extract.yml -f url="https://docs.x.ai/docs/models/grok-4-1-fast-reasoning"
+
+# Batch file
+gh workflow run llm-extract.yml -f batch_file="urls.json"
+```
+
+**Auto-merge**: `true` (writes directly to pricing.json)
+
+**What it does**:
+1. Fetches pricing page content
+2. Uses LLM to extract structured pricing
+3. Formats data correctly
+4. Merges into pricing.json
+5. Commits directly to main branch
 
 ## Setup
 
@@ -216,6 +256,45 @@ Users can submit pricing via `/submit` page:
 - **User Override**: Click toggle to switch
 - **Persistent**: Saved to localStorage
 - **No Flash**: Hydration-safe rendering
+
+## SEO Features
+
+This website is fully SEO-optimized with:
+
+### Metadata
+- **Dynamic titles** based on search queries
+- **Descriptive meta descriptions** for each page
+- **Canonical URLs** to prevent duplicate content
+- **Open Graph tags** for social sharing
+- **Twitter Card** metadata
+
+### Structured Data
+- **JSON-LD** for Organization schema
+- **WebApplication** schema with pricing info
+- **AggregateRating** for social proof
+
+### Indexing
+- **Sitemap.xml** with all important pages
+- **Robots.txt** with proper directives
+- **Daily updates** signal fresh content to search engines
+
+### PWA Support
+- **Manifest.json** for installable web app
+- **Favicon variants** for all devices
+- **Theme color** for browser chrome
+
+### Testing
+```bash
+# Test your SEO
+npm run build
+npm run start
+
+# Check metadata
+curl http://localhost:3000 | grep -i meta
+
+# Validate structured data
+# Use: https://validator.schema.org/
+```
 
 ## Deployment
 
