@@ -13,6 +13,9 @@
     "scrape": "tsx scripts/scrape-providers.ts",
     "compare": "tsx scripts/compare-pricing.ts",
     "email:test": "tsx scripts/send-email.ts",
+    "extract": "tsx scripts/llm-extract.ts",
+    "merge": "tsx scripts/merge-pricing.ts",
+    "extract-and-merge": "tsx scripts/extract-and-merge.ts",
     "db:remove": "rm -f llm-pricing.db || true"
   },
   "dependencies": {

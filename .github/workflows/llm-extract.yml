@@ -1,0 +1,219 @@
+name: LLM Pricing Extraction
+
+on:
+  workflow_dispatch:
+    inputs:
+      url:
+        description: 'Single documentation URL (ignored if batch_file specified)'
+        required: false
+        type: string
+      provider_hint:
+        description: 'Provider name hint for single URL (optional)'
+        required: false
+        type: string
+      batch_file:
+        description: 'Batch file path in repo (e.g., scripts/urls.json). If set, processes all URLs in file.'
+        required: false
+        type: string
+      auto_merge:
+        description: 'Auto-merge into pricing.json?'
+        required: false
+        default: 'false'
+        type: choice
+        options:
+          - 'true'
+          - 'false'
+      alert_email:
+        description: 'Email for extraction results (optional)'
+        required: false
+        type: string
+
+concurrency:
+  group: llm-extract-${{ github.run_id }}
+  cancel-in-progress: false
+
+jobs:
+  extract:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+      pull-requests: write
+
+    steps:
+      # 1. Checkout repository
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      # 2. Setup Node.js
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      # 3. Install dependencies
+      - name: Install dependencies
+        run: npm ci
+
+      # 4. Run LLM extraction
+      - name: Extract pricing from URL
+        id: extract
+        env:
+          EXTRACTION_API_KEY: ${{ secrets.EXTRACTION_API_KEY }}
+          EXTRACTION_BASE_URL: ${{ secrets.EXTRACTION_BASE_URL }}
+          EXTRACTION_MODEL: ${{ secrets.EXTRACTION_MODEL }}
+          RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
+        run: |
+          BATCH_FILE="${{ github.event.inputs.batch_file }}"
+          URL="${{ github.event.inputs.url }}"
+          HINT="${{ github.event.inputs.provider_hint }}"
+          MERGE="${{ github.event.inputs.auto_merge }}"
+          EMAIL="${{ github.event.inputs.alert_email || secrets.ALERT_EMAIL }}"
+
+          echo "=== LLM Pricing Extraction ==="
+          echo "Batch file: ${BATCH_FILE:-None}"
+          echo "Single URL: ${URL:-None}"
+          echo "Provider hint: ${HINT:-None}"
+          echo "Auto-merge: $MERGE"
+          echo ""
+
+          if [ -n "$BATCH_FILE" ]; then
+            # Batch mode
+            echo "Running BATCH extraction from: $BATCH_FILE"
+            if [ "$MERGE" = "true" ]; then
+              echo "⚠️  Batch mode with auto-merge is not recommended for safety."
+              echo "   Run in preview mode first, then manually review."
+              echo "   Continuing with preview only..."
+            fi
+
+            # Always preview for batch mode (safety)
+            npx tsx scripts/llm-extract.ts "$BATCH_FILE" --batch
+
+            # Check if any changes were made (should be none in preview)
+            if git diff --quiet src/data/pricing.json; then
+              echo "no_changes=true" >> $GITHUB_OUTPUT
+            else
+              echo "no_changes=false" >> $GITHUB_OUTPUT
+            fi
+
+          elif [ -n "$URL" ]; then
+            # Single URL mode
+            echo "Running SINGLE URL extraction"
+
+            if [ "$MERGE" = "true" ]; then
+              echo "Step 1: Extracting and merging into pricing.json..."
+              if [ -n "$HINT" ]; then
+                npx tsx scripts/extract-and-merge.ts "$URL" --provider "$HINT"
+              else
+                npx tsx scripts/extract-and-merge.ts "$URL"
+              fi
+
+              # Check if pricing.json was modified
+              if git diff --quiet src/data/pricing.json; then
+                echo "no_changes=true" >> $GITHUB_OUTPUT
+              else
+                echo "no_changes=false" >> $GITHUB_OUTPUT
+              fi
+            else
+              echo "Step 1: Preview extraction (no changes to files)..."
+              if [ -n "$HINT" ]; then
+                npx tsx scripts/llm-extract.ts "$URL" --provider "$HINT"
+              else
+                npx tsx scripts/llm-extract.ts "$URL"
+              fi
+              echo "no_changes=true" >> $GITHUB_OUTPUT
+            fi
+          else
+            echo "❌ Error: Either 'url' or 'batch_file' must be specified"
+            exit 1
+          fi
+
+      # 5. Send email notification (if email provided and merged)
+      - name: Send email notification
+        if: github.event.inputs.auto_merge == 'true' && github.event.inputs.alert_email != ''
+        env:
+          RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
+          ALERT_EMAIL: ${{ github.event.inputs.alert_email }}
+          URL: ${{ github.event.inputs.url }}
+        run: |
+          if [ "${{ steps.extract.outputs.no_changes }}" = "false" ]; then
+            echo "Sending extraction summary to $ALERT_EMAIL..."
+            # You could add a simple email script here if needed
+            echo "Extraction complete. Check the workflow logs for details."
+          fi
+
+      # 6. Create Pull Request (if merged and changes detected)
+      - name: Create Pull Request
+        if: github.event.inputs.auto_merge == 'true' && steps.extract.outputs.no_changes == 'false'
+        uses: peter-evans/create-pull-request@v5
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: "chore: extract pricing from ${{ github.event.inputs.batch_file || github.event.inputs.url }}"
+          title: "📊 LLM Extraction: ${{ github.event.inputs.batch_file || github.event.inputs.url }}"
+          body: |
+            ## LLM Pricing Extraction
+
+            **Source**: ${{ github.event.inputs.batch_file || github.event.inputs.url }}
+            **Provider Hint**: ${{ github.event.inputs.provider_hint || 'None' }}
+            **Mode**: ${{ github.event.inputs.batch_file && 'Batch' || 'Single URL' }}
+            **Extracted**: ${{ github.run_number }}
+
+            ### Changes
+            This PR adds/updates pricing data extracted via LLM.
+
+            ### Review Checklist
+            - [ ] Verify extracted prices match source
+            - [ ] Check model names are accurate
+            - [ ] Verify context windows
+            - [ ] Approve if correct
+
+            ---
+            *Generated by GitHub Actions LLM Extraction Workflow*
+          branch: llm-extract/${{ github.run_number }}
+          delete-branch: true
+
+      # 7. Upload artifacts
+      - name: Upload extraction artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: extraction-results-${{ github.run_number }}
+          path: |
+            src/data/pricing.json
+          retention-days: 7
+
+      # 8. Job Summary
+      - name: Job Summary
+        run: |
+          echo "## 🤖 LLM Pricing Extraction Summary" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+
+          if [ "${{ github.event.inputs.batch_file }}" != "" ]; then
+            echo "**Batch File**: ${{ github.event.inputs.batch_file }}" >> $GITHUB_STEP_SUMMARY
+            echo "**Mode**: Batch Processing" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "**URL**: ${{ github.event.inputs.url }}" >> $GITHUB_STEP_SUMMARY
+            echo "**Provider Hint**: ${{ github.event.inputs.provider_hint || 'None' }}" >> $GITHUB_STEP_SUMMARY
+            echo "**Mode**: Single URL" >> $GITHUB_STEP_SUMMARY
+          fi
+
+          echo "**Auto-merge**: ${{ github.event.inputs.auto_merge }}" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+
+          if [ "${{ github.event.inputs.auto_merge }}" = "true" ]; then
+            if [ "${{ steps.extract.outputs.no_changes }}" = "true" ]; then
+              echo "✅ No changes detected - pricing data already up to date" >> $GITHUB_STEP_SUMMARY
+            else
+              echo "📝 Pull request created with extracted pricing data" >> $GITHUB_STEP_SUMMARY
+            fi
+          else
+            echo "🔍 Preview mode - check logs above for extracted data" >> $GITHUB_STEP_SUMMARY
+          fi
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### Next Steps" >> $GITHUB_STEP_SUMMARY
+          echo "- Review the extracted data carefully in the logs" >> $GITHUB_STEP_SUMMARY
+          echo "- For batch files: preview first, then enable auto-merge" >> $GITHUB_STEP_SUMMARY
+          echo "- Or manually verify with \`npm run extract\` locally" >> $GITHUB_STEP_SUMMARY

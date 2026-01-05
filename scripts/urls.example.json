@@ -1,0 +1,14 @@
+[
+  {
+    "url": "https://docs.x.ai/docs/models/grok-4-1-fast-reasoning",
+    "provider": "xAI"
+  },
+  {
+    "url": "https://openai.com/pricing",
+    "provider": "OpenAI"
+  },
+  {
+    "url": "https://www.anthropic.com/pricing",
+    "provider": "Anthropic"
+  }
+]

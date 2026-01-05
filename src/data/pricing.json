@@ -246,11 +246,11 @@
         },
         {
           "name": "Grok 4 Fast",
-          "input_per_million": 0.2,
-          "output_per_million": 0.5,
-          "context_window": 0,
-          "free_tier": null,
-          "last_updated": "2026-01-05T07:46:02.882Z"
+          "input_per_million": 0.5,
+          "output_per_million": 2.5,
+          "context_window": 128000,
+          "free_tier": "50 requests per month",
+          "last_updated": "2026-01-05T08:43:48.561Z"
         },
         {
           "name": "Grok 4 ≤128k",
@@ -307,13 +307,45 @@
           "context_window": 0,
           "free_tier": null,
           "last_updated": "2026-01-05T07:46:02.882Z"
+        },
+        {
+          "name": "Grok 4",
+          "input_per_million": 3,
+          "output_per_million": 15,
+          "context_window": 128000,
+          "free_tier": "50 requests per month",
+          "last_updated": "2026-01-05T08:43:48.561Z"
+        },
+        {
+          "name": "Grok 4 Code",
+          "input_per_million": 3,
+          "output_per_million": 15,
+          "context_window": 128000,
+          "free_tier": "50 requests per month",
+          "last_updated": "2026-01-05T08:43:48.561Z"
+        },
+        {
+          "name": "Grok 4 Mini",
+          "input_per_million": 0.3,
+          "output_per_million": 1.5,
+          "context_window": 128000,
+          "free_tier": "50 requests per month",
+          "last_updated": "2026-01-05T08:43:48.561Z"
+        },
+        {
+          "name": "Grok 4 Mini Fast",
+          "input_per_million": 0.1,
+          "output_per_million": 0.5,
+          "context_window": 128000,
+          "free_tier": "50 requests per month",
+          "last_updated": "2026-01-05T08:43:48.561Z"
         }
       ]
     }
   ],
   "metadata": {
-    "last_updated": "2026-01-05T08:00:00.000Z",
+    "last_updated": "2026-01-05T08:43:48.562Z",
     "source": "scraped",
-    "total_models": 32
+    "total_models": 36
   }
 }
