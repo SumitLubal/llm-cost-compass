@@ -29,7 +29,7 @@ export function CostCalculator({ models }: CostCalculatorProps) {
   };
 
   return (
-    <div className="bg-white rounded-2xl shadow-lg overflow-hidden mb-8">
+    <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg overflow-hidden mb-8 border border-gray-200 dark:border-gray-700">
       <div className="bg-gradient-to-r from-purple-600 to-blue-600 px-6 py-4 text-white">
         <h2 className="text-xl font-bold">💰 Cost Calculator</h2>
         <p className="text-sm text-purple-100">Estimate your monthly bill across all models</p>
@@ -39,7 +39,7 @@ export function CostCalculator({ models }: CostCalculatorProps) {
         {/* Input Section */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
               Input Tokens (per month)
             </label>
             <input
@@ -47,15 +47,15 @@ export function CostCalculator({ models }: CostCalculatorProps) {
               value={inputTokens}
               onChange={(e) => setInputTokens(Number(e.target.value))}
               placeholder="e.g., 100000"
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 text-gray-900 font-medium"
+              className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 text-gray-900 dark:text-gray-100 font-medium bg-white dark:bg-gray-700"
             />
-            <p className="text-xs text-gray-500 mt-1">
+            <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
               ~{(inputTokens / 1000).toLocaleString()}K tokens
             </p>
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
               Output Tokens (per month)
             </label>
             <input
@@ -63,9 +63,9 @@ export function CostCalculator({ models }: CostCalculatorProps) {
               value={outputTokens}
               onChange={(e) => setOutputTokens(Number(e.target.value))}
               placeholder="e.g., 50000"
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 text-gray-900 font-medium"
+              className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 text-gray-900 dark:text-gray-100 font-medium bg-white dark:bg-gray-700"
             />
-            <p className="text-xs text-gray-500 mt-1">
+            <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
               ~{(outputTokens / 1000).toLocaleString()}K tokens
             </p>
           </div>
@@ -81,35 +81,35 @@ export function CostCalculator({ models }: CostCalculatorProps) {
         {/* Results Section */}
         {showResults && (
           <div className="space-y-4">
-            <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-4">
-              <h3 className="font-semibold text-blue-900 mb-2">Your Usage:</h3>
+            <div className="bg-blue-50 dark:bg-blue-950/30 border border-blue-200 dark:border-blue-800 rounded-lg p-4 mb-4">
+              <h3 className="font-semibold text-blue-900 dark:text-blue-100 mb-2">Your Usage:</h3>
               <div className="grid grid-cols-2 gap-4 text-sm">
                 <div>
-                  <span className="text-gray-600">Input:</span>{' '}
-                  <span className="font-mono font-bold text-gray-900">
+                  <span className="text-gray-600 dark:text-gray-400">Input:</span>{' '}
+                  <span className="font-mono font-bold text-gray-900 dark:text-gray-100">
                     {inputTokens.toLocaleString()} tokens
                   </span>
                 </div>
                 <div>
-                  <span className="text-gray-600">Output:</span>{' '}
-                  <span className="font-mono font-bold text-gray-900">
+                  <span className="text-gray-600 dark:text-gray-400">Output:</span>{' '}
+                  <span className="font-mono font-bold text-gray-900 dark:text-gray-100">
                     {outputTokens.toLocaleString()} tokens
                   </span>
                 </div>
                 <div className="col-span-2">
-                  <span className="text-gray-600">Total:</span>{' '}
-                  <span className="font-mono font-bold text-gray-900">
+                  <span className="text-gray-600 dark:text-gray-400">Total:</span>{' '}
+                  <span className="font-mono font-bold text-gray-900 dark:text-gray-100">
                     {(inputTokens + outputTokens).toLocaleString()} tokens
                   </span>
                 </div>
               </div>
             </div>
 
-            <h3 className="font-semibold text-gray-900 text-lg">Estimated Monthly Costs:</h3>
+            <h3 className="font-semibold text-gray-900 dark:text-gray-100 text-lg">Estimated Monthly Costs:</h3>
 
             <div className="overflow-x-auto">
               <table className="w-full text-sm">
-                <thead className="bg-gray-50 text-gray-700">
+                <thead className="bg-gray-50 dark:bg-gray-700 text-gray-700 dark:text-gray-300">
                   <tr>
                     <th className="px-4 py-2 text-left">Provider</th>
                     <th className="px-4 py-2 text-left">Model</th>
@@ -118,7 +118,7 @@ export function CostCalculator({ models }: CostCalculatorProps) {
                     <th className="px-4 py-2 text-right font-bold">Total</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-gray-200">
+                <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
                   {sortedModels.map((model, idx) => {
                     const inputCost = (inputTokens / 1000000) * model.input_per_million;
                     const outputCost = (outputTokens / 1000000) * model.output_per_million;
@@ -128,16 +128,18 @@ export function CostCalculator({ models }: CostCalculatorProps) {
                     return (
                       <tr
                         key={idx}
-                        className={isCheapest ? 'bg-green-50 hover:bg-green-100' : 'hover:bg-gray-50'}
+                        className={isCheapest
+                          ? 'bg-green-50 dark:bg-green-950/30 hover:bg-green-100 dark:hover:bg-green-950/50'
+                          : 'hover:bg-gray-50 dark:hover:bg-gray-800'}
                       >
-                        <td className="px-4 py-3 font-medium text-gray-900">
+                        <td className="px-4 py-3 font-medium text-gray-900 dark:text-gray-100">
                           {model.provider}
                           {isCheapest && <span className="ml-2 text-xs bg-green-600 text-white px-2 py-0.5 rounded">CHEAPEST</span>}
                         </td>
-                        <td className="px-4 py-3 text-gray-700">{model.model}</td>
-                        <td className="px-4 py-3 text-right text-gray-600">${inputCost.toFixed(2)}</td>
-                        <td className="px-4 py-3 text-right text-gray-600">${outputCost.toFixed(2)}</td>
-                        <td className="px-4 py-3 text-right font-bold text-gray-900">
+                        <td className="px-4 py-3 text-gray-700 dark:text-gray-300">{model.model}</td>
+                        <td className="px-4 py-3 text-right text-gray-600 dark:text-gray-400">${inputCost.toFixed(2)}</td>
+                        <td className="px-4 py-3 text-right text-gray-600 dark:text-gray-400">${outputCost.toFixed(2)}</td>
+                        <td className="px-4 py-3 text-right font-bold text-gray-900 dark:text-gray-100">
                           {total === 0 ? 'FREE' : `$${total.toFixed(2)}`}
                         </td>
                       </tr>
@@ -183,12 +185,12 @@ export function CostCalculator({ models }: CostCalculatorProps) {
 
             {/* Free Tier Alert */}
             {sortedModels.some(m => calculateCost(m) === 0) && (
-              <div className="bg-green-50 border border-green-200 rounded-lg p-4 mt-4">
+              <div className="bg-green-50 dark:bg-green-950/30 border border-green-200 dark:border-green-800 rounded-lg p-4 mt-4">
                 <div className="flex items-start gap-3">
                   <div className="text-2xl">🆓</div>
                   <div>
-                    <div className="font-semibold text-green-900">Free Tier Available!</div>
-                    <div className="text-sm text-green-700 mt-1">
+                    <div className="font-semibold text-green-900 dark:text-green-100">Free Tier Available!</div>
+                    <div className="text-sm text-green-700 dark:text-green-300 mt-1">
                       Some providers offer free tiers that could cover your usage entirely.
                     </div>
                   </div>
@@ -198,7 +200,7 @@ export function CostCalculator({ models }: CostCalculatorProps) {
 
             <button
               onClick={() => setShowResults(false)}
-              className="w-full border border-gray-300 text-gray-700 py-2 rounded-lg hover:bg-gray-50 transition mt-4"
+              className="w-full border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 py-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 transition mt-4"
             >
               Hide Results
             </button>
@@ -208,29 +210,29 @@ export function CostCalculator({ models }: CostCalculatorProps) {
         {/* Quick Presets */}
         {!showResults && (
           <div className="mt-4">
-            <div className="text-sm font-medium text-gray-700 mb-2">Quick Presets:</div>
+            <div className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Quick Presets:</div>
             <div className="flex flex-wrap gap-2">
               <button
                 onClick={() => { setInputTokens(100000); setOutputTokens(50000); }}
-                className="px-3 py-1 bg-gray-100 text-gray-700 rounded-lg text-sm hover:bg-gray-200"
+                className="px-3 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-lg text-sm hover:bg-gray-200 dark:hover:bg-gray-600"
               >
                 100K/50K
               </button>
               <button
                 onClick={() => { setInputTokens(1000000); setOutputTokens(500000); }}
-                className="px-3 py-1 bg-gray-100 text-gray-700 rounded-lg text-sm hover:bg-gray-200"
+                className="px-3 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-lg text-sm hover:bg-gray-200 dark:hover:bg-gray-600"
               >
                 1M/500K
               </button>
               <button
                 onClick={() => { setInputTokens(5000000); setOutputTokens(2000000); }}
-                className="px-3 py-1 bg-gray-100 text-gray-700 rounded-lg text-sm hover:bg-gray-200"
+                className="px-3 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-lg text-sm hover:bg-gray-200 dark:hover:bg-gray-600"
               >
                 5M/2M
               </button>
               <button
                 onClick={() => { setInputTokens(10000000); setOutputTokens(5000000); }}
-                className="px-3 py-1 bg-gray-100 text-gray-700 rounded-lg text-sm hover:bg-gray-200"
+                className="px-3 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-lg text-sm hover:bg-gray-200 dark:hover:bg-gray-600"
               >
                 10M/5M
               </button>

@@ -56,8 +56,8 @@ export function SubmitForm() {
     return (
       <div className="text-center py-8">
         <div className="text-6xl mb-4">✅</div>
-        <h3 className="text-2xl font-bold text-gray-900 mb-2">Submitted Successfully!</h3>
-        <p className="text-gray-600 mb-6">
+        <h3 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-2">Submitted Successfully!</h3>
+        <p className="text-gray-600 dark:text-gray-400 mb-6">
           Your pricing submission is in our review queue. We'll verify it and notify you when it's live.
         </p>
         <button
@@ -73,7 +73,7 @@ export function SubmitForm() {
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
       <div>
-        <label className="block text-sm font-medium text-gray-700 mb-1">
+        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
           Provider Name *
         </label>
         <input
@@ -83,12 +83,12 @@ export function SubmitForm() {
           value={formData.providerName}
           onChange={handleChange}
           placeholder="e.g., OpenAI, Anthropic, Google"
-          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+          className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-700"
         />
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-gray-700 mb-1">
+        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
           Website URL *
         </label>
         <input
@@ -98,12 +98,12 @@ export function SubmitForm() {
           value={formData.website}
           onChange={handleChange}
           placeholder="https://provider.com/pricing"
-          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+          className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-700"
         />
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-gray-700 mb-1">
+        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
           Model Name
         </label>
         <input
@@ -112,13 +112,13 @@ export function SubmitForm() {
           value={formData.modelName}
           onChange={handleChange}
           placeholder="e.g., GPT-4, Claude 3 Opus"
-          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+          className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-700"
         />
       </div>
 
       <div className="grid grid-cols-2 gap-4">
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
+          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
             Input Price (per 1M tokens)
           </label>
           <input
@@ -128,12 +128,12 @@ export function SubmitForm() {
             value={formData.inputPrice}
             onChange={handleChange}
             placeholder="e.g., 5.00"
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-700"
           />
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
+          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
             Output Price (per 1M tokens)
           </label>
           <input
@@ -143,13 +143,13 @@ export function SubmitForm() {
             value={formData.outputPrice}
             onChange={handleChange}
             placeholder="e.g., 15.00"
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-700"
           />
         </div>
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-gray-700 mb-1">
+        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
           Your Email (optional)
         </label>
         <input
@@ -158,12 +158,12 @@ export function SubmitForm() {
           value={formData.userEmail}
           onChange={handleChange}
           placeholder="Get notified when published"
-          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+          className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-700"
         />
       </div>
 
       {status === 'error' && (
-        <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-2 rounded-lg text-sm">
+        <div className="bg-red-50 dark:bg-red-950/30 border border-red-200 dark:border-red-800 text-red-700 dark:text-red-200 px-4 py-2 rounded-lg text-sm">
           {error}
         </div>
       )}
@@ -176,7 +176,7 @@ export function SubmitForm() {
         {status === 'submitting' ? 'Submitting...' : 'Submit Pricing'}
       </button>
 
-      <p className="text-xs text-gray-500 text-center">
+      <p className="text-xs text-gray-500 dark:text-gray-400 text-center">
         * Required fields. All submissions are reviewed before publishing.
       </p>
     </form>

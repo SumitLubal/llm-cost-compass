@@ -24,9 +24,9 @@ export function SearchBar({ initialQuery }: { initialQuery: string }) {
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           placeholder="Search providers (OpenAI, Claude, Gemini, Llama, Mistral)..."
-          className="w-full px-6 py-4 pl-12 text-lg rounded-2xl border-2 border-gray-200 focus:border-blue-500 focus:outline-none shadow-sm transition-all"
+          className="w-full px-6 py-4 pl-12 text-lg rounded-2xl border-2 border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:border-blue-500 focus:outline-none shadow-sm transition-all"
         />
-        <div className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400">
+        <div className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 dark:text-gray-500">
           🔍
         </div>
         <button
@@ -45,7 +45,7 @@ export function SearchBar({ initialQuery }: { initialQuery: string }) {
           >
             ← Clear search
           </button>
-          <span className="text-sm text-gray-500">Showing results for "{initialQuery}"</span>
+          <span className="text-sm text-gray-500 dark:text-gray-400">Showing results for "{initialQuery}"</span>
         </div>
       )}
     </div>

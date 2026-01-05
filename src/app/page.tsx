@@ -3,6 +3,7 @@ import { ComparisonView } from '@/components/ComparisonView';
 import { SearchBar } from '@/components/SearchBar';
 import { SubmitButton } from '@/components/SubmitButton';
 import { CostCalculator } from '@/components/CostCalculator';
+import { ThemeToggle } from '@/components/ThemeToggle';
 
 export const dynamic = 'force-dynamic';
 
@@ -26,21 +27,21 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ q
   } catch (error) {
     // Database might not be seeded yet
     return (
-      <div className="min-h-screen bg-gradient-to-br from-purple-50 to-blue-50 py-12 px-4">
+      <div className="min-h-screen bg-gradient-to-br from-purple-50 to-blue-50 dark:from-gray-900 dark:to-gray-950 py-12 px-4">
         <div className="max-w-6xl mx-auto">
           <header className="text-center mb-12">
-            <h1 className="text-5xl font-bold text-gray-900 mb-2">
+            <h1 className="text-5xl font-bold text-gray-900 dark:text-gray-100 mb-2">
               🎯 LLM PriceCheck
             </h1>
-            <p className="text-gray-600 text-lg">
+            <p className="text-gray-600 dark:text-gray-400 text-lg">
               Find the best LLM pricing instantly
             </p>
           </header>
 
-          <div className="bg-white rounded-2xl shadow-lg p-8 text-center">
-            <h2 className="text-2xl font-semibold mb-4">Database Not Seeded</h2>
-            <p className="text-gray-600 mb-6">
-              Run <code className="bg-gray-100 px-2 py-1 rounded">npm run db:seed</code> to populate initial data
+          <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-8 text-center border border-gray-200 dark:border-gray-700">
+            <h2 className="text-2xl font-semibold mb-4 text-gray-900 dark:text-gray-100">Database Not Seeded</h2>
+            <p className="text-gray-600 dark:text-gray-400 mb-6">
+              Run <code className="bg-gray-100 dark:bg-gray-700 px-2 py-1 rounded">npm run db:seed</code> to populate initial data
             </p>
             <a
               href="/submit"
@@ -55,9 +56,9 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ q
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-50 via-blue-50 to-cyan-50">
+    <div className="min-h-screen bg-gradient-to-br from-purple-50 via-blue-50 to-cyan-50 dark:from-gray-900 dark:via-gray-950 dark:to-black">
       {/* Header */}
-      <header className="bg-white/80 backdrop-blur-sm border-b border-gray-200 sticky top-0 z-50">
+      <header className="bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm border-b border-gray-200 dark:border-gray-800 sticky top-0 z-50">
         <div className="max-w-6xl mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
@@ -65,18 +66,19 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ q
                 💎
               </div>
               <div>
-                <h1 className="text-2xl font-bold text-gray-900 leading-tight">
+                <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100 leading-tight">
                   LLM PriceCheck
                 </h1>
-                <p className="text-xs text-gray-600">Smart pricing comparison</p>
+                <p className="text-xs text-gray-600 dark:text-gray-400">Smart pricing comparison</p>
               </div>
             </div>
 
-            <div className="flex gap-2">
+            <div className="flex gap-2 items-center">
+              <ThemeToggle />
               <SubmitButton />
               <a
                 href="/submit"
-                className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition"
+                className="px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-200 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition"
               >
                 Submit Pricing
               </a>
@@ -98,10 +100,10 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ q
       </main>
 
       {/* Footer */}
-      <footer className="border-t border-gray-200 bg-white/50 backdrop-blur-sm mt-16">
-        <div className="max-w-6xl mx-auto px-4 py-6 text-center text-sm text-gray-600">
+      <footer className="border-t border-gray-200 dark:border-gray-800 bg-white/50 dark:bg-gray-900/50 backdrop-blur-sm mt-16">
+        <div className="max-w-6xl mx-auto px-4 py-6 text-center text-sm text-gray-600 dark:text-gray-400">
           <p>Prices updated daily • Always show better alternatives • Never hide providers</p>
-          <p className="mt-2 text-xs text-gray-500">
+          <p className="mt-2 text-xs text-gray-500 dark:text-gray-500">
             Built for Sumeet • Beta v0.1
           </p>
         </div>

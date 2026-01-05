@@ -14,8 +14,8 @@ export function ComparisonView({ data, isSearch, query }: ComparisonViewProps) {
     return (
       <div className="text-center py-12">
         <div className="text-6xl mb-4">🔍</div>
-        <h3 className="text-xl font-semibold text-gray-900 mb-2">No results found</h3>
-        <p className="text-gray-600">Try searching for "OpenAI", "Claude", or "Gemini"</p>
+        <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-2">No results found</h3>
+        <p className="text-gray-600 dark:text-gray-400">Try searching for "OpenAI", "Claude", or "Gemini"</p>
       </div>
     );
   }
@@ -60,10 +60,10 @@ export function ComparisonView({ data, isSearch, query }: ComparisonViewProps) {
         </div>
 
         {/* Full Table */}
-        <div className="bg-white rounded-2xl shadow-lg overflow-hidden">
-          <div className="px-6 py-4 bg-gray-50 border-b border-gray-200">
-            <h2 className="text-lg font-semibold text-gray-900">All Models</h2>
-            <p className="text-sm text-gray-600">Click any model to see better alternatives</p>
+        <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg overflow-hidden border border-gray-200 dark:border-gray-700">
+          <div className="px-6 py-4 bg-gray-50 dark:bg-gray-700 border-b border-gray-200 dark:border-gray-700">
+            <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100">All Models</h2>
+            <p className="text-sm text-gray-600 dark:text-gray-400">Click any model to see better alternatives</p>
           </div>
           <PricingTable models={all_models} />
         </div>
@@ -75,12 +75,12 @@ export function ComparisonView({ data, isSearch, query }: ComparisonViewProps) {
   const models = 'all_models' in data ? data.all_models : [];
 
   return (
-    <div className="bg-white rounded-2xl shadow-lg overflow-hidden">
-      <div className="px-6 py-4 bg-blue-50 border-b border-blue-200">
-        <h2 className="text-lg font-semibold text-gray-900">
+    <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg overflow-hidden border border-gray-200 dark:border-gray-700">
+      <div className="px-6 py-4 bg-blue-50 dark:bg-blue-950/30 border-b border-blue-200 dark:border-blue-800">
+        <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
           Search Results for "{query}"
         </h2>
-        <p className="text-sm text-gray-600">Found {models.length} models</p>
+        <p className="text-sm text-gray-600 dark:text-gray-400">Found {models.length} models</p>
       </div>
       <PricingTable models={models} />
     </div>
@@ -128,7 +128,7 @@ function PricingTable({ models }: { models: ModelPricing[] }) {
     <>
       <div className="overflow-x-auto">
         <table className="w-full text-sm">
-          <thead className="bg-gray-50 text-gray-700">
+          <thead className="bg-gray-50 dark:bg-gray-700 text-gray-700 dark:text-gray-300">
             <tr>
               <th className="px-6 py-3 text-left font-semibold">Provider</th>
               <th className="px-6 py-3 text-left font-semibold">Model</th>
@@ -138,7 +138,7 @@ function PricingTable({ models }: { models: ModelPricing[] }) {
               <th className="px-6 py-3 text-right font-semibold">Score</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-gray-200">
+          <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
             {models.map((model, idx) => {
               const total = model.input_per_million + model.output_per_million;
               const isFree = total === 0;
@@ -146,15 +146,15 @@ function PricingTable({ models }: { models: ModelPricing[] }) {
               return (
                 <tr
                   key={idx}
-                  className="hover:bg-gray-50 transition-colors cursor-pointer"
+                  className="hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors cursor-pointer"
                   onClick={() => handleRowClick(model)}
                 >
-                  <td className="px-6 py-4 font-medium text-gray-900">{model.provider}</td>
-                  <td className="px-6 py-4 text-gray-700">{model.model}</td>
-                  <td className="px-6 py-4 text-right text-gray-600">
+                  <td className="px-6 py-4 font-medium text-gray-900 dark:text-gray-100">{model.provider}</td>
+                  <td className="px-6 py-4 text-gray-700 dark:text-gray-300">{model.model}</td>
+                  <td className="px-6 py-4 text-right text-gray-600 dark:text-gray-400">
                     {model.input_per_million === 0 ? 'FREE' : `$${model.input_per_million.toFixed(2)}`}
                   </td>
-                  <td className="px-6 py-4 text-right text-gray-600">
+                  <td className="px-6 py-4 text-right text-gray-600 dark:text-gray-400">
                     {model.output_per_million === 0 ? 'FREE' : `$${model.output_per_million.toFixed(2)}`}
                   </td>
                   <td className="px-6 py-4 text-right font-semibold">
@@ -165,7 +165,7 @@ function PricingTable({ models }: { models: ModelPricing[] }) {
                     )}
                   </td>
                   <td className="px-6 py-4 text-right">
-                    <span className="inline-flex items-center px-2 py-1 rounded-md bg-gray-100 text-gray-700 font-medium">
+                    <span className="inline-flex items-center px-2 py-1 rounded-md bg-gray-100 dark:bg-gray-600 text-gray-700 dark:text-gray-200 font-medium">
                       {model.score?.toFixed(0) || '-'}
                     </span>
                   </td>
@@ -179,9 +179,9 @@ function PricingTable({ models }: { models: ModelPricing[] }) {
       {/* Simple modal for selected model */}
       {selectedModel && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-2xl p-6 max-w-md w-full">
-            <h3 className="text-xl font-bold mb-2">{selectedModel.provider} {selectedModel.model}</h3>
-            <p className="text-gray-600 mb-4">
+          <div className="bg-white dark:bg-gray-800 rounded-2xl p-6 max-w-md w-full border border-gray-200 dark:border-gray-700">
+            <h3 className="text-xl font-bold text-gray-900 dark:text-gray-100 mb-2">{selectedModel.provider} {selectedModel.model}</h3>
+            <p className="text-gray-600 dark:text-gray-400 mb-4">
               Price: ${(selectedModel.input_per_million + selectedModel.output_per_million).toFixed(2)} per 1M tokens
             </p>
             <button
