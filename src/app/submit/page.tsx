@@ -17,12 +17,12 @@ export const metadata: Metadata = {
     'crowdsourced LLM pricing',
   ],
   alternates: {
-    canonical: 'https://llmpricecheck.com/submit',
+    canonical: 'https://llmpricecompare.com/submit',
   },
   openGraph: {
     title: 'Submit LLM Pricing | LLM PriceCheck',
     description: 'Help keep our database accurate. Submit new pricing for OpenAI, Anthropic, Google, xAI, and more.',
-    url: 'https://llmpricecheck.com/submit',
+    url: 'https://llmpricecompare.com/submit',
     type: 'website',
   },
   twitter: {

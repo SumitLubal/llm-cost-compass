@@ -54,10 +54,10 @@ export const metadata: Metadata = {
 
   // Open Graph
   openGraph: {
-    title: "LLM PriceCheck - Compare LLM Pricing",
+    title: "LLM PriceCompare - Compare LLM Pricing",
     description: "Compare LLM pricing across all providers. Real-time cost calculator and smart recommendations.",
-    url: "https://llmpricecheck.com",
-    siteName: "LLM PriceCheck",
+    url: "https://llmpricecompare.com",
+    siteName: "LLM PriceCompare",
     locale: "en_US",
     type: "website",
     images: [
@@ -65,7 +65,7 @@ export const metadata: Metadata = {
         url: "/og-image.png",
         width: 1200,
         height: 630,
-        alt: "LLM PriceCheck - Smart LLM Pricing Comparison",
+        alt: "LLM PriceCompare - Smart LLM Pricing Comparison",
       },
     ],
   },
@@ -73,7 +73,7 @@ export const metadata: Metadata = {
   // Twitter
   twitter: {
     card: "summary_large_image",
-    title: "LLM PriceCheck - Compare LLM Pricing",
+    title: "LLM PriceCompare - Compare LLM Pricing",
     description: "Compare LLM pricing across all providers. Real-time cost calculator and smart recommendations.",
     images: ["/og-image.png"],
   },
@@ -102,7 +102,7 @@ export const metadata: Metadata = {
 
   // Alternates (for multilingual in future)
   alternates: {
-    canonical: "https://llmpricecheck.com",
+    canonical: "https://llmpricecompare.com",
   },
 
   // Referrer policy
@@ -130,10 +130,10 @@ export const metadata: Metadata = {
 const structuredData = {
   "@context": "https://schema.org",
   "@type": "WebApplication",
-  "name": "LLM PriceCheck",
-  "alternateName": ["LLM Pricing Tool", "AI Cost Calculator", "LLM Comparison"],
+  "name": "LLM PriceCompare",
+  "alternateName": ["LLM Pricing Tool", "AI Cost Calculator", "LLM Comparison", "LLM PriceCheck"],
   "description": "Compare LLM pricing across OpenAI, Anthropic, Google, xAI, Amazon, Meta, DeepSeek, Mistral, and more. Real-time cost calculator, smart recommendations, and daily price updates.",
-  "url": "https://llmpricecheck.com",
+  "url": "https://llmpricecompare.com",
   "applicationCategory": "BusinessApplication",
   "operatingSystem": "Any",
   "genre": ["AI", "LLM", "Pricing", "Comparison Tool"],
@@ -224,7 +224,7 @@ export default function RootLayout({
         <link rel="manifest" href="/manifest.json" />
 
         {/* Canonical URL */}
-        <link rel="canonical" href="https://llmpricecheck.com" />
+        <link rel="canonical" href="https://llmpricecompare.com" />
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}

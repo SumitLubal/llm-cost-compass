@@ -1,7 +1,7 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://llmpricecheck.com/sitemap.xml
+Sitemap: https://llmpricecompare.com/sitemap.xml
 
 # Block admin and API routes
 Disallow: /api/

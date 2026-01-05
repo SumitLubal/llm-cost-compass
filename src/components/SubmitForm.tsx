@@ -49,7 +49,7 @@ export function SubmitForm() {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          from: 'LLM PriceCheck Submissions <noreply@llmpricecheck.com>',
+          from: 'LLM PriceCheck Submissions <noreply@llmpricecompare.com>',
           to: [process.env.NEXT_PUBLIC_ALERT_EMAIL || 'sumitlubal@hotmail.com'],
           subject: `New Pricing Submission: ${formData.providerName}`,
           html: `

@@ -172,7 +172,7 @@ export async function sendEmailAlert(
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        from: 'LLM PriceCheck <noreply@llmpricecheck.com>',
+        from: 'LLM PriceCheck <noreply@llmpricecompare.com>',
         to: [to],
         subject,
         html,

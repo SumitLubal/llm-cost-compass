@@ -19,12 +19,12 @@ export async function generateMetadata({ searchParams }: { searchParams: Promise
       title: `Search Results for "${cleanQuery}" | LLM PriceCheck`,
       description: `Find LLM pricing for ${cleanQuery}. Compare costs across OpenAI, Anthropic, Google, xAI and more.`,
       alternates: {
-        canonical: `https://llmpricecheck.com/?q=${encodeURIComponent(cleanQuery)}`,
+        canonical: `https://llmpricecompare.com/?q=${encodeURIComponent(cleanQuery)}`,
       },
       openGraph: {
         title: `LLM Pricing for ${cleanQuery} - LLM PriceCheck`,
         description: `Compare ${cleanQuery} pricing and find cheaper alternatives.`,
-        url: `https://llmpricecheck.com/?q=${encodeURIComponent(cleanQuery)}`,
+        url: `https://llmpricecompare.com/?q=${encodeURIComponent(cleanQuery)}`,
         type: 'website',
       },
       twitter: {
@@ -39,7 +39,7 @@ export async function generateMetadata({ searchParams }: { searchParams: Promise
     title: "LLM PriceCheck - Compare LLM Pricing Across All Providers",
     description: "Compare LLM pricing across OpenAI, Anthropic, Google, xAI, and more. Real-time cost calculator, smart recommendations, and daily price updates.",
     alternates: {
-      canonical: "https://llmpricecheck.com",
+      canonical: "https://llmpricecompare.com",
     },
   };
 }
