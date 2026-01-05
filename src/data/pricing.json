@@ -443,10 +443,24 @@
           "last_updated": "2026-01-05T09:18:07.310Z"
         }
       ]
+    },
+    {
+      "id": "xiaomi",
+      "name": "Xiaomi",
+      "models": [
+        {
+          "name": "MiMo-V2-Flash",
+          "input_per_million": 0.1,
+          "output_per_million": 0.3,
+          "context_window": 256000,
+          "free_tier": null,
+          "last_updated": "2026-01-05T08:43:48.561Z"
+        }
+      ]
     }
   ],
   "metadata": {
-    "last_updated": "2026-01-05T09:18:42.577Z",
+    "last_updated": "2026-01-05T09:20:41.851Z",
     "source": "scraped",
     "total_models": 50
   }
