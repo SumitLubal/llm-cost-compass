@@ -7,26 +7,99 @@ interface CostCalculatorProps {
   models: FlatModel[];
 }
 
+type SortField = 'provider' | 'model' | 'input_cost' | 'output_cost' | 'total_cost';
+type SortDirection = 'asc' | 'desc';
+
 export function CostCalculator({ models }: CostCalculatorProps) {
   const [inputTokens, setInputTokens] = useState<number>(100000); // 100K
   const [outputTokens, setOutputTokens] = useState<number>(50000); // 50K
   const [showResults, setShowResults] = useState<boolean>(false);
+  const [sortField, setSortField] = useState<SortField>('total_cost');
+  const [sortDirection, setSortDirection] = useState<SortDirection>('asc');
 
   const calculateCost = (model: FlatModel) => {
     const inputCost = (inputTokens / 1000000) * model.input_per_million;
     const outputCost = (outputTokens / 1000000) * model.output_per_million;
-    return inputCost + outputCost;
+    return { inputCost, outputCost, total: inputCost + outputCost };
   };
-
-  const sortedModels = [...models].sort((a, b) =>
-    calculateCost(a) - calculateCost(b)
-  );
 
   const handleCalculate = () => {
     if (inputTokens >= 0 && outputTokens >= 0) {
       setShowResults(true);
     }
   };
+
+  const handleSort = (field: SortField) => {
+    if (sortField === field) {
+      setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc');
+    } else {
+      setSortField(field);
+      setSortDirection('asc');
+    }
+  };
+
+  const getSortIcon = (field: SortField) => {
+    if (sortField !== field) return '↕';
+    return sortDirection === 'asc' ? '↑' : '↓';
+  };
+
+  const getSortedModels = () => {
+    const modelsWithCosts = models.map(model => ({
+      model,
+      costs: calculateCost(model)
+    }));
+
+    return modelsWithCosts.sort((a, b) => {
+      let aVal, bVal;
+
+      switch (sortField) {
+        case 'provider':
+          aVal = a.model.provider.toLowerCase();
+          bVal = b.model.provider.toLowerCase();
+          break;
+        case 'model':
+          aVal = a.model.model.toLowerCase();
+          bVal = b.model.model.toLowerCase();
+          break;
+        case 'input_cost':
+          aVal = a.costs.inputCost;
+          bVal = b.costs.inputCost;
+          break;
+        case 'output_cost':
+          aVal = a.costs.outputCost;
+          bVal = b.costs.outputCost;
+          break;
+        case 'total_cost':
+          aVal = a.costs.total;
+          bVal = b.costs.total;
+          break;
+        default:
+          return 0;
+      }
+
+      if (typeof aVal === 'string' && typeof bVal === 'string') {
+        return sortDirection === 'asc'
+          ? aVal.localeCompare(bVal)
+          : bVal.localeCompare(aVal);
+      }
+
+      return sortDirection === 'asc' ? aVal - bVal : bVal - aVal;
+    });
+  };
+
+  const SortableHeader = ({ field, label, align = 'left' }: { field: SortField; label: string; align?: 'left' | 'right' }) => (
+    <th
+      className={`px-4 py-2 text-${align} font-semibold cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors select-none`}
+      onClick={() => handleSort(field)}
+    >
+      <span className="flex items-center gap-1 justify-end">
+        {label}
+        <span className="text-xs opacity-50">{getSortIcon(field)}</span>
+      </span>
+    </th>
+  );
+
+  const sortedData = showResults ? getSortedModels() : [];
 
   return (
     <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg overflow-hidden mb-8 border border-gray-200 dark:border-gray-700">
@@ -109,10 +182,20 @@ export function CostCalculator({ models }: CostCalculatorProps) {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
               <div className="bg-gradient-to-br from-green-600 to-green-700 text-white rounded-lg p-4">
                 <div className="text-xs opacity-90">Cheapest Option</div>
-                <div className="font-bold text-lg mt-1">{sortedModels[0].provider}</div>
-                <div className="text-sm opacity-90">{sortedModels[0].model}</div>
+                <div className="font-bold text-lg mt-1">
+                  {sortedData.reduce((best, curr) =>
+                    curr.costs.total < best.costs.total ? curr : best
+                  , sortedData[0])?.model.provider}
+                </div>
+                <div className="text-sm opacity-90">
+                  {sortedData.reduce((best, curr) =>
+                    curr.costs.total < best.costs.total ? curr : best
+                  , sortedData[0])?.model.model}
+                </div>
                 <div className="text-2xl font-bold mt-2">
-                  ${calculateCost(sortedModels[0]).toFixed(2)}
+                  ${sortedData.reduce((best, curr) =>
+                    curr.costs.total < best.costs.total ? curr : best
+                  , sortedData[0])?.costs.total.toFixed(2)}
                 </div>
               </div>
 
@@ -134,7 +217,7 @@ export function CostCalculator({ models }: CostCalculatorProps) {
                 <div className="text-xs opacity-90">Latest Prices</div>
                 <div className="text-sm mt-1 space-y-1">
                   {['OpenAI', 'Google', 'Anthropic'].map(provider => {
-                    const model = models.find(m => 
+                    const model = models.find(m =>
                       m.provider.toLowerCase().includes(provider.toLowerCase())
                     );
                     if (!model) return null;
@@ -142,7 +225,7 @@ export function CostCalculator({ models }: CostCalculatorProps) {
                     return (
                       <div key={provider} className="flex justify-between text-xs">
                         <span className="opacity-80">{provider}:</span>
-                        <span className="font-bold">${cost.toFixed(2)}</span>
+                        <span className="font-bold">${cost.total.toFixed(2)}</span>
                       </div>
                     );
                   })}
@@ -156,19 +239,17 @@ export function CostCalculator({ models }: CostCalculatorProps) {
               <table className="w-full text-sm">
                 <thead className="bg-gray-50 dark:bg-gray-700 text-gray-700 dark:text-gray-300">
                   <tr>
-                    <th className="px-4 py-2 text-left">Provider</th>
-                    <th className="px-4 py-2 text-left">Model</th>
-                    <th className="px-4 py-2 text-right">Input ($)</th>
-                    <th className="px-4 py-2 text-right">Output ($)</th>
-                    <th className="px-4 py-2 text-right font-bold">Total ($)</th>
+                    <SortableHeader field="provider" label="Provider" />
+                    <SortableHeader field="model" label="Model" />
+                    <SortableHeader field="input_cost" label="Input ($)" align="right" />
+                    <SortableHeader field="output_cost" label="Output ($)" align="right" />
+                    <SortableHeader field="total_cost" label="Total ($)" align="right" />
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
-                  {sortedModels.map((model, idx) => {
-                    const inputCost = (inputTokens / 1000000) * model.input_per_million;
-                    const outputCost = (outputTokens / 1000000) * model.output_per_million;
-                    const total = inputCost + outputCost;
-                    const isCheapest = idx === 0;
+                  {sortedData.map(({ model, costs }, idx) => {
+                    // Only show CHEAPEST badge when sorting by total_cost in ascending order
+                    const isCheapest = sortField === 'total_cost' && sortDirection === 'asc' && idx === 0;
 
                     return (
                       <tr
@@ -182,10 +263,10 @@ export function CostCalculator({ models }: CostCalculatorProps) {
                           {isCheapest && <span className="ml-2 text-xs bg-green-600 text-white px-2 py-0.5 rounded">CHEAPEST</span>}
                         </td>
                         <td className="px-4 py-3 text-gray-700 dark:text-gray-300">{model.model}</td>
-                        <td className="px-4 py-3 text-right text-gray-600 dark:text-gray-400">${inputCost.toFixed(2)}</td>
-                        <td className="px-4 py-3 text-right text-gray-600 dark:text-gray-400">${outputCost.toFixed(2)}</td>
+                        <td className="px-4 py-3 text-right text-gray-600 dark:text-gray-400">${costs.inputCost.toFixed(2)}</td>
+                        <td className="px-4 py-3 text-right text-gray-600 dark:text-gray-400">${costs.outputCost.toFixed(2)}</td>
                         <td className="px-4 py-3 text-right font-bold text-gray-900 dark:text-gray-100">
-                          {total === 0 ? 'FREE' : `$${total.toFixed(2)}`}
+                          {costs.total === 0 ? 'FREE' : `$${costs.total.toFixed(2)}`}
                         </td>
                       </tr>
                     );
@@ -195,7 +276,7 @@ export function CostCalculator({ models }: CostCalculatorProps) {
             </div>
 
             {/* Free Tier Alert */}
-            {sortedModels.some(m => calculateCost(m) === 0) && (
+            {sortedData.some(({ costs }) => costs.total === 0) && (
               <div className="bg-green-50 dark:bg-green-950/30 border border-green-200 dark:border-green-800 rounded-lg p-4 mt-4">
                 <div className="flex items-start gap-3">
                   <div className="text-2xl">🆓</div>

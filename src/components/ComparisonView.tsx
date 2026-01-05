@@ -10,6 +10,9 @@ interface ComparisonViewProps {
   query: string;
 }
 
+type SortField = 'provider' | 'model' | 'input' | 'output' | 'total' | 'score';
+type SortDirection = 'asc' | 'desc';
+
 export function ComparisonView({ data, isSearch, query }: ComparisonViewProps) {
   if ('all_models' in data && data.all_models.length === 0) {
     return (
@@ -114,10 +117,10 @@ function SmartCard({ title, subtitle, model, accent }: {
 
 function PricingTable({ models }: { models: FlatModel[] }) {
   const [selectedModel, setSelectedModel] = useState<FlatModel | null>(null);
+  const [sortField, setSortField] = useState<SortField>('score');
+  const [sortDirection, setSortDirection] = useState<SortDirection>('desc');
 
   const handleRowClick = (model: FlatModel) => {
-    // Show alternatives in a simple alert for now
-    // In production, this would show a modal
     alert(
       `Model: ${model.provider} ${model.model}\n` +
       `Price: $${(model.input_per_million + model.output_per_million).toFixed(2)} per 1M tokens\n\n` +
@@ -125,22 +128,89 @@ function PricingTable({ models }: { models: FlatModel[] }) {
     );
   };
 
+  const handleSort = (field: SortField) => {
+    if (sortField === field) {
+      setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc');
+    } else {
+      setSortField(field);
+      setSortDirection('desc');
+    }
+  };
+
+  const getSortIcon = (field: SortField) => {
+    if (sortField !== field) return '↕';
+    return sortDirection === 'asc' ? '↑' : '↓';
+  };
+
+  const sortedModels = [...models].sort((a, b) => {
+    let aVal, bVal;
+
+    switch (sortField) {
+      case 'provider':
+        aVal = a.provider.toLowerCase();
+        bVal = b.provider.toLowerCase();
+        break;
+      case 'model':
+        aVal = a.model.toLowerCase();
+        bVal = b.model.toLowerCase();
+        break;
+      case 'input':
+        aVal = a.input_per_million;
+        bVal = b.input_per_million;
+        break;
+      case 'output':
+        aVal = a.output_per_million;
+        bVal = b.output_per_million;
+        break;
+      case 'total':
+        aVal = a.input_per_million + a.output_per_million;
+        bVal = b.input_per_million + b.output_per_million;
+        break;
+      case 'score':
+        aVal = a.score || 0;
+        bVal = b.score || 0;
+        break;
+      default:
+        return 0;
+    }
+
+    if (typeof aVal === 'string' && typeof bVal === 'string') {
+      return sortDirection === 'asc'
+        ? aVal.localeCompare(bVal)
+        : bVal.localeCompare(aVal);
+    }
+
+    return sortDirection === 'asc' ? aVal - bVal : bVal - aVal;
+  });
+
+  const SortableHeader = ({ field, label }: { field: SortField; label: string }) => (
+    <th
+      className="px-6 py-3 text-left font-semibold cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors select-none"
+      onClick={() => handleSort(field)}
+    >
+      <span className="flex items-center gap-1">
+        {label}
+        <span className="text-xs opacity-50">{getSortIcon(field)}</span>
+      </span>
+    </th>
+  );
+
   return (
     <>
       <div className="overflow-x-auto">
         <table className="w-full text-sm">
           <thead className="bg-gray-50 dark:bg-gray-700 text-gray-700 dark:text-gray-300">
             <tr>
-              <th className="px-6 py-3 text-left font-semibold">Provider</th>
-              <th className="px-6 py-3 text-left font-semibold">Model</th>
-              <th className="px-6 py-3 text-right font-semibold">Input ($/M)</th>
-              <th className="px-6 py-3 text-right font-semibold">Output ($/M)</th>
-              <th className="px-6 py-3 text-right font-semibold">Total ($)</th>
-              <th className="px-6 py-3 text-right font-semibold">Score</th>
+              <SortableHeader field="provider" label="Provider" />
+              <SortableHeader field="model" label="Model" />
+              <SortableHeader field="input" label="Input ($/M)" />
+              <SortableHeader field="output" label="Output ($/M)" />
+              <SortableHeader field="total" label="Total ($)" />
+              <SortableHeader field="score" label="Score" />
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
-            {models.map((model, idx) => {
+            {sortedModels.map((model, idx) => {
               const total = model.input_per_million + model.output_per_million;
               const isFree = total === 0;
 
