@@ -129,11 +129,16 @@ function normalizeProviderName(vendor: string): string {
 
 /**
  * Detect if API values are in per-1K format (values < 100)
+ * NOTE: llm-prices.com API returns prices per million tokens already
+ * The values are typically: 0.25, 0.5, 1, 3, 5, 6, 10, 15, 30, etc.
+ * NOT per-1K format which would be 0.00025, 0.0005, etc.
  */
 function isPer1KFormat(input: number, output: number): boolean {
-  // Per-1K values are typically < 100
-  // Per-million values are typically 0.1 to 100+
-  return input < 100 && output < 100;
+  // llm-prices.com API returns per-million pricing
+  // Values like 0.25, 0.5, 1, 3, 5, 6, 10, 15, 30 are per-million
+  // Values like 0.00025, 0.0005 would be per-1K (but API doesn't use this)
+  // So we should NOT convert - just return false
+  return false;
 }
 
 /**

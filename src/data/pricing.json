@@ -6,32 +6,32 @@
       "models": [
         {
           "name": "Amazon Nova Micro",
-          "input_per_million": 35,
-          "output_per_million": 140,
+          "input_per_million": 0.035,
+          "output_per_million": 0.14,
           "context_window": 0,
           "free_tier": null,
           "last_updated": "2026-01-05T07:46:02.882Z"
         },
         {
           "name": "Amazon Nova Lite",
-          "input_per_million": 60,
-          "output_per_million": 240,
+          "input_per_million": 0.06,
+          "output_per_million": 0.24,
           "context_window": 0,
           "free_tier": null,
           "last_updated": "2026-01-05T07:46:02.882Z"
         },
         {
           "name": "Amazon Nova Pro",
-          "input_per_million": 800,
-          "output_per_million": 3200,
+          "input_per_million": 0.8,
+          "output_per_million": 3.2,
           "context_window": 0,
           "free_tier": null,
           "last_updated": "2026-01-05T07:46:02.882Z"
         },
         {
           "name": "Amazon Nova Premier",
-          "input_per_million": 2500,
-          "output_per_million": 12500,
+          "input_per_million": 2.5,
+          "output_per_million": 12.5,
           "context_window": 0,
           "free_tier": null,
           "last_updated": "2026-01-05T07:46:02.882Z"
@@ -74,16 +74,16 @@
       "models": [
         {
           "name": "DeepSeek Chat",
-          "input_per_million": 270,
-          "output_per_million": 1100,
+          "input_per_million": 0.27,
+          "output_per_million": 1.1,
           "context_window": 0,
           "free_tier": null,
           "last_updated": "2026-01-05T07:46:02.882Z"
         },
         {
           "name": "DeepSeek Reasoner",
-          "input_per_million": 550,
-          "output_per_million": 2190,
+          "input_per_million": 0.55,
+          "output_per_million": 2.19,
           "context_window": 0,
           "free_tier": null,
           "last_updated": "2026-01-05T07:46:02.882Z"
@@ -118,8 +118,8 @@
       "models": [
         {
           "name": "MiniMax M2",
-          "input_per_million": 300,
-          "output_per_million": 1200,
+          "input_per_million": 0.3,
+          "output_per_million": 1.2,
           "context_window": 0,
           "free_tier": null,
           "last_updated": "2026-01-05T07:46:02.882Z"
@@ -154,40 +154,40 @@
       "models": [
         {
           "name": "Kimi K2 0905 Preview",
-          "input_per_million": 600,
-          "output_per_million": 2500,
+          "input_per_million": 0.6,
+          "output_per_million": 2.5,
           "context_window": 0,
           "free_tier": null,
           "last_updated": "2026-01-05T07:46:02.882Z"
         },
         {
           "name": "Kimi K2 0711 Preview",
-          "input_per_million": 600,
-          "output_per_million": 2500,
+          "input_per_million": 0.6,
+          "output_per_million": 2.5,
           "context_window": 0,
           "free_tier": null,
           "last_updated": "2026-01-05T07:46:02.882Z"
         },
         {
           "name": "Kimi K2 Turbo Preview",
-          "input_per_million": 1150,
-          "output_per_million": 8000,
+          "input_per_million": 1.15,
+          "output_per_million": 8,
           "context_window": 0,
           "free_tier": null,
           "last_updated": "2026-01-05T07:46:02.882Z"
         },
         {
           "name": "Kimi K2 Thinking",
-          "input_per_million": 600,
-          "output_per_million": 2500,
+          "input_per_million": 0.6,
+          "output_per_million": 2.5,
           "context_window": 0,
           "free_tier": null,
           "last_updated": "2026-01-05T07:46:02.882Z"
         },
         {
           "name": "Kimi K2 Thinking Turbo",
-          "input_per_million": 1150,
-          "output_per_million": 8000,
+          "input_per_million": 1.15,
+          "output_per_million": 8,
           "context_window": 0,
           "free_tier": null,
           "last_updated": "2026-01-05T07:46:02.882Z"
@@ -230,80 +230,80 @@
       "models": [
         {
           "name": "Grok 3",
-          "input_per_million": 3000,
-          "output_per_million": 15000,
+          "input_per_million": 3,
+          "output_per_million": 15,
           "context_window": 0,
           "free_tier": null,
           "last_updated": "2026-01-05T07:46:02.882Z"
         },
         {
           "name": "Grok 3 Mini",
-          "input_per_million": 300,
-          "output_per_million": 500,
+          "input_per_million": 0.3,
+          "output_per_million": 0.5,
           "context_window": 0,
           "free_tier": null,
           "last_updated": "2026-01-05T07:46:02.882Z"
         },
         {
           "name": "Grok 4 Fast",
-          "input_per_million": 200,
-          "output_per_million": 500,
+          "input_per_million": 0.2,
+          "output_per_million": 0.5,
           "context_window": 0,
           "free_tier": null,
           "last_updated": "2026-01-05T07:46:02.882Z"
         },
         {
           "name": "Grok 4 ≤128k",
-          "input_per_million": 3000,
-          "output_per_million": 15000,
+          "input_per_million": 3,
+          "output_per_million": 15,
           "context_window": 0,
           "free_tier": null,
           "last_updated": "2026-01-05T07:46:02.882Z"
         },
         {
           "name": "Grok 4 >128k",
-          "input_per_million": 6000,
-          "output_per_million": 30000,
+          "input_per_million": 6,
+          "output_per_million": 30,
           "context_window": 0,
           "free_tier": null,
           "last_updated": "2026-01-05T07:46:02.882Z"
         },
         {
           "name": "Grok 4 Fast ≤128k",
-          "input_per_million": 200,
-          "output_per_million": 500,
+          "input_per_million": 0.2,
+          "output_per_million": 0.5,
           "context_window": 0,
           "free_tier": null,
           "last_updated": "2026-01-05T07:46:02.882Z"
         },
         {
           "name": "Grok 4 Fast >128k",
-          "input_per_million": 400,
-          "output_per_million": 1000,
+          "input_per_million": 0.4,
+          "output_per_million": 1,
           "context_window": 0,
           "free_tier": null,
           "last_updated": "2026-01-05T07:46:02.882Z"
         },
         {
           "name": "Grok 4 Fast Reasoning ≤128k",
-          "input_per_million": 200,
-          "output_per_million": 500,
+          "input_per_million": 0.2,
+          "output_per_million": 0.5,
           "context_window": 0,
           "free_tier": null,
           "last_updated": "2026-01-05T07:46:02.882Z"
         },
         {
           "name": "Grok 4 Fast Reasoning >128k",
-          "input_per_million": 400,
-          "output_per_million": 1000,
+          "input_per_million": 0.4,
+          "output_per_million": 1,
           "context_window": 0,
           "free_tier": null,
           "last_updated": "2026-01-05T07:46:02.882Z"
         },
         {
           "name": "Grok Code Fast 1",
-          "input_per_million": 200,
-          "output_per_million": 1500,
+          "input_per_million": 0.2,
+          "output_per_million": 1.5,
           "context_window": 0,
           "free_tier": null,
           "last_updated": "2026-01-05T07:46:02.882Z"
@@ -312,7 +312,7 @@
     }
   ],
   "metadata": {
-    "last_updated": "2026-01-05T07:46:02.885Z",
+    "last_updated": "2026-01-05T08:00:00.000Z",
     "source": "scraped",
     "total_models": 32
   }
