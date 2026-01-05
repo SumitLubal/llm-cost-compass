@@ -101,44 +101,44 @@ jobs:
 
       - name: Generate daily report
         run: |
-          cat > marketing-output/DAILY_MARKETING_REPORT.md << 'EOF'
-# Daily Marketing Report - LLM PriceCompare
-Generated: $(date -u +"%Y-%m-%d %H:%M UTC")
+          cat > marketing-output/DAILY_MARKETING_REPORT.md << 'ENDOFREPORT'
+          # Daily Marketing Report - LLM PriceCompare
+          Generated: $(date -u +"%Y-%m-%d %H:%M UTC")
 
-## ✅ Today's Automated Tasks
+          ## Today's Automated Tasks
 
-### 1. Social Media Posts
-- Posted to Twitter/X, LinkedIn, Reddit (if API credentials configured)
-- Backup posts available in `social-posts.txt`
+          1. Social Media Posts
+             - Posted to Twitter/X, LinkedIn, Reddit (if API credentials configured)
+             - Backup posts available in social-posts.txt
 
-### 2. Content Marketing
-- 30-day content calendar
-- Keyword clusters for SEO
-- Internal linking strategy
-- Meta descriptions
-- Content brief for post #1
+          2. Content Marketing
+             - 30-day content calendar
+             - Keyword clusters for SEO
+             - Internal linking strategy
+             - Meta descriptions
+             - Content brief for post #1
 
-### 3. Directory Submissions
-- 21 directories with submission details
-- Priority order for quick wins
+          3. Directory Submissions
+             - 21 directories with submission details
+             - Priority order for quick wins
 
-### 4. Outreach Plan
-- 20 outreach targets
-- 3 email templates ready
+          4. Outreach Plan
+             - 20 outreach targets
+             - 3 email templates ready
 
-## 📊 Expected Results
-- Daily social media engagement
-- Directory submissions this week
-- Backlink opportunities
-- Content publishing schedule
+          ## Expected Results
+          - Daily social media engagement
+          - Directory submissions this week
+          - Backlink opportunities
+          - Content publishing schedule
 
-## 🚀 Next Steps (Fully Automated)
-All tasks are generated automatically daily at 9 AM UTC.
-No manual work required - just review artifacts and execute.
+          ## Next Steps (Fully Automated)
+          All tasks are generated automatically daily at 9 AM UTC.
+          No manual work required - just review artifacts and execute.
 
----
-*Auto-generated daily by GitHub Actions*
-EOF
+          ---
+          Auto-generated daily by GitHub Actions
+          ENDOFREPORT
           echo "✅ Daily report generated"
 
       - name: Upload all artifacts
@@ -204,57 +204,56 @@ EOF
         run: |
           mkdir -p marketing-output
 
-          # Create comprehensive report
-          cat > marketing-output/DAILY_MARKETING_REPORT.md << 'EOF'
-# Daily Marketing Report - LLM PriceCompare
-Generated: $(date -u +"%Y-%m-%d %H:%M UTC")
+          cat > marketing-output/DAILY_MARKETING_REPORT.md << 'ENDOFREPORT'
+          # Daily Marketing Report - LLM PriceCompare
+          Generated: $(date -u +"%Y-%m-%d %H:%M UTC")
 
-## Quick Actions Today
+          ## Quick Actions Today
 
-### 1. Social Media (9 AM UTC)
-Auto-posting enabled via GitHub Actions secrets.
-Posts generated daily for Twitter/X, LinkedIn, Reddit.
+          1. Social Media (9 AM UTC)
+             Auto-posting enabled via GitHub Actions secrets.
+             Posts generated daily for Twitter/X, LinkedIn, Reddit.
 
-### 2. Directory Submissions (Priority Order)
-1. Futurepedia (AI directory) - 10 min
-2. ThereIsAnAIForThat - 10 min
-3. DevHunt (dev tools) - 10 min
-4. Product Hunt - 15 min
-5. BetaList - 10 min
+          2. Directory Submissions (Priority Order)
+             1. Futurepedia (AI directory) - 10 min
+             2. ThereIsAnAIForThat - 10 min
+             3. DevHunt (dev tools) - 10 min
+             4. Product Hunt - 15 min
+             5. BetaList - 10 min
 
-### 3. Content Creation
-- Today's recommended post: LLM Pricing Comparison 2026
-- Keywords: llm pricing comparison, openai pricing, ai cost
-- Brief: See content-briefs artifact
+          3. Content Creation
+             - Today's recommended post: LLM Pricing Comparison 2026
+             - Keywords: llm pricing comparison, openai pricing, ai cost
+             - Brief: See content-briefs artifact
 
-### 4. Outreach Targets
-- Futurepedia (directory add)
-- Product Hunt (resource link)
-- Hacker News (Show HN post)
+          4. Outreach Targets
+             - Futurepedia (directory add)
+             - Product Hunt (resource link)
+             - Hacker News (Show HN post)
 
-## Metrics to Track
-- [ ] Social media engagement
-- [ ] Directory submissions completed
-- [ ] Backlinks acquired
-- [ ] Blog post published
-- [ ] Traffic from referrals
+          ## Metrics to Track
+          - Social media engagement
+          - Directory submissions completed
+          - Backlinks acquired
+          - Blog post published
+          - Traffic from referrals
 
-## Weekly Goals
-- 5+ directory listings
-- 2+ social posts per day
-- 1 blog post per week
-- 10+ backlinks per week
+          ## Weekly Goals
+          - 5+ directory listings
+          - 2+ social posts per day
+          - 1 blog post per week
+          - 10+ backlinks per week
 
-## Tools Available
-- Social poster: scripts/marketing/social-poster.ts
-- Auto-post: scripts/marketing/auto-post.ts
-- Directory submitter: scripts/marketing/directory-submitter.ts
-- Blog ideas: scripts/marketing/blog-ideas.ts
-- Outreach: scripts/marketing/backlink-outreach.ts
+          ## Tools Available
+          - Social poster: scripts/marketing/social-poster.ts
+          - Auto-post: scripts/marketing/auto-post.ts
+          - Directory submitter: scripts/marketing/directory-submitter.ts
+          - Blog ideas: scripts/marketing/blog-ideas.ts
+          - Outreach: scripts/marketing/backlink-outreach.ts
 
----
-*This report is auto-generated daily by GitHub Actions*
-EOF
+          ---
+          This report is auto-generated daily by GitHub Actions
+          ENDOFREPORT
 
           echo "## Marketing Report" >> $GITHUB_STEP_SUMMARY
           echo "✅ Daily marketing tasks generated" >> $GITHUB_STEP_SUMMARY
@@ -287,40 +286,40 @@ EOF
         run: |
           echo "# Marketing Automation Complete" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
-          echo "## ✅ All Tasks Generated Automatically" >> $GITHUB_STEP_SUMMARY
+          echo "## All Tasks Generated Automatically" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "### Generated Files" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
-          echo "#### Social Media" >> $GITHUB_STEP_SUMMARY
+          echo "Social Media" >> $GITHUB_STEP_SUMMARY
           echo "- Auto-post results (with API credentials)" >> $GITHUB_STEP_SUMMARY
           echo "- Backup social posts for manual use" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
-          echo "#### Content Marketing" >> $GITHUB_STEP_SUMMARY
+          echo "Content Marketing" >> $GITHUB_STEP_SUMMARY
           echo "- 30-day content calendar" >> $GITHUB_STEP_SUMMARY
           echo "- Keyword clusters" >> $GITHUB_STEP_SUMMARY
           echo "- Internal linking strategy" >> $GITHUB_STEP_SUMMARY
           echo "- Meta descriptions" >> $GITHUB_STEP_SUMMARY
           echo "- Content brief #1" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
-          echo "#### Directory Submissions" >> $GITHUB_STEP_SUMMARY
+          echo "Directory Submissions" >> $GITHUB_STEP_SUMMARY
           echo "- Checklist with 21 directories" >> $GITHUB_STEP_SUMMARY
           echo "- Submission data JSON" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
-          echo "#### Outreach" >> $GITHUB_STEP_SUMMARY
+          echo "Outreach" >> $GITHUB_STEP_SUMMARY
           echo "- Outreach plan" >> $GITHUB_STEP_SUMMARY
           echo "- 3 sample email templates" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
-          echo "#### Reports" >> $GITHUB_STEP_SUMMARY
+          echo "Reports" >> $GITHUB_STEP_SUMMARY
           echo "- Daily marketing report" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
-          echo "## 🤖 Zero Manual Work Required" >> $GITHUB_STEP_SUMMARY
+          echo "## Zero Manual Work Required" >> $GITHUB_STEP_SUMMARY
           echo "All marketing materials are generated automatically daily at 9 AM UTC." >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
-          echo "### To Enable Auto-Posting:" >> $GITHUB_STEP_SUMMARY
+          echo "To Enable Auto-Posting:" >> $GITHUB_STEP_SUMMARY
           echo "Add these GitHub secrets:" >> $GITHUB_STEP_SUMMARY
           echo "- TWITTER_API_KEY, TWITTER_API_SECRET, TWITTER_ACCESS_TOKEN, TWITTER_ACCESS_SECRET" >> $GITHUB_STEP_SUMMARY
           echo "- LINKEDIN_ACCESS_TOKEN" >> $GITHUB_STEP_SUMMARY
           echo "- REDDIT_USERNAME, REDDIT_PASSWORD, REDDIT_CLIENT_ID, REDDIT_CLIENT_SECRET" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
-          echo "### Without API Credentials:" >> $GITHUB_STEP_SUMMARY
+          echo "Without API Credentials:" >> $GITHUB_STEP_SUMMARY
           echo "The workflow still generates all content for manual posting." >> $GITHUB_STEP_SUMMARY
