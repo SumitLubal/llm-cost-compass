@@ -31,37 +31,36 @@ export function CostCalculator({ models }: CostCalculatorProps) {
   const [sortDirection, setSortDirection] = useState<SortDirection>('asc');
   const { trackCalculator, trackSort } = useAnalytics();
 
-  // Sync state to URL when tokens change (debounced to avoid rapid updates)
+  // Track if user has modified values (to avoid updating URL on initial load)
+  const [hasUserModified, setHasUserModified] = useState(false);
+
+  // Sync state to URL when tokens change (only after user interaction)
   useEffect(() => {
-    // Don't run on initial render to avoid unnecessary URL updates
-    // Use a small timeout to batch updates
-    const timeoutId = setTimeout(() => {
-      const params = new URLSearchParams(searchParams.toString());
+    if (!hasUserModified) return; // Don't update URL on initial load
 
-      if (inputTokens > 0) {
-        params.set('input', inputTokens.toString());
-      } else {
-        params.delete('input');
-      }
+    const params = new URLSearchParams(searchParams.toString());
 
-      if (outputTokens > 0) {
-        params.set('output', outputTokens.toString());
-      } else {
-        params.delete('output');
-      }
+    if (inputTokens > 0) {
+      params.set('input', inputTokens.toString());
+    } else {
+      params.delete('input');
+    }
 
-      // Only update if URL actually changed
-      const currentParams = searchParams.toString();
-      const newParams = params.toString();
+    if (outputTokens > 0) {
+      params.set('output', outputTokens.toString());
+    } else {
+      params.delete('output');
+    }
 
-      if (currentParams !== newParams) {
-        const newURL = `${pathname}?${params.toString()}`;
-        router.replace(newURL, { scroll: false });
-      }
-    }, 300);
+    // Only update if URL actually changed
+    const currentParams = searchParams.toString();
+    const newParams = params.toString();
 
-    return () => clearTimeout(timeoutId);
-  }, [inputTokens, outputTokens]); // Only depend on token values
+    if (currentParams !== newParams) {
+      const newURL = `${pathname}?${params.toString()}`;
+      router.replace(newURL, { scroll: false });
+    }
+  }, [inputTokens, outputTokens, hasUserModified]); // Added hasUserModified
 
   // Sync URL to state when URL changes externally (e.g., browser back/forward)
   useEffect(() => {
@@ -81,7 +80,7 @@ export function CostCalculator({ models }: CostCalculatorProps) {
         setOutputTokens(newOutput);
       }
     }
-  }, [searchParams]); // Only run when URL changes
+  }, [searchParams]);
 
   const calculateCost = (model: FlatModel) => {
     const inputCost = (inputTokens / 1000000) * model.input_per_million;
@@ -99,6 +98,7 @@ export function CostCalculator({ models }: CostCalculatorProps) {
   };
 
   const handleInputChange = (type: 'input' | 'output', value: number) => {
+    setHasUserModified(true);
     if (type === 'input') {
       setInputTokens(value);
     } else {
@@ -388,25 +388,25 @@ export function CostCalculator({ models }: CostCalculatorProps) {
             <div className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Quick Presets:</div>
             <div className="flex flex-wrap gap-2">
               <button
-                onClick={() => { setInputTokens(100000); setOutputTokens(50000); }}
+                onClick={() => { setHasUserModified(true); setInputTokens(100000); setOutputTokens(50000); }}
                 className="px-3 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-lg text-sm hover:bg-gray-200 dark:hover:bg-gray-600"
               >
                 100K/50K
               </button>
               <button
-                onClick={() => { setInputTokens(1000000); setOutputTokens(500000); }}
+                onClick={() => { setHasUserModified(true); setInputTokens(1000000); setOutputTokens(500000); }}
                 className="px-3 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-lg text-sm hover:bg-gray-200 dark:hover:bg-gray-600"
               >
                 1M/500K
               </button>
               <button
-                onClick={() => { setInputTokens(5000000); setOutputTokens(2000000); }}
+                onClick={() => { setHasUserModified(true); setInputTokens(5000000); setOutputTokens(2000000); }}
                 className="px-3 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-lg text-sm hover:bg-gray-200 dark:hover:bg-gray-600"
               >
                 5M/2M
               </button>
               <button
-                onClick={() => { setInputTokens(10000000); setOutputTokens(5000000); }}
+                onClick={() => { setHasUserModified(true); setInputTokens(10000000); setOutputTokens(5000000); }}
                 className="px-3 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-lg text-sm hover:bg-gray-200 dark:hover:bg-gray-600"
               >
                 10M/5M
