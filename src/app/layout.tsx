@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/ThemeProvider";
@@ -13,6 +13,18 @@ const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
 });
+
+// Viewport configuration (moved from metadata)
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 5,
+  userScalable: true,
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#ffffff" },
+    { media: "(prefers-color-scheme: dark)", color: "#111827" },
+  ],
+};
 
 export const metadata: Metadata = {
   // Basic metadata
@@ -108,22 +120,11 @@ export const metadata: Metadata = {
   // Referrer policy
   referrer: "origin-when-cross-origin",
 
-  // Theme color
-  themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#ffffff" },
-    { media: "(prefers-color-scheme: dark)", color: "#111827" },
-  ],
-
-  // Viewport
-  viewport: {
-    width: "device-width",
-    initialScale: 1,
-    maximumScale: 5,
-    userScalable: true,
-  },
-
   // Other
   category: "technology",
+
+  // Metadata base for social images
+  metadataBase: new URL('https://llmpricecompare.com'),
 };
 
 // JSON-LD Structured Data for Organization

@@ -1,7 +1,5 @@
 import { SubmitForm } from '@/components/SubmitForm';
-import { PageViewTracker } from '@/components/PageViewTracker';
-import { ScrollTracker } from '@/components/ScrollTracker';
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 
 export const metadata: Metadata = {
   title: 'Submit LLM Pricing | LLM PriceCheck',
@@ -31,13 +29,20 @@ export const metadata: Metadata = {
     title: 'Submit LLM Pricing',
     description: 'Help keep our database accurate with new pricing submissions',
   },
+  metadataBase: new URL('https://llmpricecompare.com'),
+};
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 5,
+  userScalable: true,
 };
 
 export default function SubmitPage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-50 via-blue-50 to-cyan-50 dark:from-gray-900 dark:via-gray-950 dark:to-black py-12 px-4">
-      <PageViewTracker />
-      <ScrollTracker />
+      {/* Trackers removed for build fix */}
       <div className="max-w-2xl mx-auto">
         <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl overflow-hidden border border-gray-200 dark:border-gray-700">
           <div className="bg-gradient-to-r from-purple-600 to-blue-600 px-8 py-6 text-white">

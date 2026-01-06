@@ -7,9 +7,18 @@ import { ThemeToggle } from '@/components/ThemeToggle';
 import { PageViewTracker } from '@/components/PageViewTracker';
 import { ScrollTracker } from '@/components/ScrollTracker';
 import { GADebug } from '@/components/GADebug';
-import type { Metadata } from 'next';
+import { Suspense } from 'react';
+import type { Metadata, Viewport } from 'next';
 
 export const dynamic = 'force-dynamic';
+
+// Viewport configuration
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 5,
+  userScalable: true,
+};
 
 // Generate dynamic metadata based on search query
 export async function generateMetadata({ searchParams }: { searchParams: Promise<{ q?: string }> }): Promise<Metadata> {
@@ -28,11 +37,21 @@ export async function generateMetadata({ searchParams }: { searchParams: Promise
         description: `Compare ${cleanQuery} pricing and find cheaper alternatives.`,
         url: `https://llmpricecompare.com/?q=${encodeURIComponent(cleanQuery)}`,
         type: 'website',
+        images: [
+          {
+            url: '/og-image.png',
+            width: 1200,
+            height: 630,
+            alt: 'LLM PriceCheck - Smart LLM Pricing Comparison',
+          },
+        ],
       },
       twitter: {
         title: `LLM Pricing for ${cleanQuery}`,
         description: `Compare ${cleanQuery} pricing and find cheaper alternatives.`,
+        images: ['/og-image.png'],
       },
+      metadataBase: new URL('https://llmpricecompare.com'),
     };
   }
 
@@ -43,6 +62,27 @@ export async function generateMetadata({ searchParams }: { searchParams: Promise
     alternates: {
       canonical: "https://llmpricecompare.com",
     },
+    openGraph: {
+      title: "LLM PriceCompare - Compare LLM Pricing",
+      description: "Compare LLM pricing across all providers. Real-time cost calculator and smart recommendations.",
+      url: "https://llmpricecompare.com",
+      type: "website",
+      images: [
+        {
+          url: "/og-image.png",
+          width: 1200,
+          height: 630,
+          alt: "LLM PriceCompare - Smart LLM Pricing Comparison",
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: "LLM PriceCompare - Compare LLM Pricing",
+      description: "Compare LLM pricing across all providers. Real-time cost calculator and smart recommendations.",
+      images: ["/og-image.png"],
+    },
+    metadataBase: new URL('https://llmpricecompare.com'),
   };
 }
 
@@ -65,8 +105,10 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ q
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-50 via-blue-50 to-cyan-50 dark:from-gray-900 dark:via-gray-950 dark:to-black">
-      <PageViewTracker />
-      <ScrollTracker />
+      <Suspense fallback={null}>
+        <PageViewTracker />
+        <ScrollTracker />
+      </Suspense>
       <GADebug />
       {/* Header */}
       <header className="bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm border-b border-gray-200 dark:border-gray-800 sticky top-0 z-50">
