@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect } from 'react';
 import { useSearchParams, useRouter, usePathname } from 'next/navigation';
 import type { FlatModel } from '@/data/types';
 import { useAnalytics } from '@/hooks/useAnalytics';
@@ -29,41 +29,59 @@ export function CostCalculator({ models }: CostCalculatorProps) {
   const [showResults, setShowResults] = useState<boolean>(false);
   const [sortField, setSortField] = useState<SortField>('total_cost');
   const [sortDirection, setSortDirection] = useState<SortDirection>('asc');
-  const [isMounted, setIsMounted] = useState(false);
   const { trackCalculator, trackSort } = useAnalytics();
 
-  // Track mount state to prevent hydration issues
+  // Sync state to URL when tokens change (debounced to avoid rapid updates)
   useEffect(() => {
-    setIsMounted(true);
-  }, []);
+    // Don't run on initial render to avoid unnecessary URL updates
+    // Use a small timeout to batch updates
+    const timeoutId = setTimeout(() => {
+      const params = new URLSearchParams(searchParams.toString());
 
-  // Update URL when tokens change (only after mount)
-  const updateURL = useCallback((input: number, output: number) => {
-    if (!isMounted) return;
+      if (inputTokens > 0) {
+        params.set('input', inputTokens.toString());
+      } else {
+        params.delete('input');
+      }
 
-    const params = new URLSearchParams(searchParams);
+      if (outputTokens > 0) {
+        params.set('output', outputTokens.toString());
+      } else {
+        params.delete('output');
+      }
 
-    if (input > 0) {
-      params.set('input', input.toString());
-    } else {
-      params.delete('input');
+      // Only update if URL actually changed
+      const currentParams = searchParams.toString();
+      const newParams = params.toString();
+
+      if (currentParams !== newParams) {
+        const newURL = `${pathname}?${params.toString()}`;
+        router.replace(newURL, { scroll: false });
+      }
+    }, 300);
+
+    return () => clearTimeout(timeoutId);
+  }, [inputTokens, outputTokens]); // Only depend on token values
+
+  // Sync URL to state when URL changes externally (e.g., browser back/forward)
+  useEffect(() => {
+    const inputParam = searchParams.get('input');
+    const outputParam = searchParams.get('output');
+
+    if (inputParam !== null) {
+      const newInput = Math.max(0, parseInt(inputParam));
+      if (!isNaN(newInput) && newInput !== inputTokens) {
+        setInputTokens(newInput);
+      }
     }
 
-    if (output > 0) {
-      params.set('output', output.toString());
-    } else {
-      params.delete('output');
+    if (outputParam !== null) {
+      const newOutput = Math.max(0, parseInt(outputParam));
+      if (!isNaN(newOutput) && newOutput !== outputTokens) {
+        setOutputTokens(newOutput);
+      }
     }
-
-    // Preserve other params like 'q' for search
-    const newURL = `${pathname}?${params.toString()}`;
-    router.replace(newURL, { scroll: false });
-  }, [searchParams, pathname, router, isMounted]);
-
-  // Update URL whenever tokens change
-  useEffect(() => {
-    updateURL(inputTokens, outputTokens);
-  }, [inputTokens, outputTokens, updateURL]);
+  }, [searchParams]); // Only run when URL changes
 
   const calculateCost = (model: FlatModel) => {
     const inputCost = (inputTokens / 1000000) * model.input_per_million;
