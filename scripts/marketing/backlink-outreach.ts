@@ -186,7 +186,6 @@ The post would be 1500-2000 words, fully researched, with actionable insights.
 Would you be interested in publishing this?
 
 Best,
-Sumeet
 LLM PriceCompare
 https://llmpricecompare.com`
   }),
@@ -210,7 +209,6 @@ Would you consider adding it to your resources/tools page? It's completely free 
 Thanks for your time!
 
 Best,
-Sumeet
 LLM PriceCompare`
   }),
 
@@ -237,7 +235,7 @@ Category: Developer Tools / AI
 Would love to be listed in your directory!
 
 Best,
-Sumeet`
+LLM PriceCompare`
   }),
 
   showHN: (target: OutreachTarget) => ({
@@ -247,7 +245,7 @@ Sumeet`
 I built a free tool to solve a problem I had: keeping track of LLM pricing across all providers.
 
 Website: https://llmpricecompare.com
-GitHub: https://github.com/yourusername/llm-cost-compass
+GitHub: https://github.com/SumitLubal/llm-cost-compass
 
 Features:
 • Tracks 32+ models from 9 providers (OpenAI, Anthropic, Google, xAI, Amazon, Meta, DeepSeek, Mistral)

@@ -86,7 +86,7 @@ export function generateEmailHTML(changes: PriceChange[], timestamp: string): st
       <div style="margin-top: 25px; padding: 20px; background: #f9fafb; border-radius: 8px; border: 1px solid #e5e7eb;">
         <strong style="font-size: 16px;">Next Steps:</strong>
         <div style="margin-top: 15px; display: flex; gap: 10px; flex-wrap: wrap;">
-          <a href="https://github.com/yourusername/llm-cost-compass"
+          <a href="https://github.com/SumitLubal/llm-cost-compass"
              style="padding: 12px 24px; background: #3b82f6; color: white; text-decoration: none; border-radius: 6px; font-weight: bold;">
             Review on GitHub
           </a>

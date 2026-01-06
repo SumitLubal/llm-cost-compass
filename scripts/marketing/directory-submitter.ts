@@ -34,7 +34,7 @@ Perfect for developers, startups, and enterprises looking to optimize their AI c
   keywords: ['LLM', 'AI', 'pricing', 'comparison', 'OpenAI', 'Anthropic', 'Google', 'xAI', 'cost calculator', 'AI tools'],
   category: 'Developer Tools',
   twitter: '@llmpricecompare',
-  github: 'https://github.com/yourusername/llm-cost-compass'
+  github: 'https://github.com/SumitLubal/llm-cost-compass'
 };
 
 // Free directories that accept submissions

@@ -94,7 +94,7 @@ export const metadata: Metadata = {
   manifest: "/manifest.json",
 
   // Authors
-  authors: [{ name: "Sumeet" }],
+  authors: [{ name: "LLM PriceCheck" }],
 
   // Classification
   classification: "Business",
@@ -147,9 +147,8 @@ const structuredData = {
     "priceValidUntil": "2029-12-31",
   },
   "creator": {
-    "@type": "Person",
-    "name": "Sumeet",
-    "jobTitle": "Software Engineer",
+    "@type": "Organization",
+    "name": "LLM PriceCheck",
   },
   "aggregateRating": {
     "@type": "AggregateRating",
@@ -204,7 +203,7 @@ export default function RootLayout({
         {/* Additional SEO meta tags */}
         <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
         <meta name="googlebot" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
-        <meta name="author" content="Sumeet" />
+        <meta name="author" content="LLM PriceCheck" />
         <meta name="generator" content="Next.js" />
         <meta name="rating" content="general" />
         <meta name="revisit-after" content="1 days" />
@@ -216,7 +215,7 @@ export default function RootLayout({
 
         {/* Twitter additional tags */}
         <meta name="twitter:site" content="@llmpricecheck" />
-        <meta name="twitter:creator" content="@sumeet" />
+        <meta name="twitter:creator" content="@llmpricecheck" />
 
         {/* Theme color for browsers */}
         <meta name="theme-color" content="#6366f1" media="(prefers-color-scheme: light)" />

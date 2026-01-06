@@ -313,13 +313,13 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ q
             <a href="/submit" className="hover:text-purple-600 dark:hover:text-purple-400 transition">
               📝 Submit Pricing
             </a>
-            <a href="https://github.com" className="hover:text-purple-600 dark:hover:text-purple-400 transition" target="_blank" rel="noopener">
+            <a href="https://github.com/SumitLubal/llm-cost-compass" className="hover:text-purple-600 dark:hover:text-purple-400 transition" target="_blank" rel="noopener">
               ⭐ GitHub
             </a>
           </div>
           <p>Prices updated daily • Always show better alternatives • Never hide providers</p>
           <p className="mt-2 text-xs text-gray-500 dark:text-gray-500">
-            Built for Sumeet • Beta v0.1
+            Beta v0.1
           </p>
         </div>
       </footer>
