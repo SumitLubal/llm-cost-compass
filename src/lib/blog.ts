@@ -10,9 +10,18 @@ export interface BlogPost {
   author: string;
   tags: string[];
   content: string;
+  difficulty?: string;
+  readingTime?: string;
 }
 
 const BLOG_DIR = path.join(process.cwd(), 'src/app/blog');
+
+// Calculate reading time from content
+function calculateReadingTime(content: string): string {
+  const words = content.split(/\s+/).length;
+  const minutes = Math.ceil(words / 200);
+  return `${minutes} min read`;
+}
 
 // Get all blog posts
 export function getAllBlogPosts(): BlogPost[] {
@@ -34,6 +43,8 @@ export function getAllBlogPosts(): BlogPost[] {
       author: data.author,
       tags: data.tags || [],
       content,
+      difficulty: data.difficulty || 'Beginner',
+      readingTime: calculateReadingTime(content),
     };
   });
 }
@@ -57,6 +68,8 @@ export function getBlogPost(slug: string): BlogPost | null {
     author: data.author,
     tags: data.tags || [],
     content,
+    difficulty: data.difficulty || 'Beginner',
+    readingTime: calculateReadingTime(content),
   };
 }
 
