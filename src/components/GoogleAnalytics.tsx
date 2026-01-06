@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect } from 'react';
+import Script from 'next/script';
 
 interface GoogleAnalyticsProps {
   measurementId: string;
@@ -24,30 +25,38 @@ export function GoogleAnalytics({ measurementId }: GoogleAnalyticsProps) {
       console.log('[GA] Created gtag function');
     }
 
-    // Queue initial config - this will be processed when gtag.js loads
-    window.gtag('js', new Date());
-    window.gtag('config', measurementId, {
-      page_path: window.location.pathname,
-      send_page_view: true,
-    });
-    console.log('[GA] Config queued:', measurementId);
-
-    // Load gtag.js script
-    const script = document.createElement('script');
-    script.src = `https://www.googletagmanager.com/gtag/js?id=${measurementId}`;
-    script.async = true;
-    script.onload = () => {
-      console.log('[GA] Script loaded successfully');
-    };
-    script.onerror = (e) => {
-      console.error('[GA] Script failed to load:', e);
-    };
-    document.head.appendChild(script);
-
-    return () => {};
+    console.log('[GA] Initialized with ID:', measurementId);
   }, [measurementId]);
 
-  return null;
+  if (!measurementId) {
+    console.log('[GA] No measurement ID provided, skipping GA initialization');
+    return null;
+  }
+
+  return (
+    <>
+      {/* Load gtag.js script */}
+      <Script
+        src={`https://www.googletagmanager.com/gtag/js?id=${measurementId}`}
+        strategy="afterInteractive"
+        onLoad={() => {
+          console.log('[GA] Script loaded successfully');
+          // Queue initial config after script loads
+          if (window.gtag) {
+            window.gtag('js', new Date());
+            window.gtag('config', measurementId, {
+              page_path: window.location.pathname,
+              send_page_view: true,
+            });
+            console.log('[GA] Config sent:', measurementId);
+          }
+        }}
+        onError={(e) => {
+          console.error('[GA] Script failed to load:', e);
+        }}
+      />
+    </>
+  );
 }
 
 // Helper function to track events

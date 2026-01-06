@@ -237,12 +237,10 @@ export default function RootLayout({
       >
         <ThemeProvider>{children}</ThemeProvider>
 
-        {/* Google Analytics - only if measurement ID is provided */}
-        {process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID && (
-          <GoogleAnalytics
-            measurementId={process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID}
-          />
-        )}
+        {/* Google Analytics */}
+        <GoogleAnalytics
+          measurementId={process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID || ''}
+        />
       </body>
     </html>
   );

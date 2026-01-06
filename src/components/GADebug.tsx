@@ -12,9 +12,12 @@ export function GADebug() {
         measurementId: process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID,
         hasWindow: typeof window !== 'undefined',
         dataLayer: typeof window !== 'undefined' ? (window as any).dataLayer : null,
+        dataLayerType: typeof window !== 'undefined' && (window as any).dataLayer ? typeof (window as any).dataLayer : null,
         gtag: typeof window !== 'undefined' ? typeof (window as any).gtag : null,
         gtagIsFunction: typeof window !== 'undefined' && typeof (window as any).gtag === 'function',
         scriptLoaded: typeof window !== 'undefined' && document.querySelector('script[src*="googletagmanager.com"]') !== null,
+        scriptTags: typeof window !== 'undefined' ? Array.from(document.querySelectorAll('script')).filter(s => s.src.includes('googletagmanager')).map(s => ({ src: s.src, async: s.async })) : [],
+        dataLayerContents: typeof window !== 'undefined' && (window as any).dataLayer ? (window as any).dataLayer.slice(0, 5) : null,
       };
       setDebugInfo(info);
     };
@@ -57,6 +60,18 @@ export function GADebug() {
         <div>dataLayer: <span className={debugInfo.dataLayer ? 'text-green-400' : 'text-red-400'}>{debugInfo.dataLayer ? 'EXISTS' : 'MISSING'}</span></div>
         <div>Script tag: <span className={debugInfo.scriptLoaded ? 'text-green-400' : 'text-red-400'}>{debugInfo.scriptLoaded ? 'LOADED' : 'MISSING'}</span></div>
         <div>Status: <span className={isReady ? 'text-green-400 font-bold' : 'text-red-400 font-bold'}>{isReady ? 'READY' : 'NOT READY'}</span></div>
+
+        {/* Additional debug info */}
+        {debugInfo.dataLayerContents && (
+          <div className="text-[10px] text-gray-400 mt-1">
+            dataLayer[0-4]: {JSON.stringify(debugInfo.dataLayerContents)}
+          </div>
+        )}
+        {debugInfo.scriptTags.length > 0 && (
+          <div className="text-[10px] text-gray-400 mt-1">
+            Scripts: {debugInfo.scriptTags.length} found
+          </div>
+        )}
       </div>
       <div className="mt-3 pt-3 border-t border-gray-700">
         <button
