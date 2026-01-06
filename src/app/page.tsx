@@ -109,7 +109,7 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ q
         <PageViewTracker />
         <ScrollTracker />
       </Suspense>
-      <GADebug />
+      {process.env.NODE_ENV === 'development' && <GADebug />}
       {/* Header */}
       <header className="bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm border-b border-gray-200 dark:border-gray-800 sticky top-0 z-50">
         <div className="max-w-6xl mx-auto px-4 py-4">
