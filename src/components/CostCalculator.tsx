@@ -1,6 +1,7 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect, useCallback } from 'react';
+import { useSearchParams, useRouter, usePathname } from 'next/navigation';
 import type { FlatModel } from '@/data/types';
 import { useAnalytics } from '@/hooks/useAnalytics';
 
@@ -12,12 +13,57 @@ type SortField = 'provider' | 'model' | 'input_cost' | 'output_cost' | 'total_co
 type SortDirection = 'asc' | 'desc';
 
 export function CostCalculator({ models }: CostCalculatorProps) {
-  const [inputTokens, setInputTokens] = useState<number>(100000); // 100K
-  const [outputTokens, setOutputTokens] = useState<number>(50000); // 50K
+  const searchParams = useSearchParams();
+  const router = useRouter();
+  const pathname = usePathname();
+
+  // Initialize state from URL params or defaults
+  const [inputTokens, setInputTokens] = useState<number>(() => {
+    const param = searchParams.get('input');
+    return param ? Math.max(0, parseInt(param)) : 100000;
+  });
+  const [outputTokens, setOutputTokens] = useState<number>(() => {
+    const param = searchParams.get('output');
+    return param ? Math.max(0, parseInt(param)) : 50000;
+  });
   const [showResults, setShowResults] = useState<boolean>(false);
   const [sortField, setSortField] = useState<SortField>('total_cost');
   const [sortDirection, setSortDirection] = useState<SortDirection>('asc');
+  const [isMounted, setIsMounted] = useState(false);
   const { trackCalculator, trackSort } = useAnalytics();
+
+  // Track mount state to prevent hydration issues
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  // Update URL when tokens change (only after mount)
+  const updateURL = useCallback((input: number, output: number) => {
+    if (!isMounted) return;
+
+    const params = new URLSearchParams(searchParams);
+
+    if (input > 0) {
+      params.set('input', input.toString());
+    } else {
+      params.delete('input');
+    }
+
+    if (output > 0) {
+      params.set('output', output.toString());
+    } else {
+      params.delete('output');
+    }
+
+    // Preserve other params like 'q' for search
+    const newURL = `${pathname}?${params.toString()}`;
+    router.replace(newURL, { scroll: false });
+  }, [searchParams, pathname, router, isMounted]);
+
+  // Update URL whenever tokens change
+  useEffect(() => {
+    updateURL(inputTokens, outputTokens);
+  }, [inputTokens, outputTokens, updateURL]);
 
   const calculateCost = (model: FlatModel) => {
     const inputCost = (inputTokens / 1000000) * model.input_per_million;
@@ -31,6 +77,14 @@ export function CostCalculator({ models }: CostCalculatorProps) {
       setShowResults(true);
       // Track calculator usage
       trackCalculator(inputTokens, outputTokens, models.length);
+    }
+  };
+
+  const handleInputChange = (type: 'input' | 'output', value: number) => {
+    if (type === 'input') {
+      setInputTokens(value);
+    } else {
+      setOutputTokens(value);
     }
   };
 
@@ -129,7 +183,7 @@ export function CostCalculator({ models }: CostCalculatorProps) {
             <input
               type="number"
               value={inputTokens}
-              onChange={(e) => setInputTokens(Number(e.target.value))}
+              onChange={(e) => handleInputChange('input', Number(e.target.value))}
               placeholder="e.g., 100000"
               className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 text-gray-900 dark:text-gray-100 font-medium bg-white dark:bg-gray-700"
             />
@@ -145,7 +199,7 @@ export function CostCalculator({ models }: CostCalculatorProps) {
             <input
               type="number"
               value={outputTokens}
-              onChange={(e) => setOutputTokens(Number(e.target.value))}
+              onChange={(e) => handleInputChange('output', Number(e.target.value))}
               placeholder="e.g., 50000"
               className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 text-gray-900 dark:text-gray-100 font-medium bg-white dark:bg-gray-700"
             />
@@ -338,6 +392,20 @@ export function CostCalculator({ models }: CostCalculatorProps) {
                 className="px-3 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-lg text-sm hover:bg-gray-200 dark:hover:bg-gray-600"
               >
                 10M/5M
+              </button>
+              <button
+                onClick={() => {
+                  // Copy shareable URL to clipboard
+                  if (typeof window !== 'undefined') {
+                    const url = `${window.location.origin}${pathname}?input=${inputTokens}&output=${outputTokens}`;
+                    navigator.clipboard.writeText(url).then(() => {
+                      alert('Shareable URL copied to clipboard!');
+                    });
+                  }
+                }}
+                className="px-3 py-1 bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300 rounded-lg text-sm hover:bg-purple-200 dark:hover:bg-purple-900/50"
+              >
+                📋 Copy Share URL
               </button>
             </div>
           </div>

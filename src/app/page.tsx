@@ -9,6 +9,7 @@ import { ScrollTracker } from '@/components/ScrollTracker';
 import { GADebug } from '@/components/GADebug';
 import { Suspense } from 'react';
 import type { Metadata, Viewport } from 'next';
+import Link from 'next/link';
 
 export const dynamic = 'force-dynamic';
 
@@ -114,17 +115,17 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ q
       <header className="bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm border-b border-gray-200 dark:border-gray-800 sticky top-0 z-50">
         <div className="max-w-6xl mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-gradient-to-br from-purple-600 to-blue-600 rounded-lg flex items-center justify-center text-white font-bold text-xl">
+            <Link href="/" className="flex items-center gap-3 group">
+              <div className="w-10 h-10 bg-gradient-to-br from-purple-600 to-blue-600 rounded-lg flex items-center justify-center text-white font-bold text-xl group-hover:scale-105 group-hover:shadow-lg transition-transform">
                 💎
               </div>
               <div>
-                <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100 leading-tight">
+                <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100 leading-tight group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-colors">
                   LLM PriceCheck
                 </h1>
                 <p className="text-xs text-gray-600 dark:text-gray-400">Smart pricing comparison</p>
               </div>
-            </div>
+            </Link>
 
             <div className="flex gap-2 items-center">
               <ThemeToggle />
