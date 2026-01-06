@@ -129,6 +129,12 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ q
 
             <div className="flex gap-2 items-center">
               <ThemeToggle />
+              <Link
+                href="/blog"
+                className="px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-200 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition hidden sm:block"
+              >
+                📚 Blog
+              </Link>
               <SubmitButton />
               <a
                 href="/submit"
@@ -263,6 +269,34 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ q
                 ))}
               </div>
             </section>
+
+            {/* Blog Section */}
+            <section className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6 border border-gray-200 dark:border-gray-700">
+              <div className="flex items-center justify-between mb-4">
+                <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100">
+                  📚 LLM Pricing Insights & Guides
+                </h2>
+                <Link
+                  href="/blog"
+                  className="px-4 py-2 bg-purple-600 text-white font-semibold rounded-lg hover:bg-purple-700 transition text-sm"
+                >
+                  View All Articles →
+                </Link>
+              </div>
+              <p className="text-gray-700 dark:text-gray-300 mb-4">
+                Learn about LLM tokens, cost optimization strategies, embeddings, and best practices for building cost-effective AI applications.
+              </p>
+              <div className="grid md:grid-cols-2 gap-3">
+                <Link href="/blog/understanding-tokens" className="p-3 bg-gradient-to-br from-purple-50 to-blue-50 dark:from-gray-700 dark:to-gray-800 rounded-lg border border-purple-200 dark:border-gray-600 hover:shadow-md transition">
+                  <div className="font-semibold text-gray-900 dark:text-gray-100 mb-1">Understanding LLM Tokens</div>
+                  <div className="text-xs text-gray-600 dark:text-gray-400">Learn what tokens are and how they affect pricing</div>
+                </Link>
+                <Link href="/blog/cost-optimization-tips" className="p-3 bg-gradient-to-br from-purple-50 to-blue-50 dark:from-gray-700 dark:to-gray-800 rounded-lg border border-purple-200 dark:border-gray-600 hover:shadow-md transition">
+                  <div className="font-semibold text-gray-900 dark:text-gray-100 mb-1">10 Cost Optimization Tips</div>
+                  <div className="text-xs text-gray-600 dark:text-gray-400">Cut your LLM API costs by 50% or more</div>
+                </Link>
+              </div>
+            </section>
           </div>
         )}
       </main>
@@ -270,6 +304,17 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ q
       {/* Footer */}
       <footer className="border-t border-gray-200 dark:border-gray-800 bg-white/50 dark:bg-gray-900/50 backdrop-blur-sm mt-16">
         <div className="max-w-6xl mx-auto px-4 py-6 text-center text-sm text-gray-600 dark:text-gray-400">
+          <div className="flex flex-wrap justify-center gap-4 mb-2">
+            <Link href="/blog" className="hover:text-purple-600 dark:hover:text-purple-400 transition">
+              📚 Blog
+            </Link>
+            <a href="/submit" className="hover:text-purple-600 dark:hover:text-purple-400 transition">
+              📝 Submit Pricing
+            </a>
+            <a href="https://github.com" className="hover:text-purple-600 dark:hover:text-purple-400 transition" target="_blank" rel="noopener">
+              ⭐ GitHub
+            </a>
+          </div>
           <p>Prices updated daily • Always show better alternatives • Never hide providers</p>
           <p className="mt-2 text-xs text-gray-500 dark:text-gray-500">
             Built for Sumeet • Beta v0.1

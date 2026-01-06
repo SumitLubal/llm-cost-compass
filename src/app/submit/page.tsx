@@ -69,9 +69,12 @@ export default function SubmitPage() {
           </div>
         </div>
 
-        <div className="mt-8 text-center">
+        <div className="mt-8 text-center flex gap-4 justify-center">
           <a href="/" className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100">
             ← Back to comparison
+          </a>
+          <a href="/blog" className="text-purple-600 dark:text-purple-400 hover:text-purple-700 dark:hover:text-purple-300">
+            📚 Read our blog
           </a>
         </div>
       </div>
