@@ -116,9 +116,11 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ q
         <div className="max-w-6xl mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
             <Link href="/" className="flex items-center gap-3 group">
-              <div className="w-10 h-10 bg-gradient-to-br from-purple-600 to-blue-600 rounded-lg flex items-center justify-center text-white font-bold text-xl group-hover:scale-105 group-hover:shadow-lg transition-transform">
-                💎
-              </div>
+              <img
+                src="/logg-price.png"
+                alt="LLM PriceCheck Logo"
+                className="w-10 h-10 rounded-lg group-hover:scale-105 group-hover:shadow-lg transition-transform"
+              />
               <div>
                 <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100 leading-tight group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-colors">
                   LLM PriceCheck
