@@ -125,7 +125,12 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ q
                 <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100 leading-tight group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-colors">
                   LLM PriceCheck
                 </h1>
-                <p className="text-xs text-gray-600 dark:text-gray-400">Smart pricing comparison</p>
+                <div className="flex items-center gap-2">
+                  <p className="text-xs text-gray-600 dark:text-gray-400">Smart pricing comparison</p>
+                  <span className="bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300 text-[10px] font-medium px-2 py-0.5 rounded-full whitespace-nowrap">
+                    Updated Daily
+                  </span>
+                </div>
               </div>
             </Link>
 
