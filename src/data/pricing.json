@@ -38,7 +38,9 @@
           "output_per_million": 75,
           "context_window": 200000,
           "free_tier": null,
-          "last_updated": "2026-01-13T07:17:01.794Z"
+          "last_updated": "2026-01-13T07:17:01.794Z",
+          "speed": 45,
+          "sde_bench_score": 85
         },
         {
           "name": "Claude 3 Sonnet",
@@ -46,7 +48,9 @@
           "output_per_million": 15,
           "context_window": 200000,
           "free_tier": null,
-          "last_updated": "2026-01-13T07:17:01.794Z"
+          "last_updated": "2026-01-13T07:17:01.794Z",
+          "speed": 65,
+          "sde_bench_score": 75
         },
         {
           "name": "Claude 3 Haiku",
@@ -54,7 +58,9 @@
           "output_per_million": 1.25,
           "context_window": 200000,
           "free_tier": "1M tokens/month free tier",
-          "last_updated": "2026-01-13T07:17:01.794Z"
+          "last_updated": "2026-01-13T07:17:01.794Z",
+          "speed": 95,
+          "sde_bench_score": 65
         },
         {
           "name": "Claude Opus 4.5",
@@ -131,7 +137,9 @@
           "output_per_million": 1.1,
           "context_window": 0,
           "free_tier": null,
-          "last_updated": "2026-01-13T07:17:01.794Z"
+          "last_updated": "2026-01-13T07:17:01.794Z",
+          "speed": 78,
+          "sde_bench_score": 69
         },
         {
           "name": "DeepSeek Reasoner",
@@ -167,7 +175,9 @@
           "output_per_million": 15,
           "context_window": 2000000,
           "free_tier": "Free tier: 1M tokens/month",
-          "last_updated": "2026-01-13T07:17:01.794Z"
+          "last_updated": "2026-01-13T07:17:01.794Z",
+          "speed": 70,
+          "sde_bench_score": 72
         },
         {
           "name": "Gemini Pro",
@@ -304,7 +314,9 @@
           "input_per_million": 2.5,
           "output_per_million": 10,
           "context_window": 0,
-          "last_updated": "2026-01-13T07:30:15.483Z"
+          "last_updated": "2026-01-13T07:30:15.483Z",
+          "speed": 80,
+          "sde_bench_score": 78
         },
         {
           "name": "GPT-4 Turbo",
@@ -312,7 +324,9 @@
           "output_per_million": 30,
           "context_window": 128000,
           "free_tier": null,
-          "last_updated": "2026-01-13T07:17:01.794Z"
+          "last_updated": "2026-01-13T07:17:01.794Z",
+          "speed": 60,
+          "sde_bench_score": 76
         },
         {
           "name": "GPT-3.5 Turbo",
@@ -320,7 +334,9 @@
           "output_per_million": 1.5,
           "context_window": 16385,
           "free_tier": "Free tier: $5 credit for new users",
-          "last_updated": "2026-01-13T07:17:01.794Z"
+          "last_updated": "2026-01-13T07:17:01.794Z",
+          "speed": 85,
+          "sde_bench_score": 55
         },
         {
           "name": "GPT 5.2",
@@ -425,7 +441,9 @@
           "input_per_million": 0.15,
           "output_per_million": 0.6,
           "context_window": 0,
-          "last_updated": "2026-01-13T07:30:15.483Z"
+          "last_updated": "2026-01-13T07:30:15.483Z",
+          "speed": 90,
+          "sde_bench_score": 70
         }
       ]
     },
@@ -439,7 +457,9 @@
           "output_per_million": 15,
           "context_window": 0,
           "free_tier": null,
-          "last_updated": "2026-01-13T07:17:01.794Z"
+          "last_updated": "2026-01-13T07:17:01.794Z",
+          "speed": 75,
+          "sde_bench_score": 73
         },
         {
           "name": "Grok 3 Mini",
@@ -447,7 +467,9 @@
           "output_per_million": 0.5,
           "context_window": 0,
           "free_tier": null,
-          "last_updated": "2026-01-13T07:17:01.794Z"
+          "last_updated": "2026-01-13T07:17:01.794Z",
+          "speed": 92,
+          "sde_bench_score": 62
         },
         {
           "name": "Grok 4 Fast",
@@ -455,7 +477,9 @@
           "output_per_million": 0.5,
           "context_window": 0,
           "free_tier": null,
-          "last_updated": "2026-01-13T07:17:01.794Z"
+          "last_updated": "2026-01-13T07:17:01.794Z",
+          "speed": 98,
+          "sde_bench_score": 68
         },
         {
           "name": "Grok 4 ≤128k",
@@ -538,14 +562,18 @@
           "input_per_million": 0.59,
           "output_per_million": 0.7,
           "context_window": 0,
-          "last_updated": "2026-01-13T07:30:15.483Z"
+          "last_updated": "2026-01-13T07:30:15.483Z",
+          "speed": 68,
+          "sde_bench_score": 67
         },
         {
           "name": "Llama 3.1 405b",
           "input_per_million": 3.5,
           "output_per_million": 3.5,
           "context_window": 0,
-          "last_updated": "2026-01-13T07:30:15.483Z"
+          "last_updated": "2026-01-13T07:30:15.483Z",
+          "speed": 55,
+          "sde_bench_score": 74
         }
       ]
     },
@@ -559,7 +587,9 @@
           "output_per_million": 0.3,
           "context_window": 256000,
           "free_tier": "Free until Jan 20th",
-          "last_updated": "2026-01-13T07:53:00.000Z"
+          "last_updated": "2026-01-13T07:53:00.000Z",
+          "speed": 96,
+          "sde_bench_score": 71
         }
       ]
     }

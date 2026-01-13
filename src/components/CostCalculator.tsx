@@ -26,27 +26,37 @@ export function CostCalculator({ models }: CostCalculatorProps) {
     const param = searchParams.get('output');
     return param ? Math.max(0, parseInt(param)) : 50000;
   });
-  const [showResults, setShowResults] = useState<boolean>(false);
+  // Auto-show results if params exist in URL
+  const [showResults, setShowResults] = useState<boolean>(() => {
+    return searchParams.has('input') && searchParams.has('output');
+  });
   const [sortField, setSortField] = useState<SortField>('total_cost');
   const [sortDirection, setSortDirection] = useState<SortDirection>('asc');
+
+  // Pagination state
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [itemsPerPage, setItemsPerPage] = useState<number>(10);
+
   const { trackCalculator, trackSort } = useAnalytics();
 
   // Track if user has modified values (to avoid updating URL on initial load)
+  // If we loaded from URL, we consider it "modified" so effects run correctly if needed,
+  // but we mostly want to respect the user's intent.
   const [hasUserModified, setHasUserModified] = useState(false);
 
   // Sync state to URL when tokens change (only after user interaction)
   useEffect(() => {
-    if (!hasUserModified) return; // Don't update URL on initial load
+    if (!hasUserModified && !showResults) return;
 
     const params = new URLSearchParams(searchParams.toString());
 
-    if (inputTokens > 0) {
+    if (showResults && inputTokens >= 0) {
       params.set('input', inputTokens.toString());
     } else {
       params.delete('input');
     }
 
-    if (outputTokens > 0) {
+    if (showResults && outputTokens >= 0) {
       params.set('output', outputTokens.toString());
     } else {
       params.delete('output');
@@ -60,12 +70,16 @@ export function CostCalculator({ models }: CostCalculatorProps) {
       const newURL = `${pathname}?${params.toString()}`;
       router.replace(newURL, { scroll: false });
     }
-  }, [inputTokens, outputTokens, hasUserModified]); // Added hasUserModified
+  }, [inputTokens, outputTokens, showResults, hasUserModified]);
 
-  // Sync URL to state when URL changes externally (e.g., browser back/forward)
+  // Sync URL to state when URL changes externally
   useEffect(() => {
     const inputParam = searchParams.get('input');
     const outputParam = searchParams.get('output');
+
+    if (inputParam && outputParam) {
+      setShowResults(true);
+    }
 
     if (inputParam !== null) {
       const newInput = Math.max(0, parseInt(inputParam));
@@ -92,10 +106,23 @@ export function CostCalculator({ models }: CostCalculatorProps) {
     console.log('[GA DEBUG] Calculate button clicked');
     if (inputTokens >= 0 && outputTokens >= 0) {
       setShowResults(true);
+      setHasUserModified(true);
       // Track calculator usage
       trackCalculator(inputTokens, outputTokens, models.length);
+      setCurrentPage(1);
     }
   };
+
+  const handleHideResults = () => {
+    setShowResults(false);
+    setHasUserModified(true);
+    // Clear params effectively
+    const params = new URLSearchParams(searchParams.toString());
+    params.delete('input');
+    params.delete('output');
+    router.replace(`${pathname}?${params.toString()}`, { scroll: false });
+  };
+
 
   const handleInputChange = (type: 'input' | 'output', value: number) => {
     setHasUserModified(true);
@@ -118,6 +145,7 @@ export function CostCalculator({ models }: CostCalculatorProps) {
     }
     // Track sort event
     trackSort(field, newDirection);
+    setCurrentPage(1);
   };
 
   const getSortIcon = (field: SortField) => {
@@ -175,7 +203,7 @@ export function CostCalculator({ models }: CostCalculatorProps) {
       className={`px-4 py-2 text-${align} font-semibold cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors select-none`}
       onClick={() => handleSort(field)}
     >
-      <span className="flex items-center gap-1 justify-end">
+      <span className={`flex items-center gap-1 ${align === 'right' ? 'justify-end' : 'justify-start'}`}>
         {label}
         <span className="text-xs opacity-50">{getSortIcon(field)}</span>
       </span>
@@ -183,6 +211,37 @@ export function CostCalculator({ models }: CostCalculatorProps) {
   );
 
   const sortedData = showResults ? getSortedModels() : [];
+
+  // Pagination Logic
+  const totalPages = itemsPerPage === -1 ? 1 : Math.ceil(sortedData.length / itemsPerPage);
+  const paginatedData = itemsPerPage === -1
+    ? sortedData
+    : sortedData.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
+
+  // Generate page numbers to show
+  const getPageNumbers = () => {
+    const pages = [];
+    if (totalPages <= 7) {
+      for (let i = 1; i <= totalPages; i++) pages.push(i);
+    } else {
+      if (currentPage <= 4) {
+        for (let i = 1; i <= 5; i++) pages.push(i);
+        pages.push('...');
+        pages.push(totalPages);
+      } else if (currentPage >= totalPages - 3) {
+        pages.push(1);
+        pages.push('...');
+        for (let i = totalPages - 4; i <= totalPages; i++) pages.push(i);
+      } else {
+        pages.push(1);
+        pages.push('...');
+        for (let i = currentPage - 1; i <= currentPage + 1; i++) pages.push(i);
+        pages.push('...');
+        pages.push(totalPages);
+      }
+    }
+    return pages;
+  };
 
   return (
     <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg overflow-hidden mb-8 border border-gray-200 dark:border-gray-700">
@@ -268,17 +327,17 @@ export function CostCalculator({ models }: CostCalculatorProps) {
                 <div className="font-bold text-lg mt-1">
                   {sortedData.reduce((best, curr) =>
                     curr.costs.total < best.costs.total ? curr : best
-                  , sortedData[0])?.model.provider}
+                    , sortedData[0])?.model.provider}
                 </div>
                 <div className="text-sm opacity-90">
                   {sortedData.reduce((best, curr) =>
                     curr.costs.total < best.costs.total ? curr : best
-                  , sortedData[0])?.model.model}
+                    , sortedData[0])?.model.model}
                 </div>
                 <div className="text-2xl font-bold mt-2">
                   ${sortedData.reduce((best, curr) =>
                     curr.costs.total < best.costs.total ? curr : best
-                  , sortedData[0])?.costs.total.toFixed(2)}
+                    , sortedData[0])?.costs.total.toFixed(2)}
                 </div>
               </div>
 
@@ -330,9 +389,12 @@ export function CostCalculator({ models }: CostCalculatorProps) {
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
-                  {sortedData.map(({ model, costs }, idx) => {
+                  {paginatedData.map(({ model, costs }, idx) => {
+                    // Global index for cheapest calculation
+                    const globalIndex = (currentPage - 1) * (itemsPerPage === -1 ? 0 : itemsPerPage) + idx;
+
                     // Only show CHEAPEST badge when sorting by total_cost in ascending order
-                    const isCheapest = sortField === 'total_cost' && sortDirection === 'asc' && idx === 0;
+                    const isCheapest = sortField === 'total_cost' && sortDirection === 'asc' && globalIndex === 0;
 
                     return (
                       <tr
@@ -358,6 +420,72 @@ export function CostCalculator({ models }: CostCalculatorProps) {
               </table>
             </div>
 
+            {/* Pagination Controls */}
+            <div className="flex flex-col sm:flex-row items-center justify-between gap-4 py-4 border-t border-gray-200 dark:border-gray-700">
+
+              {/* Items per page Selector */}
+              <div className="flex items-center gap-2 text-sm text-gray-700 dark:text-gray-300">
+                <span>Show:</span>
+                <select
+                  value={itemsPerPage}
+                  onChange={(e) => {
+                    setItemsPerPage(Number(e.target.value));
+                    setCurrentPage(1);
+                  }}
+                  className="bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded px-2 py-1 focus:outline-none focus:ring-2 focus:ring-purple-500"
+                >
+                  <option value={10}>10</option>
+                  <option value={20}>20</option>
+                  <option value={50}>50</option>
+                  <option value={-1}>All</option>
+                </select>
+                <span>results</span>
+              </div>
+
+              {/* Page Numbers */}
+              {itemsPerPage !== -1 && totalPages > 1 && (
+                <div className="flex items-center gap-1">
+                  <button
+                    onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
+                    disabled={currentPage === 1}
+                    className="px-3 py-1 rounded border border-gray-300 dark:border-gray-600 disabled:opacity-50 hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300"
+                  >
+                    Prev
+                  </button>
+
+                  {getPageNumbers().map((page, i) => (
+                    typeof page === 'number' ? (
+                      <button
+                        key={i}
+                        onClick={() => setCurrentPage(page)}
+                        className={`w-8 h-8 rounded flex items-center justify-center text-sm ${currentPage === page
+                            ? 'bg-purple-600 text-white'
+                            : 'hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300'
+                          }`}
+                      >
+                        {page}
+                      </button>
+                    ) : (
+                      <span key={i} className="px-1 text-gray-500">...</span>
+                    )
+                  ))}
+
+                  <button
+                    onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
+                    disabled={currentPage === totalPages}
+                    className="px-3 py-1 rounded border border-gray-300 dark:border-gray-600 disabled:opacity-50 hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300"
+                  >
+                    Next
+                  </button>
+                </div>
+              )}
+
+              {/* Results Count */}
+              <div className="text-sm text-gray-500 dark:text-gray-400">
+                Showing {itemsPerPage === -1 ? 1 : (currentPage - 1) * itemsPerPage + 1} to {itemsPerPage === -1 ? sortedData.length : Math.min(currentPage * itemsPerPage, sortedData.length)} of {sortedData.length}
+              </div>
+            </div>
+
             {/* Free Tier Alert */}
             {sortedData.some(({ costs }) => costs.total === 0) && (
               <div className="bg-green-50 dark:bg-green-950/30 border border-green-200 dark:border-green-800 rounded-lg p-4 mt-4">
@@ -374,7 +502,7 @@ export function CostCalculator({ models }: CostCalculatorProps) {
             )}
 
             <button
-              onClick={() => setShowResults(false)}
+              onClick={handleHideResults}
               className="w-full border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 py-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 transition mt-4"
             >
               Hide Results

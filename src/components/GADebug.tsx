@@ -6,6 +6,8 @@ export function GADebug() {
   const [debugInfo, setDebugInfo] = useState<any>(null);
   const [testResult, setTestResult] = useState<string>('');
 
+  const [isCollapsed, setIsCollapsed] = useState<boolean>(true);
+
   useEffect(() => {
     const updateInfo = () => {
       const info = {
@@ -49,11 +51,25 @@ export function GADebug() {
 
   if (!debugInfo) return null;
 
+  if (isCollapsed) {
+    return (
+      <button
+        onClick={() => setIsCollapsed(false)}
+        className="fixed bottom-4 right-4 bg-gray-900 text-white p-2 rounded-lg shadow-lg z-50 font-mono text-xs border border-gray-700 hover:bg-gray-800 transition"
+      >
+        GA DEBUG
+      </button>
+    );
+  }
+
   const isReady = debugInfo.gtagIsFunction && debugInfo.dataLayer;
 
   return (
     <div className="fixed bottom-4 right-4 bg-gray-900 text-white p-4 rounded-lg shadow-lg z-50 font-mono text-xs max-w-md border border-gray-700">
-      <div className="font-bold mb-2 text-yellow-400">GA DEBUG</div>
+      <div className="flex justify-between items-center mb-2">
+        <div className="font-bold text-yellow-400">GA DEBUG</div>
+        <button onClick={() => setIsCollapsed(true)} className="text-gray-400 hover:text-white">[-]</button>
+      </div>
       <div className="space-y-1 opacity-90">
         <div>Measurement ID: <span className={debugInfo.measurementId ? 'text-green-400' : 'text-red-400'}>{debugInfo.measurementId || 'MISSING!'}</span></div>
         <div>gtag function: <span className={debugInfo.gtagIsFunction ? 'text-green-400' : 'text-red-400'}>{debugInfo.gtagIsFunction ? 'READY' : 'MISSING'}</span></div>

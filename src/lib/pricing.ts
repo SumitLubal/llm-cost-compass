@@ -35,6 +35,8 @@ function flattenModels(data: PricingData): FlatModel[] {
         context_window: model.context_window,
         free_tier: model.free_tier,
         last_updated: model.last_updated,
+        speed: model.speed,
+        sde_bench_score: model.sde_bench_score,
         // Additional FlatModel properties
         provider: provider.name,
         provider_id: provider.id,
@@ -148,4 +150,48 @@ export function getLastUpdated(): string {
  */
 export function getTotalModels(): number {
   return pricingData.metadata.total_models;
+}
+
+/**
+ * Get top 5 models by price (lowest total cost)
+ */
+export function getTop5ByPrice(): FlatModel[] {
+  const allModels = flattenModels(pricingData);
+  return allModels
+    .filter(m => m.total_cost > 0) // Exclude free tier for price comparison
+    .sort((a, b) => a.total_cost - b.total_cost)
+    .slice(0, 5);
+}
+
+/**
+ * Get top 5 models by speed (highest tokens per second)
+ */
+export function getTop5BySpeed(): FlatModel[] {
+  const allModels = flattenModels(pricingData);
+  return allModels
+    .filter(m => m.speed !== undefined)
+    .sort((a, b) => (b.speed || 0) - (a.speed || 0))
+    .slice(0, 5);
+}
+
+/**
+ * Get top 5 models by SDE bench score (highest score)
+ */
+export function getTop5ByBenchScore(): FlatModel[] {
+  const allModels = flattenModels(pricingData);
+  return allModels
+    .filter(m => m.sde_bench_score !== undefined)
+    .sort((a, b) => (b.sde_bench_score || 0) - (a.sde_bench_score || 0))
+    .slice(0, 5);
+}
+
+/**
+ * Get all top 5 charts data in one call
+ */
+export function getTop5Charts() {
+  return {
+    price: getTop5ByPrice(),
+    speed: getTop5BySpeed(),
+    benchScore: getTop5ByBenchScore(),
+  };
 }

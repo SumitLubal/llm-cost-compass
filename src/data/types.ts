@@ -5,6 +5,8 @@ export interface ModelPricing {
   context_window: number;
   free_tier: string | null;
   last_updated: string;
+  speed?: number; // Tokens per second
+  sde_bench_score?: number; // SDE Bench Score
 }
 
 export interface ProviderData {
@@ -28,6 +30,8 @@ export interface FlatModel extends ModelPricing {
   model: string;
   score: number;
   total_cost: number;
+  speed?: number;
+  sde_bench_score?: number;
 }
 
 export interface PriceChange {

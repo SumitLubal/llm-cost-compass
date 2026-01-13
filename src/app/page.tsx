@@ -1,4 +1,4 @@
-import { comparePricing, searchModels } from '@/lib/pricing';
+import { comparePricing, searchModels, getTop5Charts } from '@/lib/pricing';
 import { ComparisonView } from '@/components/ComparisonView';
 import { SearchBar } from '@/components/SearchBar';
 import { SubmitButton } from '@/components/SubmitButton';
@@ -7,6 +7,7 @@ import { ThemeToggle } from '@/components/ThemeToggle';
 import { PageViewTracker } from '@/components/PageViewTracker';
 import { ScrollTracker } from '@/components/ScrollTracker';
 import { GADebug } from '@/components/GADebug';
+import { Top5Charts } from '@/components/Top5Charts';
 import { Suspense } from 'react';
 import type { Metadata, Viewport } from 'next';
 import Link from 'next/link';
@@ -87,12 +88,15 @@ export async function generateMetadata({ searchParams }: { searchParams: Promise
   };
 }
 
-export default async function Home({ searchParams }: { searchParams: Promise<{ q?: string }> }) {
-  const { q: query = '' } = await searchParams;
+export default async function Home({ searchParams }: { searchParams: Promise<{ q?: string; input?: string; output?: string }> }) {
+  const { q: query = '', input, output } = await searchParams;
 
   let data;
   let isSearch = false;
   let allModels: any[] = [];
+
+  // Check if calculator is active
+  const isCalculatorActive = !!(input && output);
 
   if (query) {
     const results = searchModels(query);
@@ -103,6 +107,9 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ q
     data = comparePricing();
     allModels = data.all_models;
   }
+
+  // Get top 5 charts data (only on home page, not search)
+  const top5Data = !query ? getTop5Charts() : null;
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-50 via-blue-50 to-cyan-50 dark:from-gray-900 dark:via-gray-950 dark:to-black">
@@ -153,7 +160,6 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ q
           </div>
         </div>
       </header>
-
       {/* Main Content */}
       <main className="max-w-6xl mx-auto px-4 py-8">
         {/* Search */}
@@ -162,8 +168,15 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ q
         {/* Cost Calculator */}
         <CostCalculator models={allModels} />
 
-        {/* Comparison View */}
-        <ComparisonView data={data} isSearch={isSearch} query={query} />
+        {/* Top 5 Charts - Only show on home page (no search query) */}
+        {top5Data && (
+          <Top5Charts price={top5Data.price} speed={top5Data.speed} benchScore={top5Data.benchScore} />
+        )}
+
+        {/* Comparison View - Only show if calculator is NOT active */}
+        {!isCalculatorActive && (
+          <ComparisonView data={data} isSearch={isSearch} query={query} />
+        )}
 
         {/* SEO Content Section - Only show on home page (no search query) */}
         {!query && (
