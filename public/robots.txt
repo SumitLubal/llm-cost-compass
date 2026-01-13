@@ -21,9 +21,6 @@ Crawl-delay: 1
 User-agent: Googlebot
 Allow: /
 Crawl-delay: 0
-Max-video-preview: -1
-Max-image-preview: large
-Max-snippet: -1
 
 # Bingbot
 User-agent: Bingbot
