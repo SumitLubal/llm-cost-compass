@@ -19,6 +19,14 @@
           "context_window": 0,
           "free_tier": null,
           "last_updated": "2026-01-05T07:46:02.882Z"
+        },
+        {
+          "name": "Nova Pro",
+          "input_per_million": 1,
+          "output_per_million": 4,
+          "context_window": 0,
+          "free_tier": null,
+          "last_updated": "2026-01-13T06:59:20.108Z"
         }
       ]
     },
@@ -119,6 +127,54 @@
           "output_per_million": 1.25,
           "context_window": 0,
           "last_updated": "2026-01-11T18:47:30.117Z"
+        },
+        {
+          "name": "Claude 4 Opus",
+          "input_per_million": 15,
+          "output_per_million": 75,
+          "context_window": 0,
+          "free_tier": null,
+          "last_updated": "2026-01-13T06:59:20.108Z"
+        },
+        {
+          "name": "Claude 4 Sonnet",
+          "input_per_million": 3,
+          "output_per_million": 15,
+          "context_window": 0,
+          "free_tier": null,
+          "last_updated": "2026-01-13T06:59:20.108Z"
+        },
+        {
+          "name": "Claude 3.7 Sonnet",
+          "input_per_million": 3,
+          "output_per_million": 15,
+          "context_window": 0,
+          "free_tier": null,
+          "last_updated": "2026-01-13T06:59:20.108Z"
+        },
+        {
+          "name": "Claude 3.7 Sonnet [R]",
+          "input_per_million": 3,
+          "output_per_million": 15,
+          "context_window": 0,
+          "free_tier": null,
+          "last_updated": "2026-01-13T06:59:20.108Z"
+        },
+        {
+          "name": "Claude 3.5 Haiku",
+          "input_per_million": 0.8,
+          "output_per_million": 4,
+          "context_window": 0,
+          "free_tier": null,
+          "last_updated": "2026-01-13T06:59:20.108Z"
+        },
+        {
+          "name": "Claude 3.5 Sonnet",
+          "input_per_million": 3,
+          "output_per_million": 15,
+          "context_window": 0,
+          "free_tier": null,
+          "last_updated": "2026-01-13T06:59:20.108Z"
         }
       ]
     },
@@ -141,6 +197,22 @@
           "context_window": 0,
           "free_tier": null,
           "last_updated": "2026-01-05T07:46:02.882Z"
+        },
+        {
+          "name": "DeepSeek-R1",
+          "input_per_million": 0.55,
+          "output_per_million": 2.19,
+          "context_window": 0,
+          "free_tier": null,
+          "last_updated": "2026-01-13T06:59:20.108Z"
+        },
+        {
+          "name": "DeepSeek V3 0324",
+          "input_per_million": 0.27,
+          "output_per_million": 1.1,
+          "context_window": 0,
+          "free_tier": null,
+          "last_updated": "2026-01-13T06:59:20.108Z"
         }
       ]
     },
@@ -219,6 +291,76 @@
           "context_window": 200000,
           "free_tier": "Not available",
           "last_updated": "2026-01-11T18:47:23.451Z"
+        },
+        {
+          "name": "Gemini 2.5 Flash",
+          "input_per_million": 0.15,
+          "output_per_million": 0.6,
+          "context_window": 0,
+          "free_tier": null,
+          "last_updated": "2026-01-13T06:59:20.108Z"
+        },
+        {
+          "name": "Gemma 3 27b",
+          "input_per_million": 0.07,
+          "output_per_million": 0.07,
+          "context_window": 0,
+          "free_tier": null,
+          "last_updated": "2026-01-13T06:59:20.108Z"
+        },
+        {
+          "name": "Gemini 2.5 Pro",
+          "input_per_million": 1.25,
+          "output_per_million": 10,
+          "context_window": 0,
+          "free_tier": null,
+          "last_updated": "2026-01-13T06:59:20.108Z"
+        },
+        {
+          "name": "Gemini 2.0 Flash",
+          "input_per_million": 0.1,
+          "output_per_million": 0.4,
+          "context_window": 0,
+          "free_tier": null,
+          "last_updated": "2026-01-13T06:59:20.108Z"
+        }
+      ]
+    },
+    {
+      "id": "meta",
+      "name": "Meta",
+      "models": [
+        {
+          "name": "Llama 4 Scout",
+          "input_per_million": 0.11,
+          "output_per_million": 0.34,
+          "context_window": 0,
+          "free_tier": null,
+          "last_updated": "2026-01-13T06:59:20.108Z"
+        },
+        {
+          "name": "Llama 4 Maverick",
+          "input_per_million": 0.2,
+          "output_per_million": 0.6,
+          "context_window": 0,
+          "free_tier": null,
+          "last_updated": "2026-01-13T06:59:20.108Z"
+        },
+        {
+          "name": "Llama 3.3 70b",
+          "input_per_million": 0.59,
+          "output_per_million": 0.7,
+          "context_window": 0,
+          "free_tier": null,
+          "last_updated": "2026-01-13T06:59:20.108Z"
+        },
+        {
+          "name": "Llama 3.1 405b",
+          "input_per_million": 3.5,
+          "output_per_million": 3.5,
+          "context_window": 0,
+          "free_tier": null,
+          "last_updated": "2026-01-13T06:59:20.108Z"
         }
       ]
     },
@@ -331,6 +473,126 @@
           "context_window": 16385,
           "free_tier": "Free tier: $5 credit for new users",
           "last_updated": "2026-01-05T07:46:02.882Z"
+        },
+        {
+          "name": "GPT 5.2",
+          "input_per_million": 1.5,
+          "output_per_million": 14,
+          "context_window": 0,
+          "free_tier": null,
+          "last_updated": "2026-01-13T06:59:20.108Z"
+        },
+        {
+          "name": "GPT 5.1",
+          "input_per_million": 1.25,
+          "output_per_million": 10,
+          "context_window": 0,
+          "free_tier": null,
+          "last_updated": "2026-01-13T06:59:20.108Z"
+        },
+        {
+          "name": "GPT-5",
+          "input_per_million": 1.25,
+          "output_per_million": 10,
+          "context_window": 0,
+          "free_tier": null,
+          "last_updated": "2026-01-13T06:59:20.108Z"
+        },
+        {
+          "name": "GPT oss 20b",
+          "input_per_million": 0.08,
+          "output_per_million": 0.35,
+          "context_window": 0,
+          "free_tier": null,
+          "last_updated": "2026-01-13T06:59:20.108Z"
+        },
+        {
+          "name": "GPT oss 120b",
+          "input_per_million": 0.15,
+          "output_per_million": 0.6,
+          "context_window": 0,
+          "free_tier": null,
+          "last_updated": "2026-01-13T06:59:20.108Z"
+        },
+        {
+          "name": "OpenAI o3",
+          "input_per_million": 10,
+          "output_per_million": 40,
+          "context_window": 0,
+          "free_tier": null,
+          "last_updated": "2026-01-13T06:59:20.108Z"
+        },
+        {
+          "name": "OpenAI o4-mini",
+          "input_per_million": 1.1,
+          "output_per_million": 4.4,
+          "context_window": 0,
+          "free_tier": null,
+          "last_updated": "2026-01-13T06:59:20.108Z"
+        },
+        {
+          "name": "GPT-4.1 nano",
+          "input_per_million": 0.1,
+          "output_per_million": 0.4,
+          "context_window": 0,
+          "free_tier": null,
+          "last_updated": "2026-01-13T06:59:20.108Z"
+        },
+        {
+          "name": "GPT-4.1 mini",
+          "input_per_million": 0.4,
+          "output_per_million": 1.6,
+          "context_window": 0,
+          "free_tier": null,
+          "last_updated": "2026-01-13T06:59:20.108Z"
+        },
+        {
+          "name": "GPT-4.1",
+          "input_per_million": 2,
+          "output_per_million": 8,
+          "context_window": 0,
+          "free_tier": null,
+          "last_updated": "2026-01-13T06:59:20.108Z"
+        },
+        {
+          "name": "GPT-4.5",
+          "input_per_million": 75,
+          "output_per_million": 150,
+          "context_window": 0,
+          "free_tier": null,
+          "last_updated": "2026-01-13T06:59:20.108Z"
+        },
+        {
+          "name": "OpenAI o3-mini",
+          "input_per_million": 1.1,
+          "output_per_million": 4.4,
+          "context_window": 0,
+          "free_tier": null,
+          "last_updated": "2026-01-13T06:59:20.108Z"
+        },
+        {
+          "name": "OpenAI o1-mini",
+          "input_per_million": 3,
+          "output_per_million": 12,
+          "context_window": 0,
+          "free_tier": null,
+          "last_updated": "2026-01-13T06:59:20.108Z"
+        },
+        {
+          "name": "OpenAI o1",
+          "input_per_million": 15,
+          "output_per_million": 60,
+          "context_window": 0,
+          "free_tier": null,
+          "last_updated": "2026-01-13T06:59:20.108Z"
+        },
+        {
+          "name": "GPT-4o mini",
+          "input_per_million": 0.15,
+          "output_per_million": 0.6,
+          "context_window": 0,
+          "free_tier": null,
+          "last_updated": "2026-01-13T06:59:20.108Z"
         }
       ]
     },
@@ -484,8 +746,8 @@
     }
   ],
   "metadata": {
-    "last_updated": "2026-01-11T18:47:30.118Z",
+    "last_updated": "2026-01-13T06:59:20.108Z",
     "source": "scraped",
-    "total_models": 54
+    "total_models": 86
   }
 }

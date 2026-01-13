@@ -20,15 +20,29 @@ import * as path from 'path';
 
 // Load .env file if it exists
 const envPath = path.join(process.cwd(), '.env');
-if (fs.existsSync(envPath)) {
-  const envContent = fs.readFileSync(envPath, 'utf-8');
-  envContent.split('\n').forEach(line => {
-    const [key, value] = line.split('=');
-    if (key && value && !process.env[key.trim()]) {
-      process.env[key.trim()] = value.trim();
-    }
-  });
-}
+const envLocalPath = path.join(process.cwd(), '.env.local');
+
+const loadEnv = (filePath: string) => {
+  if (fs.existsSync(filePath)) {
+    const envContent = fs.readFileSync(filePath, 'utf-8');
+    envContent.split('\n').forEach(line => {
+      const [key, value] = line.split('=');
+      if (key && value) {
+        // Remove quotes if present
+        const cleanValue = value.trim().replace(/^["'](.*)["']$/, '$1');
+        // Only set if not already defined (preserves system env vars / secrets)
+        if (!process.env[key.trim()]) {
+          process.env[key.trim()] = cleanValue;
+        }
+      }
+    });
+  }
+};
+
+// Load .env.local first (local user overrides)
+loadEnv(envLocalPath);
+// Then load .env (defaults)
+loadEnv(envPath);
 
 interface ExtractionConfig {
   apiKey: string;
