@@ -69,6 +69,7 @@ interface ExtractedModelData {
   output_per_million: number;
   context_window: number;
   free_tier?: string;
+  provider?: string;
 }
 
 interface ExtractionResult {
@@ -84,11 +85,12 @@ Given a documentation page about LLM pricing, extract the following information:
 
 1. Provider name (e.g., "xAI", "OpenAI", "Anthropic")
 2. Model name(s) and their pricing details:
-   - Model name
+    - Model name
    - Input price per million tokens
    - Output price per million tokens
    - Context window (if available)
    - Free tier information (if available)
+   - Provider name (specific to this model, e.g. "OpenAI" for GPT-4 even if on a comparison page)
 
 Important notes:
 - Prices are ALWAYS in dollars per million tokens ($/M)
@@ -99,13 +101,15 @@ Important notes:
 - Some providers use "per 1K tokens" - multiply by 1000 to get per million
 - Some providers use "per 1M tokens" - use as-is
 - Multiple models might be on one page (e.g., Grok 4 variants)
+- **CRITICAL**: For comparison pages, identify the correct provider for EACH model. Do not group everything under "Multiple Providers".
 
 Return your response as valid JSON in this exact format:
 {
-  "provider": "Provider Name",
+  "provider": "Page Provider Name",
   "models": [
     {
       "name": "Model Name",
+      "provider": "Specific Provider Name",
       "input_per_million": 0.20,
       "output_per_million": 0.50,
       "context_window": 128000,
@@ -215,7 +219,7 @@ async function callLLM(
         temperature: 0.1,
         response_format: { type: 'json_object' },
       }),
-      signal: timeout(60000),
+      signal: timeout(120000),
     });
 
     if (!response.ok) {
@@ -245,20 +249,25 @@ function validateAndNormalize(result: ExtractionResult): ExtractionResult {
     throw new Error('Invalid extraction result: missing provider or models');
   }
 
-  const normalizedModels = result.models.map(model => {
-    // Validate required fields
-    if (!model.name || typeof model.input_per_million !== 'number' || typeof model.output_per_million !== 'number') {
-      throw new Error(`Invalid model data: ${JSON.stringify(model)}`);
-    }
-
-    return {
-      name: model.name,
-      input_per_million: model.input_per_million,
-      output_per_million: model.output_per_million,
-      context_window: model.context_window || 0,
-      free_tier: model.free_tier || undefined,
-    };
-  });
+  const normalizedModels = result.models
+    .filter(model => {
+      // Check for required fields
+      if (!model.name || typeof model.input_per_million !== 'number' || typeof model.output_per_million !== 'number') {
+        console.warn(`  ⚠️  Skipping invalid model: ${model.name || 'Unknown'} (missing pricing)`);
+        return false;
+      }
+      return true;
+    })
+    .map(model => {
+      return {
+        name: model.name,
+        input_per_million: model.input_per_million,
+        output_per_million: model.output_per_million,
+        context_window: model.context_window || 0,
+        free_tier: model.free_tier || undefined,
+        provider: model.provider,
+      };
+    });
 
   return {
     provider: result.provider,
@@ -318,21 +327,45 @@ function formatForPricingJSON(result: ExtractionResult): string {
 /**
  * Convert extraction result to ProviderData format for merging
  */
-export function resultToProviderData(result: ExtractionResult): any {
+export function resultToProviderData(result: ExtractionResult): any[] {
   const timestamp = new Date().toISOString();
+  const providersMap = new Map<string, any>();
 
-  return {
-    id: result.provider.toLowerCase().replace(/\s+/g, '-'),
-    name: result.provider,
-    models: result.models.map(m => ({
-      name: m.name,
-      input_per_million: m.input_per_million,
-      output_per_million: m.output_per_million,
-      context_window: m.context_window,
-      free_tier: m.free_tier,
+  // If the page itself is a provider page (not aggregator), include it as default
+  const defaultProviderId = result.provider.toLowerCase().replace(/\s+/g, '-');
+
+  for (const model of result.models) {
+    // Determine provider for this model
+    let providerName = model.provider || result.provider;
+
+    // Normalize provider name (e.g., "OpenAI" -> "openai")
+    let providerId = providerName.toLowerCase().replace(/\s+/g, '-');
+
+    // Handle "multiple-providers" case explicitly if it still sneaks in
+    if (providerId === 'multiple-providers' && model.provider) {
+      providerName = model.provider;
+      providerId = providerName.toLowerCase().replace(/\s+/g, '-');
+    }
+
+    if (!providersMap.has(providerId)) {
+      providersMap.set(providerId, {
+        id: providerId,
+        name: providerName,
+        models: []
+      });
+    }
+
+    providersMap.get(providerId).models.push({
+      name: model.name,
+      input_per_million: model.input_per_million,
+      output_per_million: model.output_per_million,
+      context_window: model.context_window,
+      free_tier: model.free_tier,
       last_updated: timestamp,
-    })),
-  };
+    });
+  }
+
+  return Array.from(providersMap.values());
 }
 
 /**

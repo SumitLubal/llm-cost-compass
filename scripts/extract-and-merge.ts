@@ -22,11 +22,17 @@ async function extractAndMerge(url: string, providerHint?: string): Promise<void
   const result = await extractPricingFromURL(url, providerHint);
 
   // Step 2: Convert to JSON format
-  const jsonForMerge = resultToProviderData(result);
+  const providersData = resultToProviderData(result);
 
   // Step 3: Merge into pricing.json
   console.log('\nStep 2: Merging into pricing.json...');
-  await mergePricingData(jsonForMerge.id, JSON.stringify(jsonForMerge));
+
+  // Handle both array (multi-provider) and single object (legacy)
+  const providersToMerge = Array.isArray(providersData) ? providersData : [providersData];
+
+  for (const providerData of providersToMerge) {
+    await mergePricingData(providerData.id, JSON.stringify(providerData));
+  }
 
   console.log('\n✅ Complete! Data has been extracted and merged.');
 }

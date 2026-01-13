@@ -47,10 +47,7 @@ npm run dev
    - Sends email alerts on price changes
    - Handles 100+ providers scalable
 
-5. **Automated Updates**
-   - Daily cron job (Vercel)
-   - Web scraping + LLM parsing
-   - Stale data fallback (never hides providers)
+
 
 ---
 
@@ -241,24 +238,7 @@ Shows:
 
 ---
 
-## 🔄 Daily Update Process
 
-```
-2:00 AM UTC: Vercel cron triggers /api/update
-    ↓
-Fetches all providers (last scraped > 7 days)
-    ↓
-For each provider:
-    1. Fetch HTML from provider website
-    2. Send to your LLM API for extraction
-    3. Compare with existing prices
-    4. If confidence > 0.85: Auto-publish
-    5. If prices changed: Send email alert
-    ↓
-Results logged, emails sent
-```
-
----
 
 ## 🎯 Beta Testing Checklist
 

@@ -42,47 +42,7 @@ ALERT_EMAIL="sumitlubal@hotmail.com"
 npm run email:test sumitlubal@hotmail.com
 ```
 
-## Step 3: Set Up Automated Daily Updates
 
-### Option A: GitHub Actions (Recommended - Zero Maintenance)
-
-#### 3.1 Fork the Repository
-1. Go to GitHub and fork this repository
-2. Clone your fork locally
-
-#### 3.2 Add GitHub Secrets
-1. Go to your repository on GitHub
-2. Settings → Secrets and variables → Actions
-3. Add these secrets:
-
-| Secret | Description | Example |
-|--------|-------------|---------|
-| `RESEND_API_KEY` | Your Resend API key | `re_123456...` |
-| `ALERT_EMAIL` | Your email for alerts | `sumitlubal@hotmail.com` |
-
-#### 3.3 Enable GitHub Actions
-1. Go to Actions tab
-2. Click "I understand my workflows"
-3. The daily job will run automatically at 9 AM UTC
-
-#### 3.4 Manual Trigger
-You can also trigger it manually:
-1. Go to Actions → Daily Pricing Update
-2. Click "Run workflow"
-3. Choose auto-publish option
-
-### Option B: Run Manually
-
-```bash
-# Just scrape and compare (no email)
-npm run scrape
-
-# Full update with email
-npm run daily:update sumitlubal@hotmail.com
-
-# Auto-publish high-confidence changes
-npm run daily:update sumitlubal@hotmail.com --auto-publish
-```
 
 ## Step 4: Deploy to Production
 
@@ -122,43 +82,7 @@ netlify deploy --prod
 2. Connect repository to Vercel
 3. Vercel will auto-deploy on every push
 
-## Step 5: Understanding the Workflow
 
-### Daily Update Flow
-
-```
-9 AM UTC (GitHub Actions)
-    ↓
-Scrape providers for pricing
-    ↓
-Compare with existing data
-    ↓
-Changes detected?
-    ├─ YES → Send email with diff
-    │         ├─ Auto-publish if confidence > 90%
-    │         └─ OR create PR for review
-    └─ NO → Skip (no action needed)
-```
-
-### Email You'll Receive
-
-```
-Subject: 🚨 LLM Pricing Update: 3 changes (2 high-confidence)
-
-📊 LLM PriceCheck Daily Report
-
-Found 3 pricing changes across providers (2 high-confidence).
-
-┌─────────┬──────────┬────────┬───────┬───────┬────────┬──────┐
-│ Provider│ Model    │ Type   │ Old   │ New   │ Change │ Conf │
-├─────────┼──────────┼────────┼───────┼───────┼────────┼──────┤
-│ OpenAI  │ GPT-4o   │ Input  │ $5.00 │ $4.50 │ ↓ 10%  │ 95%  │
-│ Google  │ Gemini...│ Output │ $1.50 │ $1.25 │ ↓ 17%  │ 90%  │
-│ Anthropic│ Claude...│ Input │ $15.00│ $14.50│ ↓ 3%   │ 75%  │
-└─────────┴──────────┴────────┴───────┴───────┴────────┴──────┘
-
-[Review on GitHub] [View Live Site]
-```
 
 ## Step 6: User Submissions
 
