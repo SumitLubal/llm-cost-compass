@@ -17,6 +17,54 @@ export interface ComparisonResult {
 }
 
 /**
+ * Check if a free tier offer is expired
+ * Looks for patterns like "Free until Jan 20th" and compares to current date
+ * Returns the free tier string if valid, null if expired
+ */
+function getValidFreeTier(freeTier: string | null): string | null {
+  if (!freeTier) return null;
+
+  // Match patterns like "Free until Jan 20th", "Free until Jan 20", "Free until 2026-01-20"
+  const untilMatch = freeTier.match(/until\s+([A-Za-z]+\s+\d{1,2}(?:th|st|nd|rd)?|\d{4}-\d{2}-\d{2})/i);
+
+  // If no date pattern found, return as-is
+  if (!untilMatch) return freeTier;
+
+  const dateStr = untilMatch[1];
+  let expiryDate: Date;
+
+  try {
+    // Try parsing different formats
+    if (dateStr.includes('-')) {
+      // Format: 2026-01-20
+      expiryDate = new Date(dateStr);
+    } else {
+      // Format: Jan 20th or Jan 20
+      // Assume current year if not specified
+      const currentYear = new Date().getFullYear();
+      expiryDate = new Date(`${dateStr} ${currentYear}`);
+    }
+
+    // Add 1 day to include the full day
+    expiryDate.setDate(expiryDate.getDate() + 1);
+
+    // Compare with current date
+    const now = new Date();
+
+    // If expired, return null (remove the free tier text)
+    if (now >= expiryDate) {
+      return null;
+    }
+
+    // If still valid, return the original string
+    return freeTier;
+  } catch (e) {
+    // If parsing fails, assume valid and return as-is
+    return freeTier;
+  }
+}
+
+/**
  * Flatten the nested pricing data for easier manipulation
  */
 function flattenModels(data: PricingData): FlatModel[] {
@@ -24,8 +72,17 @@ function flattenModels(data: PricingData): FlatModel[] {
 
   for (const provider of data.providers) {
     for (const model of provider.models) {
+      // Check if free tier is expired and get valid free tier text
+      const validFreeTier = getValidFreeTier(model.free_tier);
+
+      // Create a copy of the model with the valid free tier for score calculation
+      const modelForScore = {
+        ...model,
+        free_tier: validFreeTier
+      };
+
       const totalCost = model.input_per_million + model.output_per_million;
-      const score = calculateScore(model);
+      const score = calculateScore(modelForScore);
 
       flattened.push({
         // From ModelPricing
@@ -33,7 +90,7 @@ function flattenModels(data: PricingData): FlatModel[] {
         input_per_million: model.input_per_million,
         output_per_million: model.output_per_million,
         context_window: model.context_window,
-        free_tier: model.free_tier,
+        free_tier: validFreeTier, // Use null if expired
         last_updated: model.last_updated,
         speed: model.speed,
         sde_bench_score: model.sde_bench_score,
