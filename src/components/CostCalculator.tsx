@@ -251,6 +251,85 @@ export function CostCalculator({ models }: CostCalculatorProps) {
       </div>
 
       <div className="p-6">
+        {/* Quick Presets - At the top for easy access */}
+        <div className="mb-6 space-y-4">
+          {/* Usage Presets - Using 130:1 input:output ratio based on real usage */}
+          <div>
+            <div className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Usage Presets:</div>
+            <div className="flex flex-wrap gap-2">
+              <button
+                onClick={() => { setHasUserModified(true); setInputTokens(1300000); setOutputTokens(10000); }}
+                className="px-3 py-1 bg-gradient-to-r from-green-100 to-emerald-100 dark:from-green-900/30 dark:to-emerald-900/30 text-green-800 dark:text-green-300 rounded-lg text-sm hover:from-green-200 hover:to-emerald-200 dark:hover:from-green-900/50 dark:hover:to-emerald-900/50 border border-green-200 dark:border-green-800"
+              >
+                🌱 1 Day of Coding
+              </button>
+              <button
+                onClick={() => { setHasUserModified(true); setInputTokens(13000000); setOutputTokens(100000); }}
+                className="px-3 py-1 bg-gradient-to-r from-blue-100 to-cyan-100 dark:from-blue-900/30 dark:to-cyan-900/30 text-blue-800 dark:text-blue-300 rounded-lg text-sm hover:from-blue-200 hover:to-cyan-200 dark:hover:from-blue-900/50 dark:hover:to-cyan-900/50 border border-blue-200 dark:border-blue-800"
+              >
+                📅 1 Month of Coding
+              </button>
+              <button
+                onClick={() => { setHasUserModified(true); setInputTokens(65000000); setOutputTokens(500000); }}
+                className="px-3 py-1 bg-gradient-to-r from-purple-100 to-pink-100 dark:from-purple-900/30 dark:to-pink-900/30 text-purple-800 dark:text-purple-300 rounded-lg text-sm hover:from-purple-200 hover:to-pink-200 dark:hover:from-purple-900/50 dark:hover:to-pink-900/50 border border-purple-200 dark:border-purple-800"
+              >
+                🌐 Building WebApp
+              </button>
+              <button
+                onClick={() => { setHasUserModified(true); setInputTokens(260000000); setOutputTokens(2000000); }}
+                className="px-3 py-1 bg-gradient-to-r from-amber-100 to-orange-100 dark:from-amber-900/30 dark:to-orange-900/30 text-amber-800 dark:text-amber-300 rounded-lg text-sm hover:from-amber-200 hover:to-orange-200 dark:hover:from-amber-900/50 dark:hover:to-orange-900/50 border border-amber-200 dark:border-amber-800"
+              >
+                🚀 Production Scale
+              </button>
+            </div>
+          </div>
+
+          {/* Token Presets */}
+          <div>
+            <div className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Token Presets:</div>
+            <div className="flex flex-wrap gap-2">
+              <button
+                onClick={() => { setHasUserModified(true); setInputTokens(1300000); setOutputTokens(10000); }}
+                className="px-3 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-lg text-sm hover:bg-gray-200 dark:hover:bg-gray-600"
+              >
+                1.3M/10K
+              </button>
+              <button
+                onClick={() => { setHasUserModified(true); setInputTokens(13000000); setOutputTokens(100000); }}
+                className="px-3 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-lg text-sm hover:bg-gray-200 dark:hover:bg-gray-600"
+              >
+                13M/100K
+              </button>
+              <button
+                onClick={() => { setHasUserModified(true); setInputTokens(65000000); setOutputTokens(500000); }}
+                className="px-3 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-lg text-sm hover:bg-gray-200 dark:hover:bg-gray-600"
+              >
+                65M/500K
+              </button>
+              <button
+                onClick={() => { setHasUserModified(true); setInputTokens(130000000); setOutputTokens(1000000); }}
+                className="px-3 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-lg text-sm hover:bg-gray-200 dark:hover:bg-gray-600"
+              >
+                130M/1M
+              </button>
+              <button
+                onClick={() => {
+                  // Copy shareable URL to clipboard
+                  if (typeof window !== 'undefined') {
+                    const url = `${window.location.origin}${pathname}?input=${inputTokens}&output=${outputTokens}`;
+                    navigator.clipboard.writeText(url).then(() => {
+                      alert('Shareable URL copied to clipboard!');
+                    });
+                  }
+                }}
+                className="px-3 py-1 bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300 rounded-lg text-sm hover:bg-purple-200 dark:hover:bg-purple-900/50"
+              >
+                📋 Copy Share URL
+              </button>
+            </div>
+          </div>
+        </div>
+
         {/* Input Section */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
           <div>
@@ -507,53 +586,6 @@ export function CostCalculator({ models }: CostCalculatorProps) {
             >
               Hide Results
             </button>
-          </div>
-        )}
-
-        {/* Quick Presets */}
-        {!showResults && (
-          <div className="mt-4">
-            <div className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Quick Presets:</div>
-            <div className="flex flex-wrap gap-2">
-              <button
-                onClick={() => { setHasUserModified(true); setInputTokens(100000); setOutputTokens(50000); }}
-                className="px-3 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-lg text-sm hover:bg-gray-200 dark:hover:bg-gray-600"
-              >
-                100K/50K
-              </button>
-              <button
-                onClick={() => { setHasUserModified(true); setInputTokens(1000000); setOutputTokens(500000); }}
-                className="px-3 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-lg text-sm hover:bg-gray-200 dark:hover:bg-gray-600"
-              >
-                1M/500K
-              </button>
-              <button
-                onClick={() => { setHasUserModified(true); setInputTokens(5000000); setOutputTokens(2000000); }}
-                className="px-3 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-lg text-sm hover:bg-gray-200 dark:hover:bg-gray-600"
-              >
-                5M/2M
-              </button>
-              <button
-                onClick={() => { setHasUserModified(true); setInputTokens(10000000); setOutputTokens(5000000); }}
-                className="px-3 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-lg text-sm hover:bg-gray-200 dark:hover:bg-gray-600"
-              >
-                10M/5M
-              </button>
-              <button
-                onClick={() => {
-                  // Copy shareable URL to clipboard
-                  if (typeof window !== 'undefined') {
-                    const url = `${window.location.origin}${pathname}?input=${inputTokens}&output=${outputTokens}`;
-                    navigator.clipboard.writeText(url).then(() => {
-                      alert('Shareable URL copied to clipboard!');
-                    });
-                  }
-                }}
-                className="px-3 py-1 bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300 rounded-lg text-sm hover:bg-purple-200 dark:hover:bg-purple-900/50"
-              >
-                📋 Copy Share URL
-              </button>
-            </div>
           </div>
         )}
       </div>

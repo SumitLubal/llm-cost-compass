@@ -11,6 +11,7 @@ import { Top5Charts } from '@/components/Top5Charts';
 import { Suspense } from 'react';
 import type { Metadata, Viewport } from 'next';
 import Link from 'next/link';
+import type { FlatModel } from '@/data/types';
 
 export const dynamic = 'force-dynamic';
 
@@ -98,6 +99,7 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ q
   // Check if calculator is active
   const isCalculatorActive = !!(input && output);
 
+  // Get base models
   if (query) {
     const results = searchModels(query);
     data = { all_models: results };
@@ -108,7 +110,7 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ q
     allModels = data.all_models;
   }
 
-  // Get top 5 charts data (only on home page, not search)
+  // Get top 5 charts data (only on home page, no search query)
   const top5Data = !query ? getTop5Charts() : null;
 
   return (
