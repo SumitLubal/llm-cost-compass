@@ -592,11 +592,128 @@
           "sde_bench_score": 71
         }
       ]
+    },
+    {
+      "id": "zhipu",
+      "name": "Zhipu",
+      "models": [
+        {
+          "name": "GLM-4.7",
+          "input_per_million": 0.6,
+          "output_per_million": 2.2,
+          "context_window": 0,
+          "free_tier": "Limited-time Free",
+          "last_updated": "2026-01-25T23:00:52.957Z"
+        },
+        {
+          "name": "GLM-4.7-FlashX",
+          "input_per_million": 0.07,
+          "output_per_million": 0.4,
+          "context_window": 0,
+          "free_tier": "Limited-time Free",
+          "last_updated": "2026-01-25T23:00:52.957Z"
+        },
+        {
+          "name": "GLM-4.6",
+          "input_per_million": 0.6,
+          "output_per_million": 2.2,
+          "context_window": 0,
+          "free_tier": "Limited-time Free",
+          "last_updated": "2026-01-25T23:00:52.957Z"
+        },
+        {
+          "name": "GLM-4.6V",
+          "input_per_million": 0.3,
+          "output_per_million": 0.9,
+          "context_window": 0,
+          "free_tier": "Limited-time Free",
+          "last_updated": "2026-01-25T23:00:52.957Z"
+        },
+        {
+          "name": "GLM-4.6V-FlashX",
+          "input_per_million": 0.04,
+          "output_per_million": 0.4,
+          "context_window": 0,
+          "free_tier": "Limited-time Free",
+          "last_updated": "2026-01-25T23:00:52.957Z"
+        },
+        {
+          "name": "GLM-4.5",
+          "input_per_million": 0.6,
+          "output_per_million": 2.2,
+          "context_window": 0,
+          "free_tier": "Limited-time Free",
+          "last_updated": "2026-01-25T23:00:52.957Z"
+        },
+        {
+          "name": "GLM-4.5V",
+          "input_per_million": 0.6,
+          "output_per_million": 1.8,
+          "context_window": 0,
+          "free_tier": "Limited-time Free",
+          "last_updated": "2026-01-25T23:00:52.957Z"
+        },
+        {
+          "name": "GLM-4.5-X",
+          "input_per_million": 2.2,
+          "output_per_million": 8.9,
+          "context_window": 0,
+          "free_tier": "Limited-time Free",
+          "last_updated": "2026-01-25T23:00:52.957Z"
+        },
+        {
+          "name": "GLM-4.5-Air",
+          "input_per_million": 0.2,
+          "output_per_million": 1.1,
+          "context_window": 0,
+          "free_tier": "Limited-time Free",
+          "last_updated": "2026-01-25T23:00:52.957Z"
+        },
+        {
+          "name": "GLM-4.5-AirX",
+          "input_per_million": 1.1,
+          "output_per_million": 4.5,
+          "context_window": 0,
+          "free_tier": "Limited-time Free",
+          "last_updated": "2026-01-25T23:00:52.957Z"
+        },
+        {
+          "name": "GLM-4-32B-0414-128K",
+          "input_per_million": 0.1,
+          "output_per_million": 0.1,
+          "context_window": 128000,
+          "last_updated": "2026-01-25T23:00:52.957Z"
+        },
+        {
+          "name": "GLM-4.7-Flash",
+          "input_per_million": 0,
+          "output_per_million": 0,
+          "context_window": 0,
+          "free_tier": "Free",
+          "last_updated": "2026-01-25T23:00:52.957Z"
+        },
+        {
+          "name": "GLM-4.6V-Flash",
+          "input_per_million": 0,
+          "output_per_million": 0,
+          "context_window": 0,
+          "free_tier": "Free",
+          "last_updated": "2026-01-25T23:00:52.957Z"
+        },
+        {
+          "name": "GLM-4.5-Flash",
+          "input_per_million": 0,
+          "output_per_million": 0,
+          "context_window": 0,
+          "free_tier": "Free",
+          "last_updated": "2026-01-25T23:00:52.957Z"
+        }
+      ]
     }
   ],
   "metadata": {
-    "last_updated": "2026-01-13T07:30:15.487Z",
+    "last_updated": "2026-01-25T23:00:52.959Z",
     "source": "scraped",
-    "total_models": 67
+    "total_models": 81
   }
 }
