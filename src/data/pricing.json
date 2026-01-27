@@ -302,6 +302,30 @@
           "context_window": 0,
           "free_tier": null,
           "last_updated": "2026-01-13T07:17:01.794Z"
+        },
+        {
+          "name": "Moonshot-v1-8k",
+          "input_per_million": 12,
+          "output_per_million": 12,
+          "context_window": 8192,
+          "free_tier": "First 10 million tokens free per month",
+          "last_updated": "2026-01-27T17:19:11.278Z"
+        },
+        {
+          "name": "Moonshot-v1-32k",
+          "input_per_million": 24,
+          "output_per_million": 24,
+          "context_window": 32768,
+          "free_tier": "First 10 million tokens free per month",
+          "last_updated": "2026-01-27T17:19:11.278Z"
+        },
+        {
+          "name": "Moonshot-v1-128k",
+          "input_per_million": 60,
+          "output_per_million": 60,
+          "context_window": 131072,
+          "free_tier": "First 10 million tokens free per month",
+          "last_updated": "2026-01-27T17:19:11.278Z"
         }
       ]
     },
@@ -712,8 +736,8 @@
     }
   ],
   "metadata": {
-    "last_updated": "2026-01-25T23:00:52.959Z",
+    "last_updated": "2026-01-27T17:19:11.279Z",
     "source": "scraped",
-    "total_models": 81
+    "total_models": 84
   }
 }
