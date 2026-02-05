@@ -151,13 +151,6 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ q
               >
                 📚 Blog
               </Link>
-              <SubmitButton />
-              <a
-                href="/submit"
-                className="px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-200 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition"
-              >
-                Submit Pricing
-              </a>
             </div>
           </div>
         </div>
@@ -330,12 +323,12 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ q
             <Link href="/blog" className="hover:text-purple-600 dark:hover:text-purple-400 transition">
               📚 Blog
             </Link>
-            <a href="/submit" className="hover:text-purple-600 dark:hover:text-purple-400 transition">
-              📝 Submit Pricing
-            </a>
-            <a href="https://github.com/SumitLubal/llm-cost-compass" className="hover:text-purple-600 dark:hover:text-purple-400 transition" target="_blank" rel="noopener">
-              ⭐ GitHub
-            </a>
+            <div className="flex gap-2">
+              <a href="https://github.com/SumitLubal/llm-cost-compass" className="hover:text-purple-600 dark:hover:text-purple-400 transition" target="_blank" rel="noopener">
+                ⭐ GitHub
+              </a>
+              <SubmitButton />
+            </div>
           </div>
           <p>Prices updated daily • Always show better alternatives • Never hide providers</p>
           <p className="mt-2 text-xs text-gray-500 dark:text-gray-500">
