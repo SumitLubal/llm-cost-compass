@@ -67,21 +67,21 @@
           "input_per_million": 5,
           "output_per_million": 25,
           "context_window": 0,
-          "last_updated": "2026-01-13T07:30:15.483Z"
+          "last_updated": "2026-05-28T15:48:44.368Z"
         },
         {
           "name": "Claude Sonnet 4.5",
           "input_per_million": 3,
           "output_per_million": 15,
           "context_window": 0,
-          "last_updated": "2026-01-13T07:30:15.483Z"
+          "last_updated": "2026-05-28T15:48:44.368Z"
         },
         {
           "name": "Claude Opus 4.1",
           "input_per_million": 15,
           "output_per_million": 75,
           "context_window": 0,
-          "last_updated": "2026-01-13T07:30:15.483Z"
+          "last_updated": "2026-05-28T15:48:44.368Z"
         },
         {
           "name": "Claude 4 Opus",
@@ -124,6 +124,55 @@
           "output_per_million": 15,
           "context_window": 0,
           "last_updated": "2026-01-13T07:30:15.483Z"
+        },
+        {
+          "name": "Claude Opus 4.7",
+          "input_per_million": 5,
+          "output_per_million": 25,
+          "context_window": 0,
+          "last_updated": "2026-05-28T15:48:44.368Z"
+        },
+        {
+          "name": "Claude Opus 4.6",
+          "input_per_million": 5,
+          "output_per_million": 25,
+          "context_window": 0,
+          "last_updated": "2026-05-28T15:48:44.368Z"
+        },
+        {
+          "name": "Claude Opus 4 (deprecated)",
+          "input_per_million": 15,
+          "output_per_million": 75,
+          "context_window": 0,
+          "last_updated": "2026-05-28T15:48:44.368Z"
+        },
+        {
+          "name": "Claude Sonnet 4.6",
+          "input_per_million": 3,
+          "output_per_million": 15,
+          "context_window": 0,
+          "last_updated": "2026-05-28T15:48:44.368Z"
+        },
+        {
+          "name": "Claude Sonnet 4 (deprecated)",
+          "input_per_million": 3,
+          "output_per_million": 15,
+          "context_window": 0,
+          "last_updated": "2026-05-28T15:48:44.368Z"
+        },
+        {
+          "name": "Claude Haiku 4.5",
+          "input_per_million": 1,
+          "output_per_million": 5,
+          "context_window": 0,
+          "last_updated": "2026-05-28T15:48:44.368Z"
+        },
+        {
+          "name": "Claude Haiku 3.5 (retired, except on Bedrock and Vertex AI)",
+          "input_per_million": 0.8,
+          "output_per_million": 4,
+          "context_window": 0,
+          "last_updated": "2026-05-28T15:48:44.368Z"
         }
       ]
     },
@@ -221,6 +270,86 @@
           "output_per_million": 0.4,
           "context_window": 0,
           "last_updated": "2026-01-13T07:30:15.483Z"
+        },
+        {
+          "name": "Gemini 3.5 Flash",
+          "input_per_million": 1.5,
+          "output_per_million": 9,
+          "context_window": 0,
+          "free_tier": "Free tier available for input and output tokens",
+          "last_updated": "2026-05-28T15:48:40.292Z"
+        },
+        {
+          "name": "Gemini 3.5 Flash (Batch)",
+          "input_per_million": 0.75,
+          "output_per_million": 4.5,
+          "context_window": 0,
+          "free_tier": "Not available in free tier",
+          "last_updated": "2026-05-28T15:48:40.292Z"
+        },
+        {
+          "name": "Gemini 3.5 Flash (Flex)",
+          "input_per_million": 0.75,
+          "output_per_million": 4.5,
+          "context_window": 0,
+          "free_tier": "Not available in free tier",
+          "last_updated": "2026-05-28T15:48:40.292Z"
+        },
+        {
+          "name": "Gemini 3.5 Flash (Priority)",
+          "input_per_million": 2.7,
+          "output_per_million": 16.2,
+          "context_window": 0,
+          "free_tier": "Free tier available for input and output tokens",
+          "last_updated": "2026-05-28T15:48:40.292Z"
+        },
+        {
+          "name": "Gemini 3.1 Flash-Lite",
+          "input_per_million": 0.25,
+          "output_per_million": 1.5,
+          "context_window": 0,
+          "free_tier": "Free tier available for input and output tokens",
+          "last_updated": "2026-05-28T15:48:40.292Z"
+        },
+        {
+          "name": "Gemini 3.1 Flash-Lite (Batch)",
+          "input_per_million": 0.125,
+          "output_per_million": 0.75,
+          "context_window": 0,
+          "free_tier": "Free tier available for input and output tokens",
+          "last_updated": "2026-05-28T15:48:40.292Z"
+        },
+        {
+          "name": "Gemini 3.1 Flash-Lite (Flex)",
+          "input_per_million": 0.125,
+          "output_per_million": 0.75,
+          "context_window": 0,
+          "free_tier": "Free tier available for input and output tokens",
+          "last_updated": "2026-05-28T15:48:40.292Z"
+        },
+        {
+          "name": "Gemini 3.1 Flash-Lite (Priority)",
+          "input_per_million": 0.45,
+          "output_per_million": 2.7,
+          "context_window": 0,
+          "free_tier": "Free tier available for input and output tokens",
+          "last_updated": "2026-05-28T15:48:40.292Z"
+        },
+        {
+          "name": "Gemini 3.1 Pro preview",
+          "input_per_million": 2,
+          "output_per_million": 12,
+          "context_window": 0,
+          "free_tier": "Not available in free tier",
+          "last_updated": "2026-05-28T15:48:40.292Z"
+        },
+        {
+          "name": "Gemini 3.1 Pro preview-customtools",
+          "input_per_million": 2,
+          "output_per_million": 12,
+          "context_window": 0,
+          "free_tier": "Not available in free tier",
+          "last_updated": "2026-05-28T15:48:40.292Z"
         }
       ]
     },
@@ -566,224 +695,224 @@
           "input_per_million": 1.25,
           "output_per_million": 2.5,
           "context_window": 1000000,
-          "last_updated": "2026-05-28T15:45:34.474Z"
+          "last_updated": "2026-05-28T15:48:34.143Z"
         },
         {
           "name": "grok-4.3-latest",
           "input_per_million": 1.25,
           "output_per_million": 2.5,
           "context_window": 1000000,
-          "last_updated": "2026-05-28T15:45:34.474Z"
+          "last_updated": "2026-05-28T15:48:34.143Z"
         },
         {
           "name": "grok-latest",
           "input_per_million": 1.25,
           "output_per_million": 2.5,
           "context_window": 1000000,
-          "last_updated": "2026-05-28T15:45:34.474Z"
+          "last_updated": "2026-05-28T15:48:34.143Z"
         },
         {
           "name": "grok-3",
           "input_per_million": 1.25,
           "output_per_million": 2.5,
           "context_window": 1000000,
-          "last_updated": "2026-05-28T15:45:34.474Z"
+          "last_updated": "2026-05-28T15:48:34.143Z"
         },
         {
           "name": "grok-3-latest",
           "input_per_million": 1.25,
           "output_per_million": 2.5,
           "context_window": 1000000,
-          "last_updated": "2026-05-28T15:45:34.474Z"
+          "last_updated": "2026-05-28T15:48:34.143Z"
         },
         {
           "name": "grok-3-beta",
           "input_per_million": 1.25,
           "output_per_million": 2.5,
           "context_window": 1000000,
-          "last_updated": "2026-05-28T15:45:34.474Z"
+          "last_updated": "2026-05-28T15:48:34.143Z"
         },
         {
           "name": "grok-3-fast",
           "input_per_million": 1.25,
           "output_per_million": 2.5,
           "context_window": 1000000,
-          "last_updated": "2026-05-28T15:45:34.474Z"
+          "last_updated": "2026-05-28T15:48:34.143Z"
         },
         {
           "name": "grok-3-fast-latest",
           "input_per_million": 1.25,
           "output_per_million": 2.5,
           "context_window": 1000000,
-          "last_updated": "2026-05-28T15:45:34.474Z"
+          "last_updated": "2026-05-28T15:48:34.143Z"
         },
         {
           "name": "grok-3-fast-beta",
           "input_per_million": 1.25,
           "output_per_million": 2.5,
           "context_window": 1000000,
-          "last_updated": "2026-05-28T15:45:34.474Z"
+          "last_updated": "2026-05-28T15:48:34.143Z"
         },
         {
           "name": "grok-3-mini",
           "input_per_million": 1.25,
           "output_per_million": 2.5,
           "context_window": 1000000,
-          "last_updated": "2026-05-28T15:45:34.474Z"
+          "last_updated": "2026-05-28T15:48:34.143Z"
         },
         {
           "name": "grok-3-mini-latest",
           "input_per_million": 1.25,
           "output_per_million": 2.5,
           "context_window": 1000000,
-          "last_updated": "2026-05-28T15:45:34.474Z"
+          "last_updated": "2026-05-28T15:48:34.143Z"
         },
         {
           "name": "grok-3-mini-beta",
           "input_per_million": 1.25,
           "output_per_million": 2.5,
           "context_window": 1000000,
-          "last_updated": "2026-05-28T15:45:34.474Z"
+          "last_updated": "2026-05-28T15:48:34.143Z"
         },
         {
           "name": "grok-3-mini-fast",
           "input_per_million": 1.25,
           "output_per_million": 2.5,
           "context_window": 1000000,
-          "last_updated": "2026-05-28T15:45:34.474Z"
+          "last_updated": "2026-05-28T15:48:34.143Z"
         },
         {
           "name": "grok-3-mini-fast-latest",
           "input_per_million": 1.25,
           "output_per_million": 2.5,
           "context_window": 1000000,
-          "last_updated": "2026-05-28T15:45:34.474Z"
+          "last_updated": "2026-05-28T15:48:34.143Z"
         },
         {
           "name": "grok-3-mini-fast-beta",
           "input_per_million": 1.25,
           "output_per_million": 2.5,
           "context_window": 1000000,
-          "last_updated": "2026-05-28T15:45:34.474Z"
+          "last_updated": "2026-05-28T15:48:34.143Z"
         },
         {
           "name": "grok-3-mini-high",
           "input_per_million": 1.25,
           "output_per_million": 2.5,
           "context_window": 1000000,
-          "last_updated": "2026-05-28T15:45:34.474Z"
+          "last_updated": "2026-05-28T15:48:34.143Z"
         },
         {
           "name": "grok-3-mini-high-beta",
           "input_per_million": 1.25,
           "output_per_million": 2.5,
           "context_window": 1000000,
-          "last_updated": "2026-05-28T15:45:34.474Z"
+          "last_updated": "2026-05-28T15:48:34.143Z"
         },
         {
           "name": "grok-3-mini-fast-high",
           "input_per_million": 1.25,
           "output_per_million": 2.5,
           "context_window": 1000000,
-          "last_updated": "2026-05-28T15:45:34.474Z"
+          "last_updated": "2026-05-28T15:48:34.143Z"
         },
         {
           "name": "grok-3-mini-fast-high-beta",
           "input_per_million": 1.25,
           "output_per_million": 2.5,
           "context_window": 1000000,
-          "last_updated": "2026-05-28T15:45:34.474Z"
+          "last_updated": "2026-05-28T15:48:34.143Z"
         },
         {
           "name": "grok-4-0709",
           "input_per_million": 1.25,
           "output_per_million": 2.5,
           "context_window": 1000000,
-          "last_updated": "2026-05-28T15:45:34.474Z"
+          "last_updated": "2026-05-28T15:48:34.143Z"
         },
         {
           "name": "grok-4",
           "input_per_million": 1.25,
           "output_per_million": 2.5,
           "context_window": 1000000,
-          "last_updated": "2026-05-28T15:45:34.474Z"
+          "last_updated": "2026-05-28T15:48:34.143Z"
         },
         {
           "name": "grok-4-latest",
           "input_per_million": 1.25,
           "output_per_million": 2.5,
           "context_window": 1000000,
-          "last_updated": "2026-05-28T15:45:34.474Z"
+          "last_updated": "2026-05-28T15:48:34.143Z"
         },
         {
           "name": "grok-4-fast-reasoning",
           "input_per_million": 1.25,
           "output_per_million": 2.5,
           "context_window": 1000000,
-          "last_updated": "2026-05-28T15:45:34.474Z"
+          "last_updated": "2026-05-28T15:48:34.143Z"
         },
         {
           "name": "grok-4-fast",
           "input_per_million": 1.25,
           "output_per_million": 2.5,
           "context_window": 1000000,
-          "last_updated": "2026-05-28T15:45:34.474Z"
+          "last_updated": "2026-05-28T15:48:34.143Z"
         },
         {
           "name": "grok-4-fast-reasoning-latest",
           "input_per_million": 1.25,
           "output_per_million": 2.5,
           "context_window": 1000000,
-          "last_updated": "2026-05-28T15:45:34.474Z"
+          "last_updated": "2026-05-28T15:48:34.143Z"
         },
         {
           "name": "grok-4-fast-non-reasoning",
           "input_per_million": 1.25,
           "output_per_million": 2.5,
           "context_window": 1000000,
-          "last_updated": "2026-05-28T15:45:34.474Z"
+          "last_updated": "2026-05-28T15:48:34.143Z"
         },
         {
           "name": "grok-4-fast-non-reasoning-latest",
           "input_per_million": 1.25,
           "output_per_million": 2.5,
           "context_window": 1000000,
-          "last_updated": "2026-05-28T15:45:34.474Z"
+          "last_updated": "2026-05-28T15:48:34.143Z"
         },
         {
           "name": "grok-4-1-fast-reasoning",
           "input_per_million": 1.25,
           "output_per_million": 2.5,
           "context_window": 1000000,
-          "last_updated": "2026-05-28T15:45:34.474Z"
+          "last_updated": "2026-05-28T15:48:34.143Z"
         },
         {
           "name": "grok-4-1-fast",
           "input_per_million": 1.25,
           "output_per_million": 2.5,
           "context_window": 1000000,
-          "last_updated": "2026-05-28T15:45:34.474Z"
+          "last_updated": "2026-05-28T15:48:34.143Z"
         },
         {
           "name": "grok-4-1-fast-reasoning-latest",
           "input_per_million": 1.25,
           "output_per_million": 2.5,
           "context_window": 1000000,
-          "last_updated": "2026-05-28T15:45:34.474Z"
+          "last_updated": "2026-05-28T15:48:34.143Z"
         },
         {
           "name": "grok-4-1-fast-non-reasoning",
           "input_per_million": 1.25,
           "output_per_million": 2.5,
           "context_window": 1000000,
-          "last_updated": "2026-05-28T15:45:34.474Z"
+          "last_updated": "2026-05-28T15:48:34.143Z"
         },
         {
           "name": "grok-4-1-fast-non-reasoning-latest",
           "input_per_million": 1.25,
           "output_per_million": 2.5,
           "context_window": 1000000,
-          "last_updated": "2026-05-28T15:45:34.474Z"
+          "last_updated": "2026-05-28T15:48:34.143Z"
         }
       ]
     },
@@ -960,8 +1089,8 @@
     }
   ],
   "metadata": {
-    "last_updated": "2026-05-28T15:45:34.475Z",
+    "last_updated": "2026-05-28T15:48:44.371Z",
     "source": "scraped",
-    "total_models": 116
+    "total_models": 133
   }
 }
