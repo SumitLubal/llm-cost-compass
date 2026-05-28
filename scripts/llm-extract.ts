@@ -366,7 +366,7 @@ export function resultToProviderData(result: ExtractionResult): ProviderData[] {
       });
     }
 
-    providersMap.get(providerId).models.push({
+    providersMap.get(providerId)!.models.push({
       name: model.name,
       input_per_million: model.input_per_million,
       output_per_million: model.output_per_million,
