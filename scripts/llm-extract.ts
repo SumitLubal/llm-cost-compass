@@ -14,7 +14,6 @@
  *   - EXTRACTION_MODEL: Model name to use (e.g., gpt-4-turbo, mimo-v2-flash)
  */
 
-import { ScrapingResult } from '../src/data/types';
 import * as fs from 'fs';
 import * as path from 'path';
 
@@ -327,11 +326,23 @@ function formatForPricingJSON(result: ExtractionResult): string {
 /**
  * Convert extraction result to ProviderData format for merging
  */
-export function resultToProviderData(result: ExtractionResult): any[] {
-  const timestamp = new Date().toISOString();
-  const providersMap = new Map<string, any>();
+interface ProviderData {
+  id: string;
+  name: string;
+  models: Array<{
+    name: string;
+    input_per_million: number;
+    output_per_million: number;
+    context_window: number;
+    free_tier?: string;
+    last_updated: string;
+  }>;
+}
 
-  // If the page itself is a provider page (not aggregator), include it as default
+export function resultToProviderData(result: ExtractionResult): ProviderData[] {
+  const timestamp = new Date().toISOString();
+  const providersMap = new Map<string, ProviderData>();
+
   const defaultProviderId = result.provider.toLowerCase().replace(/\s+/g, '-');
 
   for (const model of result.models) {
